@@ -1,4 +1,13 @@
 <Solution>
   <Project Path="Learn C# Crash Course/project 1.csproj" />
+  <Project Path="Project 10/Project 10.csproj" Id="63e648fc-8259-4b90-b5fd-bd28ac3f53f4" />
+  <Project Path="Project 11/Project 11.csproj" Id="eb966692-596b-4f0d-94a6-0b4c400dde43" />
   <Project Path="project 2/project 2.csproj" Id="f0473922-d6b4-41e7-bd12-607299a30ce7" />
+  <Project Path="Project 3/Project 3.csproj" Id="468a981d-f953-4b38-8ce6-9682172a0767" />
+  <Project Path="Project 4/Project 4.csproj" Id="f27beab2-fce5-47f0-8125-fa5af10b5052" />
+  <Project Path="Project 5/Project 5.csproj" Id="88b72454-e1e3-4ebe-889b-f5a9a7621a39" />
+  <Project Path="Project 6/Project 6.csproj" Id="05874d1c-b18b-4457-9a59-b06cfc09753d" />
+  <Project Path="Project 7/Project 7.csproj" Id="ca7d6346-902c-46a7-9003-09fa370692f9" />
+  <Project Path="Project 8/Project 8.csproj" Id="881ed449-38f2-4c8c-a359-b1d445b8bdd5" />
+  <Project Path="Project 9/Project 9.csproj" Id="555a6b56-c6d0-4487-b8f9-446f16027342" />
 </Solution>
