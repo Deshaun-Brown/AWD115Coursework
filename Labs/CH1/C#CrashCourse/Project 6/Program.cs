@@ -1,34 +1,40 @@
 ﻿using System;
 
+int[] testScores = { 85, 90, 80, 60, 76, 89, 54, 44, 39, 98, 10 };
 
-
-int[] testScores = { 85, 92, 78, 95, 88, 76, 91, 83, 89, 94 };
-
-int max = testScores[0];
-int min = testScores[0];
+double max = double.MinValue;
+double min = double.MaxValue;
 int sum = 0;
 
-foreach (int score in testScores)
-{
-    if (score > max)
+foreach (int orange in testScores)
+{ 
+
+    if (orange > max)
     {
-        max = score;
+
+        max = orange;
     }
 
-    if (score < min)
+    if (orange < min)
     {
-        min = score;
+
+
+        min = orange;//this prints the lowest score/ number
+
     }
 
-    sum += score;
+    sum += orange;
+
 }
 
-double average = (double)sum / testScores.Length;
 
-Console.WriteLine("Test Scores Analysis:");
-Console.WriteLine("--------------------");
-Console.WriteLine($"Best Score:    {max}");
-Console.WriteLine($"Worst Score:   {min}");
+
+
+    double average = (double)sum / testScores.Length;
+
+Console.WriteLine("Test Scores Anaylsis:");
+Console.WriteLine("-----------------");
+Console.WriteLine($"Best Score: {max}");
+Console.WriteLine($"Worse Score: {min}");
 Console.WriteLine($"Average Score: {average:F2}");
-Console.WriteLine($"Total Sum:     {sum}");
-
+Console.WriteLine($"Total Sum: {sum}");

@@ -1,8 +1,6 @@
 ﻿using System;
 
 
-
-
 string original = "Hello World";
 string reversed = "";
 
