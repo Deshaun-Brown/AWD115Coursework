@@ -6,10 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Chapter_2_Lab</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="tailwind.config.js" />
-  </ItemGroup>
 	<ItemGroup>
 		<UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
 	</ItemGroup>
