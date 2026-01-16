@@ -1,0 +1,11 @@
+﻿
+
+@import "tailwindcss";
+
+@source "../../Views/**/*.cshtml";
+@source "../../Controllers/**/*.cs";
+
+@theme {
+    /* Add custom theme here if needed */
+}
+

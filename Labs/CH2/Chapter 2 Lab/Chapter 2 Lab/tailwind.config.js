@@ -1,0 +1,11 @@
+﻿module.exports = {
+content: [
+  "./Views/**/*.cshtml",
+    "./Pages/**/*.cshtml"
+],
+  theme:
+    {
+    extend: { },
+  },
+  plugins: [],
+}
