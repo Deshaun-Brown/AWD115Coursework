@@ -4,6 +4,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+app.UseStaticFiles();
+app.MapRazorPages(); // For Razor Pages
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

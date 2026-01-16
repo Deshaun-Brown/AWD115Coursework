@@ -7,6 +7,7 @@ namespace Chapter_2_Lab.Views.Shared
     {
         public void OnGet()
         {
+
         }
     }
 }
