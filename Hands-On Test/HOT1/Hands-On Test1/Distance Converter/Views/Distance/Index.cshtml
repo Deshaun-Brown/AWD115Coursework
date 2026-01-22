@@ -1,0 +1,44 @@
+﻿@model Distance_Converter.Models.DistanceModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="max-w-lg mx-auto bg-white p-6 rounded shadow">
+
+    <h1 class="text-2xl font-bold mb-4">Distance Converter</h1>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="text-red-600 mb-4">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <form method="post" class="space-y-4">
+
+        <div>
+            <label asp-for="Inches" class="block font-semibold mb-1"></label>
+            <input asp-for="Inches"
+                   class="w-full border p-2 rounded focus:ring focus:ring-blue-300" />
+        </div>
+
+        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+            Convert
+        </button>
+    </form>
+
+    @if (Model.Inches.HasValue && Model.Centimeters > 0)
+    {
+        <div class="mt-6 bg-gray-100 p-4 rounded text-center">
+            <p class="text-lg font-semibold">
+                @Model.Inches.Value.ToString("F2") inches is
+                @Model.Centimeters.ToString("F2") centimeters
+            </p>
+        </div>
+    }
+</div>

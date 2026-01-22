@@ -1,0 +1,55 @@
+﻿@model Distance_Converter.Models.OrderModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="max-w-lg mx-auto bg-white p-6 rounded shadow mt-8">
+
+    <h1 class="text-2xl font-bold mb-4">T‑Shirt Order Form</h1>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="text-red-600 mb-4">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    @if (Model.DiscountCode != null && !Model.IsDiscountValid)
+    {
+        <p class="text-red-600 mb-4">Invalid discount code. No discount applied.</p>
+    }
+
+    <form method="post" class="space-y-4">
+
+        <div>
+            <label asp-for="Quantity" class="block font-semibold mb-1"></label>
+            <input asp-for="Quantity"
+                   class="w-full border p-2 rounded focus:ring focus:ring-blue-300" />
+        </div>
+
+        <div>
+            <label asp-for="DiscountCode" class="block font-semibold mb-1">Discount Code (optional)</label>
+            <input asp-for="DiscountCode"
+                   class="w-full border p-2 rounded focus:ring focus:ring-blue-300" />
+        </div>
+
+        <button class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+            Calculate
+        </button>
+    </form>
+
+    @if (Model.Quantity.HasValue)
+    {
+        <div class="mt-6 bg-gray-100 p-4 rounded">
+            <p>Subtotal: @Model.Subtotal.ToString("C")</p>
+            <p>Discount: @Model.DiscountAmount.ToString("C")</p>
+            <p>Tax: @Model.Tax.ToString("C")</p>
+            <p class="font-bold text-lg">Total: @Model.Total.ToString("C")</p>
+        </div>
+    }
+</div>
