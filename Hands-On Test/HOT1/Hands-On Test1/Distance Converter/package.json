@@ -4,16 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:css": "tailwindcss -i ./Distance\\ Converter/wwwroot/css/tailwind.css -o ./Distance\\ Converter/wwwroot/css/output.css",
-    "watch:css": "tailwindcss -i ./Distance\\ Converter/wwwroot/css/tailwind.css -o ./Distance\\ Converter/wwwroot/css/output.css --watch",
+    "build:css": "tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/output.css --minify",
+    "watch:css": "tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/output.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "dependencies": {
-    "@tailwindcss/cli": "^4.1.18",
+  "devDependencies": {
     "tailwindcss": "^4.1.18"
   }
 }

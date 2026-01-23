@@ -5,7 +5,9 @@ namespace Aircraft_Parts_App.Data
 {
     public class PartContext : DbContext
     {
-
+        public PartContext(DbContextOptions<PartContext> options) : base(options)
+        {
+        }
         public DbSet<AircraftPart> Parts{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

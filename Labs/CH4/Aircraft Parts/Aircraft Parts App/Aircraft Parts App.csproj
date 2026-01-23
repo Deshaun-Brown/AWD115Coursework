@@ -14,15 +14,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-	<ItemGroup>
-		<UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
-	</ItemGroup>
-	<Target Name="Tailwind" BeforeTargets="Build;PrepareForPublish">
-		<Exec Command="npm install" />
-		<Exec Command="npx tailwindcss -i ./wwwroot/css/tailwind.css -o ./wwwroot/css/output.css --minify" />
-		<ItemGroup>
-			<Content Include="wwwroot/css/output.css" CopuToPublishDirectory="Always" />
-		</ItemGroup>
-	</Target>
+
+  <ItemGroup>
+    <UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
+  </ItemGroup>
+
+	<Target Name="Tailwind" BeforeTargets="Build;PrepareForPublish;BeforeRebuild">    <Exec Command="npm install" />
+    <Exec Command="npx tailwindcss -i wwwroot/css/site.css -o wwwroot/css/output.css --minify" />
+    <ItemGroup>
+      <Content Include="wwwroot/css/output.css" CopyToPublishDirectory="Always" />
+    </ItemGroup>
+    </Target>
 
 </Project>

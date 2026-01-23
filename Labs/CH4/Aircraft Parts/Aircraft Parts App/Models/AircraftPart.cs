@@ -4,7 +4,7 @@ namespace Aircraft_Parts_App.Models
 {
     public class AircraftPart
     {
-        [Required]
+        
         public int Id { get; set; }                 // Primary key
         [Required]
         public string NIIN { get; set; }            // National Item Identification Number

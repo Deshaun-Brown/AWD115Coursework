@@ -1,0 +1,5 @@
+﻿@import "tailwindcss";
+
+@source "../Views/**/*.cshtml";
+
+/* Your custom styles here */
