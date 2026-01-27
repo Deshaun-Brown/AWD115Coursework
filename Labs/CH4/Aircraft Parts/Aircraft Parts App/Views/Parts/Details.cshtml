@@ -1,0 +1,57 @@
+﻿@model Part
+@{
+    ViewData["Title"] = "Part Details";
+}
+
+<h1 class="text-3xl font-bold mb-6 text-center">Part Details</h1>
+<div class="bg-white shadow-md rounded-lg overflow-hidden max-w-2xl mx-auto">
+    <div class="bg-gray-100 px-6 py-4 border-b">
+        <h4 class="text-xl font-semibold">Part</h4>
+        <div class="px-6 py-4 space-y-3">
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">Part Name:</span>
+                <span class="text-gray-900">@Model.PartName</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">NIIN:</span>
+                <span class="text-gray-900">@Model.NIIN</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">Manufacturer:</span>
+                <span class="text-gray-900">@Model.Manufacturer</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">Quantity:</span>
+                <span class="text-gray-900">@Model.QuantityInStock</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">Weight:</span>
+                <span class="text-gray-900">@Model.PartsDetails?.Weight</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">Dimensions:</span>
+                <span class="text-gray-900">@Model.PartsDetails?.Dimensions</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">Material:</span>
+                <span class="text-gray-900">@Model.PartsDetails?.Material</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">Certification:</span>
+                <span class="text-gray-900">@Model.PartsDetails?.Certification</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">Condition:</span>
+                <span class="text-gray-900">@Model.PartsDetails?.Condition</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">Unit Price:</span>
+                <span class="text-gray-900">@Model.PartsDetails?.UnitPrice.ToString("C")</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-medium text-gray-700">Supplier Contact:</span>
+                <span class="text-gray-900">@Model.PartsDetails?.SupplierContact</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,46 @@
-﻿<h1> Welcome to Rsupply</h1>
+﻿@model IEnumerable<Part>
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <header class="py-10">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900">Welcome to Rsupply</h1>
+    </header>
+
+    <main>
+        <div class="py-6">
+            <p class="text-sm text-gray-600 mb-6">Welcome to Rsupply</p>
+            
+            <div class="overflow-hidden bg-white shadow ring-1 ring-gray-200 rounded-lg">
+                <table class="min-w-full border border-gray-300 text-black bg-white">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Part Name</th>
+                            <th class="border border-gray-300 px-4 py-3 text-left font-semibold">NIIN</th>
+                            
+                            <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Manufacturer</th>
+                            <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Quantity</th>
+                            <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover:bg-gray-50">
+                                <td class="border border-gray-300 px-4 py-3">@item.PartName</td>
+                                <td class="border border-gray-300 px-4 py-3">@item.NIIN</td>
+                                
+                                <td class="border border-gray-300 px-4 py-3">@item.Manufacturer</td>
+                                <td class="border border-gray-300 px-4 py-3">@item.QuantityInStock</td>
+                                <td class="border border-gray-300 px-4 py-3">
+                                    <a asp-action="AddEdit" asp-route-id="@item.Id" asp-route-slug="@item.slug" class="text-blue-600 hover:underline mr-3">AddEdit</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" asp-route-slug="@item.slug" class="text-green-600 hover:underline mr-3">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" asp-route-slug="@item.slug" class="text-red-600 hover:underline">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
