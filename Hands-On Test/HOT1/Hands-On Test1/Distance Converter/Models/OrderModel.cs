@@ -32,16 +32,19 @@ namespace Distance_Converter.Models
             DiscountCode == "1390" ||
             DiscountCode?.ToUpper() == "BB88";
 
-        public decimal Subtotal =>
-            Quantity.HasValue ? Quantity.Value * ShirtPrice : 0;
+        public decimal SubtotalBeforeDiscount =>
+          Quantity.HasValue ? Quantity.Value * ShirtPrice : 0;
 
         public decimal DiscountAmount =>
             IsDiscountValid ? Subtotal * DiscountPercent : 0;
 
-        public decimal Tax =>
-            (Subtotal - DiscountAmount) * TaxRate;
+        public decimal Subtotal =>
+            SubtotalBeforeDiscount - DiscountAmount;
 
+        public decimal Tax =>
+            Subtotal * TaxRate;
         public decimal Total =>
-            Subtotal - DiscountAmount + Tax;
+           Subtotal + Tax;
+
     }
 }

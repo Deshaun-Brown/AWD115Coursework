@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
+	
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>Landing_Page</RootNamespace>
+
 	</PropertyGroup>
-	<ItemGroup>	
+	<ItemGroup>
 		<UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
 		<Folder Include="Controllers\" />
 		<Folder Include="Models\" />
 		<Folder Include="Views\Shared\" />
 	</ItemGroup>
-
 
 	<Target Name="Tailwind" BeforeTargets="Build;PrepareForPublish;BeforeRebuild">
 		<Exec Command="npm install" />

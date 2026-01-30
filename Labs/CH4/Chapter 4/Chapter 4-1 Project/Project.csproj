@@ -16,7 +16,7 @@
 
 	<Target Name="Tailwind" BeforeTargets="Build;PrepareForPublish;BeforeRebuild">
 		<Exec Command="npm install" />
-		<Exec Command="npx @tailwindcss -i wwwroot/css/site.css -o wwwroot/css/output.css --minify" />
+		<Exec Command="npx tailwindcss -i wwwroot/css/site.css -o wwwroot/css/output.css --minify" />
 	</Target>
 
 </Project>
