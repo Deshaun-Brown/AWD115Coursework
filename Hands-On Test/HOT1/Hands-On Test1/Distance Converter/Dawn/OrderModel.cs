@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using Distance_Converter.Controllers;
 
 namespace Distance_Converter.Models
 {
@@ -36,7 +38,7 @@ namespace Distance_Converter.Models
           Quantity.HasValue ? Quantity.Value * ShirtPrice : 0;
 
         public decimal DiscountAmount =>
-            IsDiscountValid ? Subtotal * DiscountPercent : 0;
+            IsDiscountValid ? SubtotalBeforeDiscount * DiscountPercent : 0;
 
         public decimal Subtotal =>
             SubtotalBeforeDiscount - DiscountAmount;
