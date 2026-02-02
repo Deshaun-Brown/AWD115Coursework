@@ -1,0 +1,96 @@
+@model Project.Models.Contact
+
+@{
+    string action = ViewBag.Action;
+    ViewData["Title"] = $"{action} Contact";
+}
+
+<div class="bg-gray-800 text-white py-8 mb-8">
+    <div class="max-w-7xl mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center">Contact Manager</h1>
+    </div>
+</div>
+
+<div class="max-w-2xl mx-auto px-4 mb-8">
+    <div class="bg-white shadow rounded-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">@action Contact</h2>
+
+        <div asp-validation-summary="All" class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded"></div>
+
+        <form asp-controller="Contacts" asp-action="@action" method="post">
+            <input type="hidden" asp-for="ContactId" />
+
+            <div class="mb-4">
+                <label asp-for="Firstname" class="block text-sm font-semibold text-gray-700 mb-2"></label>
+                <input asp-for="Firstname" 
+                       required
+                       class="w-full px-4 py-2 border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" />
+                <span asp-validation-for="Firstname" class="text-red-600 text-sm mt-1 block"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Lastname" class="block text-sm font-semibold text-gray-700 mb-2"></label>
+                <input asp-for="Lastname" 
+                       required
+                       class="w-full px-4 py-2 border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" />
+                <span asp-validation-for="Lastname" class="text-red-600 text-sm mt-1 block"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Phone" class="block text-sm font-semibold text-gray-700 mb-2"></label>
+                <input asp-for="Phone" 
+                       required
+                       class="w-full px-4 py-2 border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" />
+                <span asp-validation-for="Phone" class="text-red-600 text-sm mt-1 block"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Email" class="block text-sm font-semibold text-gray-700 mb-2"></label>
+                <input asp-for="Email" 
+                       type="email" 
+                       required
+                       class="w-full px-4 py-2 border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" />
+                <span asp-validation-for="Email" class="text-red-600 text-sm mt-1 block"></span>
+            </div>
+
+            <div class="mb-6">
+                <label asp-for="CategoryId" class="block text-sm font-semibold text-gray-700 mb-2"></label>
+                <select asp-for="CategoryId" 
+                        required
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
+                    <option value="0">Select a category</option>
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <option value="@category.CategoryId">@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="text-red-600 text-sm mt-1 block"></span>
+            </div>
+
+            <div class="flex gap-3">
+                <button type="submit" class="bg-gray-900 hover:bg-gray-800 text-white font-semibold py-2 px-6 rounded transition">
+                    Save
+                </button>
+                @if (action == "Add")
+                {
+                    <a asp-controller="Contacts" 
+                       asp-action="Index" 
+                       class="bg-gray-200 hover:bg-gray-300 text-gray-900 font-semibold py-2 px-6 rounded transition inline-block">
+                        Cancel
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Contacts" 
+                       asp-action="Details" 
+                       asp-route-id="@Model.ContactId" 
+                       asp-route-slug="@Model.Slug" 
+                       class="bg-gray-200 hover:bg-gray-300 text-gray-900 font-semibold py-2 px-6 rounded transition inline-block">
+                        Cancel
+                    </a>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+

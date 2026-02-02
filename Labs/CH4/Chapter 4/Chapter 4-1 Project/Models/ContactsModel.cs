@@ -1,7 +1,9 @@
-﻿namespace Chapter_4_1_Project.Models
+﻿namespace Project.Models
 {
     public class InfinitModel
     {
+
+
 
     }
 }

@@ -1,0 +1,71 @@
+@model Project.Models.Contact
+    
+@{
+    ViewData["Title"] = "Contact Details";
+}
+
+<div class="bg-gray-800 text-white py-8 mb-8">
+    <div class="max-w-7xl mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center">Contact Manager</h1>
+    </div>
+</div>
+
+<div class="max-w-3xl mx-auto px-4 mb-8">
+    <div class="bg-white shadow rounded-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Contact Details</h2>
+
+        <div class="space-y-4">
+            <div class="border-b border-gray-200 pb-4">
+                <dt class="text-sm font-semibold text-gray-600">First name</dt>
+                <dd class="mt-1 text-lg text-gray-900">@Model.Firstname</dd>
+            </div>
+
+            <div class="border-b border-gray-200 pb-4">
+                <dt class="text-sm font-semibold text-gray-600">Last name</dt>
+                <dd class="mt-1 text-lg text-gray-900">@Model.Lastname</dd>
+            </div>
+
+            <div class="border-b border-gray-200 pb-4">
+                <dt class="text-sm font-semibold text-gray-600">Phone</dt>
+                <dd class="mt-1 text-lg text-gray-900">@Model.Phone</dd>
+            </div>
+
+            <div class="border-b border-gray-200 pb-4">
+                <dt class="text-sm font-semibold text-gray-600">Email</dt>
+                <dd class="mt-1 text-lg text-gray-900">@Model.Email</dd>
+            </div>
+
+            <div class="border-b border-gray-200 pb-4">
+                <dt class="text-sm font-semibold text-gray-600">Category</dt>
+                <dd class="mt-1 text-lg text-gray-900">@Model.Category?.Name</dd>
+            </div>
+
+            <div class="pb-4">
+                <dt class="text-sm font-semibold text-gray-600">Date Added</dt>
+                <dd class="mt-1 text-lg text-gray-900">@Model.DateAdded.ToString("MM/dd/yyyy")</dd>
+            </div>
+        </div>
+            
+        <div class="mt-8 flex gap-3">
+            <a asp-controller="Contacts" 
+               asp-action="Edit" 
+               asp-route-id="@Model.ContactId" 
+               asp-route-slug="@Model.Slug" 
+               class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded transition">
+                Edit
+            </a>
+            <a asp-controller="Contacts" 
+               asp-action="Delete" 
+               asp-route-id="@Model.ContactId" 
+               asp-route-slug="@Model.Slug" 
+               class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded transition">
+                Delete
+            </a>
+            <a asp-controller="Contacts" 
+               asp-action="Index" 
+               class="bg-gray-200 hover:bg-gray-300 text-gray-900 font-semibold py-2 px-6 rounded transition">
+                Back to List
+            </a>
+        </div>
+    </div>
+</div>

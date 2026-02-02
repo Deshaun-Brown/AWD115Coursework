@@ -1,15 +1,12 @@
 ﻿<!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/output.css"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Contact Manager</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
 </head>
-<body>
-    <div>
-        @RenderBody()
-    </div>
+<body class="bg-gray-50">
+    @RenderBody()
 </body>
 </html>

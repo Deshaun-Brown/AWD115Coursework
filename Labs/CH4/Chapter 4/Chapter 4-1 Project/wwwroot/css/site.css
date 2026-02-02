@@ -1,1 +1,11 @@
-﻿@import tailwindcss
+﻿@import "tailwindcss";
+
+@layer components {
+  a {
+    cursor: pointer;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+}
