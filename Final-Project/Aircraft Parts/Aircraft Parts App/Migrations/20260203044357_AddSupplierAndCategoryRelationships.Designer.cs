@@ -3,6 +3,7 @@ using Aircraft_Parts_App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aircraft_Parts_App.Migrations
 {
     [DbContext(typeof(PartContext))]
-    partial class PartContextModelSnapshot : ModelSnapshot
+    [Migration("20260203044357_AddSupplierAndCategoryRelationships")]
+    partial class AddSupplierAndCategoryRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

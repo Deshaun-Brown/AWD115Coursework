@@ -15,7 +15,6 @@
                         <tr>
                             <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Part Name</th>
                             <th class="border border-gray-300 px-4 py-3 text-left font-semibold">NIIN</th>
-                            
                             <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Manufacturer</th>
                             <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Quantity</th>
                             <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Actions</th>
@@ -28,13 +27,12 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="border border-gray-300 px-4 py-3">@item.PartName</td>
                                 <td class="border border-gray-300 px-4 py-3">@item.NIIN</td>
-                                
                                 <td class="border border-gray-300 px-4 py-3">@item.Manufacturer</td>
                                 <td class="border border-gray-300 px-4 py-3">@item.QuantityInStock</td>
                                 <td class="border border-gray-300 px-4 py-3">
-                                    <a asp-action="AddEdit" asp-route-id="@item.Id" asp-route-slug="@item.slug" class="text-blue-600 hover:underline mr-3">AddEdit</a>
-                                    <a asp-action="Details" asp-route-id="@item.Id" asp-route-slug="@item.slug" class="text-green-600 hover:underline mr-3">Details</a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" asp-route-slug="@item.slug" class="text-red-600 hover:underline">Delete</a>
+                                    <a asp-action="AddEdit" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="text-blue-600 hover:underline mr-3">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="text-green-600 hover:underline mr-3">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="text-red-600 hover:underline">Delete</a>
                                 </td>
                             </tr>
                         }
