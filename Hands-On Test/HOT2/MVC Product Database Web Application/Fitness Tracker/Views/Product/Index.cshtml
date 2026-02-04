@@ -16,8 +16,7 @@
             <p class="mt-1 text-sm text-slate-600">Manage products in your database.</p>
         </div>
 
-        <a asp-action="Create"
-           class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+        <a asp-action="Create" class="btn-primary">
             Add Product
         </a>
     </div>
@@ -49,11 +48,11 @@
                         <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@p.Quantity</td>
                         <td class="whitespace-nowrap px-6 py-4 text-right text-sm">
                             <a asp-action="Edit" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug"
-                               class="rounded-md px-3 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-50">
+                               class="btn-link">
                                 Edit
                             </a>
                             <a asp-action="Delete" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug"
-                               class="rounded-md px-3 py-2 text-sm font-medium text-rose-700 hover:bg-rose-50">
+                               class="btn-link text-rose-700 hover:bg-rose-50">
                                 Delete
                             </a>
                         </td>
@@ -64,9 +63,8 @@
         </div>
     </div>
 
-    @* put this anywhere in the page *@
     <img src="~/images/hero-fitness.jpeg"
          alt="Fitness equipment"
          class="h-56 w-full rounded-xl object-cover"
-         style="object-position: center 25%;" />
+         style="object-position: center 12%;" />
 </div>
