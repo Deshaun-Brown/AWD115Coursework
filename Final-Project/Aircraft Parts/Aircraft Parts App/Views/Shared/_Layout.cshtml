@@ -21,7 +21,6 @@
                             <div class="ml-10 flex items-baseline space-x-4">
                                 <a asp-action="" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Aircraft Parts Library</a>
                                 <a asp-action="AddEdit" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Add New Part</a>
-                                
                             </div>
                         </div>
                     </div>
@@ -103,5 +102,7 @@
             @RenderBody()
         </main>
     </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
