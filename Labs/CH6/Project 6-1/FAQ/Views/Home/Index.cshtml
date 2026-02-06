@@ -6,8 +6,11 @@
     </div>
 
     <nav class="flex justify-center gap-6 mb-8 text-gray-600">
-        <a class="@(Model.SelectedTopicId == null ? "text-gray-900 font-semibold" : "")"
-           asp-controller="Home" asp-action="Index">
+        <a class="@(Model.SelectedTopicId == null && Model.SelectedCategoryId == null ? "text-gray-900 font-semibold" : "")"
+           asp-controller="Home"
+           asp-action="Index"
+           asp-route-topicId=""
+           asp-route-categoryId="">
             All FAQs
         </a>
 
