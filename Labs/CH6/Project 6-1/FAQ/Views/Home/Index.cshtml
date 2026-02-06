@@ -1,0 +1,61 @@
+﻿@model FAQ.Models.FaqViewModel
+
+<div class="max-w-5xl mx-auto px-4 py-6">
+    <div class="bg-cyan-500 text-white text-center py-10 mb-8">
+        <h1 class="text-4xl font-semibold">Frequently Asked Questions</h1>
+    </div>
+
+    <nav class="flex justify-center gap-6 mb-8 text-gray-600">
+        <a class="@(Model.SelectedTopicId == null ? "text-gray-900 font-semibold" : "")"
+           asp-controller="Home" asp-action="Index">
+            All FAQs
+        </a>
+
+        @foreach (var topic in Model.Topics)
+        {
+            <a class="@(Model.SelectedTopicId == topic.TopicId ? "text-gray-900 font-semibold" : "")"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-topicId="@topic.TopicId"
+               asp-route-categoryId="@Model.SelectedCategoryId">
+                @topic.Name
+            </a>
+        }
+    </nav>
+
+    <div class="grid grid-cols-12 gap-6">
+        <aside class="col-span-12 md:col-span-3">
+            <div class="border rounded">
+                @foreach (var cat in Model.Categories)
+                {
+                    <a class="block px-4 py-3 border-b last:border-b-0 @(Model.SelectedCategoryId == cat.CategoryId ? "text-blue-600 font-semibold" : "text-blue-500")"
+                       asp-controller="Home"
+                       asp-action="Index"
+                       asp-route-topicId="@Model.SelectedTopicId"
+                       asp-route-categoryId="@cat.CategoryId">
+                        @cat.Name
+                    </a>
+                }
+            </div>
+        </aside>
+
+        <main class="col-span-12 md:col-span-9">
+            <div class="border rounded divide-y">
+                @foreach (var faq in Model.Faqs)
+                {
+                    <div class="p-5">
+                        <div class="mb-2">
+                            <span class="font-semibold">@faq.Question</span>
+                            <span> @faq.Answer</span>
+                        </div>
+
+                        <div class="flex justify-between text-sm text-gray-600 mt-4">
+                            <div>Topic: <span class="text-gray-800">@faq.Topic?.Name</span></div>
+                            <div>Category: <span class="text-gray-800">@faq.Category?.Name</span></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </main>
+    </div>
+</div>
