@@ -7,20 +7,18 @@
 
     <nav class="flex justify-center gap-6 mb-8 text-gray-600">
         <a class="@(Model.SelectedTopicId == null && Model.SelectedCategoryId == null ? "text-gray-900 font-semibold" : "")"
-           asp-controller="Home"
-           asp-action="Index"
-           asp-route-topicId=""
-           asp-route-categoryId="">
+           href="/">
             All FAQs
         </a>
 
         @foreach (var topic in Model.Topics)
         {
+            var topicHref = Model.SelectedCategoryId is null
+                ? $"/topic/{topic.TopicId}/"
+                : $"/topic/{topic.TopicId}/category/{Model.SelectedCategoryId}/";
+
             <a class="@(Model.SelectedTopicId == topic.TopicId ? "text-gray-900 font-semibold" : "")"
-               asp-controller="Home"
-               asp-action="Index"
-               asp-route-topicId="@topic.TopicId"
-               asp-route-categoryId="@Model.SelectedCategoryId">
+               href="@topicHref">
                 @topic.Name
             </a>
         }
@@ -31,11 +29,12 @@
             <div class="border rounded">
                 @foreach (var cat in Model.Categories)
                 {
+                    var catHref = Model.SelectedTopicId is null
+                        ? $"/category/{cat.CategoryId}/"
+                        : $"/topic/{Model.SelectedTopicId}/category/{cat.CategoryId}/";
+
                     <a class="block px-4 py-3 border-b last:border-b-0 @(Model.SelectedCategoryId == cat.CategoryId ? "text-blue-600 font-semibold" : "text-blue-500")"
-                       asp-controller="Home"
-                       asp-action="Index"
-                       asp-route-topicId="@Model.SelectedTopicId"
-                       asp-route-categoryId="@cat.CategoryId">
+                       href="@catHref">
                         @cat.Name
                     </a>
                 }

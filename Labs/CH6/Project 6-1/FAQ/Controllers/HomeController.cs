@@ -11,6 +11,10 @@ public class HomeController : Controller
 
     public HomeController(FaqContext context) => _context = context;
 
+    [HttpGet("topic/{topicId}/category/{categoryId}/")]
+    [HttpGet("topic/{topicId}/")]
+    [HttpGet("category/{categoryId}/")]
+    [HttpGet("/")]
     public async Task<IActionResult> Index(string? topicId, string? categoryId)
     {
         IQueryable<Faq> query = _context.Faqs
