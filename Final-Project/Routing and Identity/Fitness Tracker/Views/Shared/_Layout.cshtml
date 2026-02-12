@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Fitness Tracker</title>
+    <link href="~/css/output.css" rel="stylesheet"  asp-append-version="true" />
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+
+     <script src="https://cdn.jsdelivr.net/npm/@@tailwindplus/elements@1" type="module"></script>
+    <!--
+      This example requires updating your template:
+
+      ```
+      <html class="h-full bg-gray-900">
+      <body class="h-full">
+      ```
+    -->
+    <header class="border-b border-slate-200 bg-white">
+        <nav class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <a asp-controller="Home" asp-action="Index" class="flex items-center gap-2 font-semibold">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-green-500 to-black text-white">FT</span>
+                    <span>Fitness Tracker</span>
+                </a>
+
+                <input id="nav-toggle" type="checkbox" class="peer hidden" />
+                <label for="nav-toggle"
+                       class="inline-flex cursor-pointer items-center rounded-md p-2 text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 md:hidden">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </label>
+
+                <div class="hidden items-center gap-2 md:flex">
+                    <a href="/products/" class="btn-link">Products</a>
+
+                    @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <form asp-area="Identity" asp-page="/Account/Logout"
+                              asp-route-returnUrl="/"
+                              method="post" class="inline">
+                            <button type="submit" class="btn-link">Logout</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Register" class="btn-link">Register</a>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn-link">Login</a>
+                    }
+                </div>
+            </div>
+
+            <div class="hidden border-t border-slate-200 py-3 peer-checked:block md:hidden">
+                <div class="flex flex-col gap-2">
+                    <a href="/products/" class="btn-link">Products</a>
+
+                    @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <form asp-area="Identity" asp-page="/Account/Logout"
+                              asp-route-returnUrl="/"
+                              method="post" class="inline">
+                            <button type="submit" class="btn-link">Logout</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Register" class="btn-link">Register</a>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn-link">Login</a>
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        @RenderBody()
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white">
+        <div class="mx-auto max-w-6xl px-4 py-6 text-sm text-slate-600 sm:px-6 lg:px-8">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <span>&copy; @DateTime.Now.Year - Fitness Tracker</span>
+                <span>Built with ASP.NET Core MVC + Tailwind CSS</span>
+            </div>
+        </div>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
