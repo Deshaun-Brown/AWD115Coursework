@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Fitness_Tracker.Areas.Identity.Pages.Account
 {
+    [Authorize]
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

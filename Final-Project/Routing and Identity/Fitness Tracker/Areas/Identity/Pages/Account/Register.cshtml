@@ -21,51 +21,57 @@
 
             <div class="mt-4">
                 <label asp-for="Input.Password" class="block text-sm font-medium text-slate-700">Password</label>
-                <input asp-for="Input.Password" class="mt-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <div class="relative mt-1">
+                    <input asp-for="Input.Password" id="register-password" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-10 text-slate-900 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <button type="button" id="toggle-register-password" class="absolute inset-y-0 right-0 inline-flex items-center pr-3" aria-label="Show password" aria-pressed="false">
+                        <img id="register-eye" class="h-5 w-5 text-slate-500" src="/images/icons/eye.svg" alt="Show" />
+                        <img id="register-eye-off" class="hidden h-5 w-5 text-slate-500" src="/images/icons/eye-off.svg" alt="Hide" />
+                    </button>
+                </div>
                 <span asp-validation-for="Input.Password" class="mt-1 block text-sm text-red-600"></span>
             </div>
 
             <div class="mt-4">
                 <label asp-for="Input.ConfirmPassword" class="block text-sm font-medium text-slate-700">Confirm Password</label>
-                <input asp-for="Input.ConfirmPassword" class="mt-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <div class="relative mt-1">
+                    <input asp-for="Input.ConfirmPassword" id="register-confirm-password" class="block w-full rounded-md border border-slate-300 bg-white px-3 py-2 pr-10 text-slate-900 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <button type="button" id="toggle-register-confirm-password" class="absolute inset-y-0 right-0 inline-flex items-center pr-3" aria-label="Show confirm password" aria-pressed="false">
+                        <img id="register-confirm-eye" class="h-5 w-5 text-slate-500" src="/images/icons/eye.svg" alt="Show" />
+                        <img id="register-confirm-eye-off" class="hidden h-5 w-5 text-slate-500" src="/images/icons/eye-off.svg" alt="Hide" />
+                    </button>
+                </div>
                 <span asp-validation-for="Input.ConfirmPassword" class="mt-1 block text-sm text-red-600"></span>
             </div>
 
             <button id="registerSubmit" type="submit" class="mt-6 inline-flex w-full items-center justify-center rounded-md bg-green-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">Register</button>
         </form>
     </div>
-    <div class="lg:col-span-7">
-        <section>
-            <h3 class="text-lg font-semibold">Use another service to register.</h3>
-            <div class="mt-4 h-px bg-slate-200"></div>
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div class="mt-4 rounded-md border border-slate-200 bg-white p-4 text-sm text-slate-700">
-                        <p class="leading-relaxed">
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                        <div class="mt-4">
-                            <p class="flex flex-wrap gap-2">
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="inline-flex items-center justify-center rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        (function () {
+            function wireToggle(inputId, buttonId, eyeId, eyeOffId, showLabel, hideLabel) {
+                const input = document.getElementById(inputId);
+                const btn = document.getElementById(buttonId);
+                const eye = document.getElementById(eyeId);
+                const eyeOff = document.getElementById(eyeOffId);
+                if (!input || !btn || !eye || !eyeOff) return;
+
+                btn.addEventListener('click', function () {
+                    const show = input.type === 'password';
+                    input.type = show ? 'text' : 'password';
+                    btn.setAttribute('aria-pressed', String(show));
+                    btn.setAttribute('aria-label', show ? hideLabel : showLabel);
+                    eye.classList.toggle('hidden', show);
+                    eyeOff.classList.toggle('hidden', !show);
+                });
+            }
+
+            wireToggle('register-password', 'toggle-register-password', 'register-eye', 'register-eye-off', 'Show password', 'Hide password');
+            wireToggle('register-confirm-password', 'toggle-register-confirm-password', 'register-confirm-eye', 'register-confirm-eye-off', 'Show confirm password', 'Hide confirm password');
+        })();
+    </script>
 }
