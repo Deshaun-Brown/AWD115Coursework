@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="mx-auto max-w-6xl">
+    <div class="grid items-center gap-10 lg:grid-cols-12">
+        <div class="lg:col-span-7">
+            <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+                Fitness Tracker Store
+            </h1>
+            <p class="mt-4 max-w-2xl text-lg text-slate-600">
+                Manage your products, categories, and inventory, with secure sign-in powered by ASP.NET Core Identity.
+            </p>
+
+            <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+                <a asp-controller="Product" asp-action="Index"
+                   class="inline-flex items-center justify-center rounded-md bg-green-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                    Browse Products
+                </a>
+                <a asp-controller="Product" asp-action="Create"
+                   class="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                    Add a Product
+                </a>
+
+                @if (!(User?.Identity?.IsAuthenticated ?? false))
+                {
+                    <a asp-area="Identity" asp-page="/Account/Login"
+                       class="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                        Login
+                    </a>
+                }
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-3 text-sm text-slate-600">
+                <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1">
+                    <span class="h-2 w-2 rounded-full bg-green-600"></span>
+                    Inventory tracking
+                </span>
+                <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1">
+                    <span class="h-2 w-2 rounded-full bg-green-600"></span>
+                    Category organization
+                </span>
+                <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1">
+                    <span class="h-2 w-2 rounded-full bg-green-600"></span>
+                    Secure accounts
+                </span>
+            </div>
+        </div>
+
+        <div class="lg:col-span-5">
+            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div class="relative">
+                    <img class="h-56 w-full object-cover sm:h-64" src="/images/hero-fitness.jpeg" alt="Fitness equipment" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                </div>
+                <div class="p-6">
+                    <h2 class="text-base font-semibold">Quick actions</h2>
+                    <div class="mt-4 grid grid-cols-1 gap-3">
+                        <a asp-controller="Product" asp-action="Index"
+                           class="inline-flex items-center justify-between rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 hover:bg-slate-50">
+                            <span>View all products</span>
+                            <span class="text-slate-400">/products</span>
+                        </a>
+                        <a asp-controller="Product" asp-action="Create"
+                           class="inline-flex items-center justify-between rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 hover:bg-slate-50">
+                            <span>Create a product</span>
+                            <span class="text-slate-400">/product/create</span>
+                        </a>
+                        <a asp-area="Identity" asp-page="/Account/Register"
+                           class="inline-flex items-center justify-between rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 hover:bg-slate-50">
+                            <span>Create an account</span>
+                            <span class="text-slate-400">/Identity</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-12">
+        <h2 class="text-xl font-semibold">What you can do</h2>
+        <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="rounded-xl border border-slate-200 bg-white p-6">
+                <h3 class="text-base font-semibold">Manage products</h3>
+                <p class="mt-2 text-sm text-slate-600">Create, edit, and delete store items with a simple CRUD workflow.</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-6">
+                <h3 class="text-base font-semibold">Organize categories</h3>
+                <p class="mt-2 text-sm text-slate-600">Keep products grouped so customers can find what they need faster.</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-6">
+                <h3 class="text-base font-semibold">Secure access</h3>
+                <p class="mt-2 text-sm text-slate-600">Register and login with ASP.NET Core Identity for protected features.</p>
+            </div>
+        </div>
+    </div>
+</div>

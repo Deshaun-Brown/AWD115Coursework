@@ -1,0 +1,7 @@
+@model Fitness_Tracker.Models.Product
+
+@{
+    ViewData["Title"] = ViewBag.Action + " Product";
+}
+
+@await Html.PartialAsync("~/Views/Product/CreateEdit.cshtml", Model)

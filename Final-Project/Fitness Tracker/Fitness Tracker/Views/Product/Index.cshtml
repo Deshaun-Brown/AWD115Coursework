@@ -1,0 +1,64 @@
+@model IEnumerable<Fitness_Tracker.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+@* Hero image: mostly top, moved down a little *@
+<img src="~/images/hero-fitness.jpeg"
+     alt="Fitness equipment"
+     class="h-56 w-full rounded-xl object-cover"
+     style="object-position: center 7%;" />
+
+<div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold tracking-tight">Products</h1>
+            <p class="mt-1 text-sm text-slate-600">Manage products in your database.</p>
+        </div>
+
+        <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn-primary">
+            Add Product
+        </a>
+    </div>
+
+    <div class="overflow-hidden rounded-xl border border-slate-200 bg-white">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-200">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Category</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Price</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Qty</th>
+                        <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 bg-white">
+                @foreach (var p in Model)
+                {
+                    <tr class="hover:bg-slate-50">
+                        <td class="whitespace-nowrap px-6 py-4">
+                            <div class="font-medium">@p.Name</div>
+                            <div class="text-sm text-slate-600 line-clamp-1">@p.Description</div>
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">
+                            @(p.Category?.Name ?? "—")
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">$@p.Price</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@p.Quantity</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-right text-sm">
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link">Edit</a>
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link text-rose-700 hover:bg-rose-50">Delete</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <img src="~/images/hero-fitness.jpeg"
+         alt="Fitness equipment"
+         class="h-56 w-full rounded-xl object-cover"
+         style="object-position: center 12%;" />
+</div>
