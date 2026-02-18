@@ -1,7 +1,7 @@
 ﻿
 using Fitness_Tracker.Models;
+using Fitness_Tracker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fitness_Tracker.Controllers;
@@ -17,14 +17,30 @@ public class ProductController : Controller
     }
 
     // GET: /products/
-    [HttpGet("/products")]
-    public async Task<IActionResult> Index()
+    [HttpGet("/products", Name = "Products")]
+    public async Task<IActionResult> Index(int page = 1)
     {
+        const int pageSize = 10;
+        if (page < 1) page = 1;
+
+        var totalCount = await _context.Products.CountAsync();
+
         var products = await _context.Products
             .Include(p => p.Category)
+            .OrderBy(p => p.Name)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
 
-        return View(products);
+        var model = new PagedResult<Product>
+        {
+            Items = products,
+            PageNumber = page,
+            PageSize = pageSize,
+            TotalCount = totalCount
+        };
+
+        return View(model);
     }
 }
 

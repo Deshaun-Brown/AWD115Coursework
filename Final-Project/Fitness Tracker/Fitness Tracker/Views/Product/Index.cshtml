@@ -1,4 +1,4 @@
-@model IEnumerable<Fitness_Tracker.Models.Product>
+@model Fitness_Tracker.ViewModels.PagedResult<Fitness_Tracker.Models.Product>
 
 @{
     ViewData["Title"] = "Products";
@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-200 bg-white">
-                @foreach (var p in Model)
+                @foreach (var p in Model.Items)
                 {
                     <tr class="hover:bg-slate-50">
                         <td class="whitespace-nowrap px-6 py-4">
@@ -55,7 +55,48 @@
                 </tbody>
             </table>
         </div>
+
     </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav class="flex items-center justify-between" aria-label="Pagination">
+            <div class="text-sm text-slate-600">
+                Page <span class="font-medium text-slate-900">@Model.PageNumber</span> of <span class="font-medium text-slate-900">@Model.TotalPages</span>
+                <span class="ml-2">(@Model.TotalCount total)</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+                @if (Model.HasPreviousPage)
+                {
+                    <a asp-route="Products" asp-route-page="@(Model.PageNumber - 1)"
+                       class="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+                        Previous
+                    </a>
+                }
+                else
+                {
+                    <span class="cursor-not-allowed rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-400">
+                        Previous
+                    </span>
+                }
+
+                @if (Model.HasNextPage)
+                {
+                    <a asp-route="Products" asp-route-page="@(Model.PageNumber + 1)"
+                       class="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+                        Next
+                    </a>
+                }
+                else
+                {
+                    <span class="cursor-not-allowed rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-400">
+                        Next
+                    </span>
+                }
+            </div>
+        </nav>
+    }
 
     <img src="~/images/hero-fitness.jpeg"
          alt="Fitness equipment"
