@@ -1,2 +1,24 @@
 ﻿@import "tailwindcss";
 
+@layer utilities {
+  @keyframes trip-carousel {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-trip-carousel {
+    animation: trip-carousel var(--carousel-duration, 18s) linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-trip-carousel {
+    animation: none;
+    transform: none;
+  }
+}
+

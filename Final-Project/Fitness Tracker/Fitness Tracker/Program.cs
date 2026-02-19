@@ -25,6 +25,7 @@ using (var scope = app.Services.CreateScope())
     await SeedData.InitializeAsync(scope.ServiceProvider);
 }
 
+
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
