@@ -1,0 +1,20 @@
+@model AddTripPage2ViewModel
+
+<h2>Add Info</h2>
+
+<form asp-action="AddPage2" method="post">
+    <div class="form-row">
+        <label asp-for="AccommodationPhone">Phone Number</label>
+        <input asp-for="AccommodationPhone" />
+    </div>
+
+    <div class="form-row">
+        <label asp-for="AccommodationEmail">Email Address</label>
+        <input asp-for="AccommodationEmail" />
+    </div>
+
+    <div class="button-row">
+        <button type="submit">Next</button>
+        <a asp-action="Cancel" class="button-link">Cancel</a>
+    </div>
+</form>

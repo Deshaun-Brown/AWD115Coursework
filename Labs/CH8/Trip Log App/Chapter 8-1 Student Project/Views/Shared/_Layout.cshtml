@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Trip Log</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <div class="banner">My Trip Log</div>
+        @if (!string.IsNullOrWhiteSpace(ViewBag.SubHeader as string))
+        {
+            <div class="subhead">@ViewBag.SubHeader</div>
+        }
+    </header>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
