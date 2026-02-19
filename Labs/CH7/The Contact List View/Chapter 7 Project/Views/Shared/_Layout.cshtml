@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - My Website</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+</head>
+<body>
+@{
+    var currentArea = ViewContext.RouteData.Values["area"]?.ToString();
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+
+    string NavLinkClasses(bool isActive) => isActive
+        ? "text-white"
+        : "text-slate-300 hover:text-white";
+}
+
+    <nav class="bg-slate-900">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="flex h-14 items-center justify-between">
+                <div class="flex items-center gap-6">
+                    <a class="text-base font-semibold text-white" asp-area="" asp-controller="Home" asp-action="Index">My Website</a>
+                    <div class="flex items-center gap-4 text-sm">
+                        <a class="@NavLinkClasses(currentArea is null && currentController == "Home" && currentAction == "Index")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="@NavLinkClasses(currentArea is null && currentController == "Home" && currentAction == "About")" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                        <a class="@NavLinkClasses(currentArea is null && currentController == "Home" && currentAction == "Contact")" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                    </div>
+                </div>
+
+                <a class="@NavLinkClasses(currentArea == "Help") text-sm" asp-area="Help" asp-controller="Home" asp-action="Index">Help</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="mx-auto max-w-6xl px-4">
+        @RenderSection("Header", required: true)
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4">
+        @RenderBody()
+    </main>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

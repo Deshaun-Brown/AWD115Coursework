@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+@section Header {
+    <h1>Home Page</h1>
+}
+
+<p class="lead">This app demonstrates multiple views, nested layouts, layout sections, and an Area.</p>
+
+<ul>
+    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+    <li><a asp-controller="Home" asp-action="About">About</a></li>
+    <li><a asp-area="Help" asp-controller="Home" asp-action="Index">Help</a></li>
+</ul>
