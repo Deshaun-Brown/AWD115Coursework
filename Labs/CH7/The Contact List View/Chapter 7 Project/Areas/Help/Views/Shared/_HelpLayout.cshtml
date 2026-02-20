@@ -8,16 +8,19 @@
         : "inline-block px-3 py-2 text-sm text-blue-600 hover:text-blue-800";
 }
 
+
 @section Header {
     @RenderSection("Header", required: true)
 }
+
 
 @section Scripts {
     @RenderSection("Scripts", required: false)
 }
 
-<div class="mt-4 mb-6 border-b border-slate-200">
-    <a class="@TabClasses(currentController == "Home") mr-2" asp-area="Help" asp-controller="Home" asp-action="Index">Home</a>
+
+<div class="mt-4 border-b border-slate-200">
+    <a class="@TabClasses(currentController == "Home")" asp-area="Help" asp-controller="Home" asp-action="Index">Home</a>
     <a class="@TabClasses(currentController == "Tutorial")" asp-area="Help" asp-controller="Tutorial" asp-action="Index" asp-route-id="Page1">Tutorial</a>
 </div>
 
