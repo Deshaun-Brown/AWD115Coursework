@@ -63,17 +63,14 @@
                         <a asp-controller="Product" asp-action="Index"
                            class="inline-flex items-center justify-between rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 hover:bg-slate-50">
                             <span>View all products</span>
-                            <span class="text-slate-400">/products</span>
                         </a>
-                        <a asp-controller="Product" asp-action="Create"
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Create"
                            class="inline-flex items-center justify-between rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 hover:bg-slate-50">
                             <span>Create a product</span>
-                            <span class="text-slate-400">/product/create</span>
                         </a>
                         <a asp-area="Identity" asp-page="/Account/Register"
                            class="inline-flex items-center justify-between rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 hover:bg-slate-50">
                             <span>Create an account</span>
-                            <span class="text-slate-400">/Identity</span>
                         </a>
                     </div>
                 </div>
