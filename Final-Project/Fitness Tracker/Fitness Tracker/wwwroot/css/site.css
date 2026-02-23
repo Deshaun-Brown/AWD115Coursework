@@ -22,3 +22,34 @@
   }
 }
 
+@layer utilities {
+  @keyframes fall-in {
+    0% {
+      transform: translateY(-24px) rotate(-1deg);
+      opacity: 0;
+    }
+    60% {
+      transform: translateY(8px) rotate(0.5deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0) rotate(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-fall-in {
+    opacity: 0;
+    transform: translateY(-24px);
+    animation: fall-in 600ms cubic-bezier(.22,.9,.35,1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fall-in {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+

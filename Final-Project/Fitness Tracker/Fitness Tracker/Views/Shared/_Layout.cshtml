@@ -16,6 +16,7 @@
     var isProductsIndex = currentController == "Product" && currentAction == "Index";
     var isIdentityLogin = currentArea == "Identity" && string.Equals(currentPage, "/Account/Login", StringComparison.OrdinalIgnoreCase);
     var isIdentityRegister = currentArea == "Identity" && string.Equals(currentPage, "/Account/Register", StringComparison.OrdinalIgnoreCase);
+    var isAdminProductCreate = currentArea == "Admin" && currentController == "Product" && currentAction == "Create";
 }
 
      <script src="https://cdn.jsdelivr.net/npm/@@tailwindplus/elements@1" type="module"></script>
@@ -74,6 +75,11 @@
                             <a asp-area="Identity" asp-page="/Account/Login" class="btn-link">Login</a>
                         }
                     }
+
+                    @if (!isAdminProductCreate)
+                    {
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Product</a>
+                    }
                 </div>
             </div>
 
@@ -106,6 +112,11 @@
                         {
                             <a asp-area="Identity" asp-page="/Account/Login" class="btn-link">Login</a>
                         }
+                    }
+
+                    @if (!isAdminProductCreate)
+                    {
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Product</a>
                     }
                 </div>
             </div>
@@ -140,5 +151,8 @@
     </script>
 
     @RenderSection("Scripts", required: false)
+    @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 </body>
 </html>

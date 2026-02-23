@@ -1,4 +1,5 @@
 using Fitness_Tracker.Models;
+using Fitness_Tracker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,7 @@ public class ProductController : Controller
         {
             _context.Add(product);
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Product added successfully!";
             return RedirectToAction("Index", "Product", new { area = "" });
         }
 
@@ -69,6 +71,7 @@ public class ProductController : Controller
             {
                 _context.Update(product);
                 await _context.SaveChangesAsync();
+                TempData["Success"] = "Product updated successfully!";
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -99,6 +102,7 @@ public class ProductController : Controller
 
     [HttpPost("delete/{id:int}/{slug}")]
     [ValidateAntiForgeryToken]
+
     public async Task<IActionResult> DeleteConfirmed(int id, string slug)
     {
         var product = await _context.Products.FindAsync(id);
@@ -106,8 +110,35 @@ public class ProductController : Controller
         {
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Product deleted successfully!";
+
         }
 
         return RedirectToAction("Index", "Product", new { area = "" });
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Browse(string category = "all")
+    {
+        var categories = await _context.Categories
+            .Where(c => c.Name == "Fitness Equipment" || c.Name == "Accessories")
+            .ToListAsync();
+
+        var productsQuery = _context.Products.Include(p => p.Category)
+            .Where(p => p.Category != null &&
+                        (p.Category.Name == "Fitness Equipment" || p.Category.Name == "Accessories"));
+
+        var products = category == "all"
+            ? await productsQuery.ToListAsync()
+            : await productsQuery.Where(p => p.Category!.Name == category).ToListAsync();
+
+        var model = new ProductCategoryViewModel
+        {
+            SelectedCategory = category,
+            Products = products,
+            Categories = categories
+        };
+
+        return View(model); // will render Views/Product/Browse.cshtml
     }
 }

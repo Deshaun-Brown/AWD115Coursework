@@ -1,5 +1,39 @@
 @model Fitness_Tracker.ViewModels.PagedResult<Fitness_Tracker.Models.Product>
 
+
+@if (TempData["Success"] != null)
+{
+    <div class="mb-4 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+        @TempData["Success"]
+    </div>
+
+@section Scripts {
+    <script>
+        (function () {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const items = document.querySelectorAll('.js-fall-item');
+                items.forEach((el, i) => {
+                    // staggered delay
+                    el.style.animationDelay = (i * 80) + 'ms';
+                    el.classList.add('animate-fall-in');
+
+                    const onEnd = function () {
+                        // clean up so animation doesn't replay
+                        el.classList.remove('animate-fall-in');
+                        el.style.animationDelay = '';
+                        el.removeEventListener('animationend', onEnd);
+                    };
+
+                    el.addEventListener('animationend', onEnd);
+                });
+            });
+        })();
+    </script>
+}
+}
+
 @{
     ViewData["Title"] = "Products";
 }
@@ -36,21 +70,25 @@
                 <tbody class="divide-y divide-slate-200 bg-white">
                 @foreach (var p in Model.Items)
                 {
-                    <tr class="hover:bg-slate-50">
-                        <td class="whitespace-nowrap px-6 py-4">
-                            <div class="font-medium">@p.Name</div>
-                            <div class="text-sm text-slate-600 line-clamp-1">@p.Description</div>
-                        </td>
-                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">
-                            @(p.Category?.Name ?? "—")
-                        </td>
-                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">$@p.Price</td>
-                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@p.Quantity</td>
-                        <td class="whitespace-nowrap px-6 py-4 text-right text-sm">
-                            <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link">Edit</a>
-                            <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link text-rose-700 hover:bg-rose-50">Delete</a>
-                        </td>
-                    </tr>
+                    <tr class="js-fall-item hover:bg-slate-50">
+    <td class="whitespace-nowrap px-6 py-4">
+        <div class="rounded border p-4 bg-white transform transition-transform duration-200 ease-out hover:-translate-y-3 hover:shadow-2xl hover:z-10 relative will-change-transform">
+            <div class="font-medium">@p.Name</div>
+            <div class="text-sm text-slate-600 line-clamp-1">@p.Description</div>
+        </div>
+    </td>
+    <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">
+        <div class="px-0 py-0">
+            @(p.Category?.Name ?? "—")
+        </div>
+    </td>
+    <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">$@p.Price</td>
+    <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@p.Quantity</td>
+    <td class="whitespace-nowrap px-6 py-4 text-right text-sm">
+        <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link">Edit</a>
+        <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link text-rose-700 hover:bg-rose-50">Delete</a>
+    </td>
+</tr>
                 }
                 </tbody>
             </table>
