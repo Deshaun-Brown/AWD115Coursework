@@ -11,11 +11,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fitness_Tracker.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext
+        
+        
+        
+        (typeof(ApplicationDbContext
+        ))]
     [Migration("20260212020803_add-migration init")]
     partial class addmigrationinit
     {
-        /// <inheritdoc />
+        /// <inheritdoc /> 
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

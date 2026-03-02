@@ -1,5 +1,6 @@
 using Fitness_Tracker.Models;
 using Fitness_Tracker.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ namespace Fitness_Tracker.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Route("Admin/product")]
+[Authorize(Roles = "Admin")]
 public class ProductController : Controller
 {
     private readonly ApplicationDbContext _context;

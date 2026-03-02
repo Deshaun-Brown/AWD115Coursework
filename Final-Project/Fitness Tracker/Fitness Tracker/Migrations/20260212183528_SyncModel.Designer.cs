@@ -11,7 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fitness_Tracker.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    
+        
+       [DbContext (typeof(ApplicationDbContext))]
     [Migration("20260212183528_SyncModel")]
     partial class SyncModel
     {

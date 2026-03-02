@@ -13,6 +13,7 @@ public class ProductController : Controller
     public ProductController(ApplicationDbContext context)
     {
         _context = context;
+
     }
 
     // GET: /products/
@@ -41,7 +42,7 @@ public class ProductController : Controller
 
         return View(model);
     }
-
+    
     // GET: /products/browse
     [HttpGet("/products/browse")]
     public async Task<IActionResult> Browse(string category = "all")
@@ -66,6 +67,18 @@ public class ProductController : Controller
         };
 
         return View(model); // expects Views/Product/Browse.cshtml
+    }
+
+    public async Task<IActionResult> Details(int id)
+    {
+        var product = await _context.Products
+            .Include(p => p.Category)
+            .FirstOrDefaultAsync(p => p.ProductId == id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+        return View(product); // expects Views/Product/Details.cshtml
     }
 }
 

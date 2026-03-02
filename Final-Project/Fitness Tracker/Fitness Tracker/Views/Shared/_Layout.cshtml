@@ -3,7 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Fitness Tracker</title>
+    
+    @{
+        ViewData["Title"] = "Get Fit with Our Store"; 
+    }
     <link href="~/css/output.css" rel="stylesheet"  asp-append-version="true" />
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-900">
@@ -76,7 +79,7 @@
                         }
                     }
 
-                    @if (!isAdminProductCreate)
+                    @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin") && !isAdminProductCreate)
                     {
                         <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Product</a>
                     }
@@ -114,7 +117,7 @@
                         }
                     }
 
-                    @if (!isAdminProductCreate)
+                    @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin") && !isAdminProductCreate)
                     {
                         <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Product</a>
                     }
@@ -123,7 +126,8 @@
         </nav>
     </header>
 
-    <main class="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <!-- reduced top padding so page hero sits closer to the top of the viewport -->
+    <main class="mx-auto w-full max-w-6xl px-4 pt-4 pb-8 sm:px-6 lg:px-8">
         @RenderBody()
     </main>
 
@@ -147,6 +151,101 @@
                 toggle.setAttribute('aria-expanded', String(!isExpanded));
                 menu.classList.toggle('hidden');
             });
+        })();
+    </script>
+
+    <!-- Global AI Agent widget (bottom-right) -->
+    <div id="aiAgentWidget" class="fixed inset-x-4 bottom-6 z-50 flex justify-end">
+        <div id="aiAgentPanel" class="hidden w-[360px] max-w-full rounded-xl border border-slate-200 bg-white shadow-lg">
+            <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+                <div class="text-sm font-medium">Store Agent</div>
+                <button id="aiAgentClose" class="text-slate-500 hover:text-slate-700">✕</button>
+            </div>
+            <div class="px-3 py-2">
+                <ul id="layoutChatMessages" class="max-h-48 space-y-2 overflow-auto text-sm text-slate-700"></ul>
+
+                <form id="layoutChatForm" class="mt-3 flex gap-2">
+                    <input id="layoutQuestionInput" type="text" autocomplete="off" placeholder="Ask about products or inventory..."
+                           class="min-w-0 flex-1 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm" />
+                    <button id="layoutSendBtn" type="submit"
+                            class="inline-flex items-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white hover:bg-green-700">
+                        Send
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <button id="aiAgentToggle" title="Ask the store agent"
+                class="ml-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-green-600 text-white shadow-md hover:bg-green-700">
+            💬
+        </button>
+    </div>
+
+    <script>
+        (function () {
+            const toggle = document.getElementById('aiAgentToggle');
+            const panel = document.getElementById('aiAgentPanel');
+            const closeBtn = document.getElementById('aiAgentClose');
+            const chatForm = document.getElementById('layoutChatForm');
+            const questionInput = document.getElementById('layoutQuestionInput');
+            const chatMessages = document.getElementById('layoutChatMessages');
+            const sendBtn = document.getElementById('layoutSendBtn');
+
+            function addMessage(who, text, toneClass) {
+                const li = document.createElement('li');
+                const label = document.createElement('div');
+                label.className = 'text-xs text-slate-500';
+                label.textContent = who;
+
+                const bubble = document.createElement('div');
+                bubble.className = `rounded-md px-3 py-2 text-sm ${toneClass}`;
+                bubble.textContent = text;
+
+                li.appendChild(label);
+                li.appendChild(bubble);
+                chatMessages.appendChild(li);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            if (toggle && panel) {
+                toggle.addEventListener('click', () => panel.classList.toggle('hidden'));
+            }
+            if (closeBtn && panel) {
+                closeBtn.addEventListener('click', () => panel.classList.add('hidden'));
+            }
+
+            if (chatForm) {
+                chatForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const question = questionInput.value.trim();
+                    if (!question) return;
+
+                    addMessage('You', question, 'bg-indigo-100');
+                    questionInput.value = '';
+                    sendBtn.disabled = true;
+                    sendBtn.textContent = '...';
+
+                    try {
+                        const res = await fetch('/api/chat/ask', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ question })
+                        });
+
+                        const data = await res.json();
+                        if (res.ok) {
+                            addMessage('StoreAgent', data.answer || 'No answer.', 'bg-gray-100');
+                        } else {
+                            addMessage('StoreAgent', data?.error || 'Sorry, something went wrong.', 'bg-red-100');
+                        }
+                    } catch (err) {
+                        addMessage('StoreAgent', 'Network error. Try again.', 'bg-red-100');
+                    } finally {
+                        sendBtn.disabled = false;
+                        sendBtn.textContent = 'Send';
+                    }
+                });
+            }
         })();
     </script>
 
