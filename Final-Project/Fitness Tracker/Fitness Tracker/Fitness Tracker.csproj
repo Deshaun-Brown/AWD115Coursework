@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.Agents.AI" Version="1.0.0-rc1" />
     <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-rc1" />
     <!-- Add Microsoft.Extensions.AI packages to enable the Microsoft.Extensions.AI namespace and helpers -->
-    <!-- Use versions aligned with other Microsoft packages in the project to avoid package downgrade errors -->
+    <!-- Use versions aligned with other Microsoft packages in the project to avoid packag e downgrade errors -->
     <PackageReference Include="Microsoft.Extensions.AI" Version="10.3.0" />
     <PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="10.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.3" />

@@ -1,5 +1,7 @@
 ﻿using Fitness_Tracker.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Fitness_Tracker.Data;
 
@@ -10,6 +12,54 @@ public static class SeedData
         await using var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
         await context.Database.MigrateAsync();
+
+        // Ensure roles and a test admin user exist even if products are already seeded.
+        try
+        {
+            var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
+            var config = serviceProvider.GetService<IConfiguration>();
+
+            if (roleManager != null && userManager != null)
+            {
+                const string adminRole = "Admin";
+
+                if (!await roleManager.RoleExistsAsync(adminRole))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(adminRole));
+                }
+
+                // Read admin credentials from configuration or environment variables
+                var adminEmail = config?["AdminUser:Email"] ?? Environment.GetEnvironmentVariable("ADMIN_EMAIL") ?? "admin@local.test";
+                var adminPassword = config?["AdminUser:Password"] ?? Environment.GetEnvironmentVariable("ADMIN_PASSWORD") ?? "Admin123!";
+
+                var adminUser = await userManager.FindByEmailAsync(adminEmail);
+                if (adminUser == null)
+                {
+                    adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+                    var result = await userManager.CreateAsync(adminUser, adminPassword);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(adminUser, adminRole);
+                    }
+                    else
+                    {
+                        // ignore failures here - migrations/seed should not throw; consider logging in future
+                    }
+                }
+                else
+                {
+                    if (!await userManager.IsInRoleAsync(adminUser, adminRole))
+                    {
+                        await userManager.AddToRoleAsync(adminUser, adminRole);
+                    }
+                }
+            }
+        }
+        catch
+        {
+            // swallow exceptions to avoid blocking migrations; consider logging in real apps
+        }
 
         if (await context.Categories.AnyAsync() || await context.Products.AnyAsync())
             return;

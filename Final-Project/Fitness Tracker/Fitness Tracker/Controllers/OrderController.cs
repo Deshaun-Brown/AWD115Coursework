@@ -32,15 +32,10 @@ public class ProductController : Controller
             .Take(pageSize)
             .ToListAsync();
 
-        var model = new PagedResult<Product>
-        {
-            Items = products,
-            PageNumber = page,
-            PageSize = pageSize,
-            TotalCount = totalCount
-        };
-
-        return View(model);
+        // For now return the product list directly to the existing view which expects
+        // an IEnumerable<Product>. If you need pagination UI later, update the view
+        // to accept PagedResult<Product> or add a separate paged view.
+        return View(products);
     }
     
     // GET: /products/browse

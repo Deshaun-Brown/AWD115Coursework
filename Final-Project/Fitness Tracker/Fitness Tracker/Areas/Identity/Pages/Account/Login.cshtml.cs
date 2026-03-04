@@ -17,11 +17,13 @@ namespace Fitness_Tracker.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -105,12 +107,43 @@ namespace Fitness_Tracker.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                // Validate credentials first (so we can apply different cookie properties per role)
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+
+                var result = await _signInManager.CheckPasswordSignInAsync(user, Input.Password, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    // Decide cookie/session properties per-role
+                    var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
+                    var authProps = new Microsoft.AspNetCore.Authentication.AuthenticationProperties
+                    {
+                        IsPersistent = isAdmin ? true : Input.RememberMe,
+                        AllowRefresh = true,
+                        ExpiresUtc = isAdmin
+                            ? DateTimeOffset.UtcNow.AddDays(30)   // persistent/admin: long lived
+                            : DateTimeOffset.UtcNow.AddMinutes(1) // regular users: shorter session
+                    };
+
+                    await _signInManager.SignInAsync(user, authProps);
                     _logger.LogInformation("User logged in.");
+
+                    // If ReturnUrl points to an admin area but the signed-in user is not an admin,
+                    // don't redirect back to the protected page (would produce Access Denied).
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        var normalized = returnUrl.StartsWith("~/") ? returnUrl[1..] : returnUrl;
+                        if (normalized.StartsWith("/Admin", StringComparison.OrdinalIgnoreCase) && !isAdmin)
+                        {
+                            return LocalRedirect("/");
+                        }
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

@@ -1,6 +1,6 @@
 ﻿namespace Fitness_Tracker.Models
 {
-    public class Orders
+    public class Order
     {
 
         public enum OrderStatus
