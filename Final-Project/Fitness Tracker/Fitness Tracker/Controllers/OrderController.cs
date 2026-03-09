@@ -48,7 +48,7 @@ public class OrderController : Controller
     }
     
     // GET: /products/browse
-    [HttpGet("/products/browse")]
+    [HttpGet("/products/browse", Name = "ProductsBrowse")]
     public async Task<IActionResult> Browse(string category = "all")
     {
         var categories = await _context.Categories

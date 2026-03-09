@@ -7,18 +7,16 @@
         <h3 class="font-semibold mb-2">Category</h3>
         <ul>
             <li>
-                <a asp-action="Browse"
-                   asp-controller="Product"
-                   asp-route-category="all"
-                   class="@(Model.SelectedCategory == "all" ? "font-bold text-green-600" : "")">
+                <a href="@Url.RouteUrl("ProductsBrowse", new { category = "all" })"
+                   class="@(Model.SelectedCategory == "all" ? "font-bold text-green-600" : "text-slate-700")">
                     All
                 </a>
             </li>
             @foreach (var cat in Model.Categories)
             {
                 <li>
-                    <a asp-action="Browse" asp-controller="Product" asp-route-category="@cat.Name"
-                       class="@(Model.SelectedCategory == cat.Name ? "font-bold text-green-600" : "")">
+                    <a href="@Url.RouteUrl("ProductsBrowse", new { category = cat.Name })"
+                       class="@(Model.SelectedCategory == cat.Name ? "font-bold text-green-600" : "text-slate-700")">
                         @cat.Name
                     </a>
                 </li>
