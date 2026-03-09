@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Fitness_Tracker.Controllers;
 
 [Route("product")]
-public class ProductController : Controller
+public class OrderController : Controller
 {
     private readonly ApplicationDbContext _context;
 
-    public ProductController(ApplicationDbContext context)
+    public OrderController(ApplicationDbContext context)
     {
         _context = context;
 
@@ -32,10 +32,19 @@ public class ProductController : Controller
             .Take(pageSize)
             .ToListAsync();
 
-        // For now return the product list directly to the existing view which expects
-        // an IEnumerable<Product>. If you need pagination UI later, update the view
-        // to accept PagedResult<Product> or add a separate paged view.
-        return View(products);
+        var model = new ProductCategoryViewModel();
+
+        // If the Index view expects a paged result, construct and return it.
+        var paged = new Fitness_Tracker.ViewModels.PagedResult<Fitness_Tracker.Models.Product>
+        {
+            Items = products,
+            PageNumber = page,
+            PageSize = pageSize,
+            TotalCount = totalCount
+        };
+
+        // Return the paged model to the view so pagination UI works.
+        return View(paged);
     }
     
     // GET: /products/browse
@@ -61,7 +70,8 @@ public class ProductController : Controller
             Categories = categories
         };
 
-        return View(model); // expects Views/Product/Browse.cshtml
+        // Use the existing view in the Order folder so we don't need a duplicate under Views/Product.
+        return View("~/Views/Order/Browse.cshtml", model);
     }
 
     public async Task<IActionResult> Details(int id)

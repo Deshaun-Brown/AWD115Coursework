@@ -7,7 +7,7 @@ using Microsoft.Extensions.AI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+ 
 builder.Services.AddRazorPages();
 
 // Add session support (ISessionStore) in case middleware is used elsewhere

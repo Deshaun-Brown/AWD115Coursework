@@ -1,0 +1,83 @@
+﻿@model IEnumerable<To_Do_App.Models.ToDo>
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "My Tasks";
+}
+
+<div class="flex gap-6">
+    <aside class="w-1/4">
+        <form asp-action="Filter" method="post" class="space-y-4 bg-white p-4 rounded shadow">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Category</label>
+                <select name="filter" class="mt-1 block w-full rounded border border-gray-300 px-3 py-2" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "Name", ViewBag.Filters?.CategoryId))">
+                    <option value="all">All</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Due</label>
+                <select name="filterDue" class="mt-1 block w-full rounded border border-gray-300 px-3 py-2" asp-items="@(new SelectList(ViewBag.DueFilters, "Key", "Value", ViewBag.Filters?.Due))">
+                    <option value="all">All</option>
+                </select>
+            </div>
+
+            <div class="pt-2">
+                <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700">Apply</button>
+            </div>
+        </form>
+    </aside>
+
+    <section class="flex-1">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold text-gray-800">Tasks</h2>
+            <form asp-action="DeleteComplete" method="post" asp-route-id="@ViewBag.Filters?.FilterString" class="flex items-center gap-3">
+                <a asp-action="Add" class="inline-flex items-center px-3 py-1 rounded bg-green-600 text-white text-sm hover:bg-green-700">Add new task</a>
+                <button type="submit" class="inline-flex items-center px-3 py-1 rounded bg-red-600 text-white text-sm hover:bg-red-700">Delete completed tasks</button>
+            </form>
+        </div>
+        <div class="bg-white shadow overflow-hidden rounded">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3"></th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @if (Model != null)
+                    {
+                        <form asp-action="MarkCompleted" method="post">
+                            <input type="hidden" name="filterId" value="@ViewBag.Filters?.FilterString" />
+                            @foreach (To_Do_App.Models.ToDo task in Model)
+                                {
+                                string overdue = task.Overdue ? "bg-orange-100 text-orange-800" : "";
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">@task.Description</td>
+                                <td class="px-6 py-4 whitespace-nowrap">@task.Category?.Name</td>
+                                <td class="px-6 py-4 whitespace-nowrap @overdue">@task.DueDate?.ToShortDateString()</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 @overdue">@task.Status?.Name</span>
+                                </td>
+                                
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    @if (task.StatusId == "open")
+                                    {
+                                        <button type="submit" name="@nameof(To_Do_App.Models.ToDo.Id)" value="@task.Id" class="inline-flex items-center px-3 py-1 rounded bg-blue-600 text-white text-sm hover:bg-blue-700">Mark Completed</button>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@task.Id" class="text-blue-600 hover:text-blue-900">Edit</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        </form>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>

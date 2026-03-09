@@ -14,11 +14,11 @@
             </p>
 
             <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-                <a asp-controller="Product" asp-action="Index"
+                <a href="/products"
                    class="inline-flex items-center justify-center rounded-md bg-green-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                     Browse Products
                 </a>
-                <a asp-controller="Product" asp-action="Browse"
+                <a href="/products/browse"
                    class="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                     Browse Equipment
                 </a>
@@ -169,7 +169,7 @@
                 <div class="p-6">
                     <h2 class="text-base font-semibold">Quick actions</h2>
                     <div class="mt-4 grid grid-cols-1 gap-3">
-                        <a asp-controller="Product" asp-action="Index"
+                        <a href="/products"
                            class="inline-flex items-center justify-between rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 hover:bg-slate-50">
                             <span>View all products</span>
                         </a>

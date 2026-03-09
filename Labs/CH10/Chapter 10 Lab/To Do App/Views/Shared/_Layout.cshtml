@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - ToDo</title>
+    <link rel="stylesheet" href="~/css/output.css" />
+</head>
+<body class="min-h-screen bg-gray-50 text-gray-900">
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="text-xl font-semibold text-gray-900">ToDo</a>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a asp-controller="ToDo" asp-action="Index" class="text-gray-600 hover:text-gray-900">Tasks</a>
+                    <a asp-controller="Home" asp-action="Privacy" class="text-gray-600 hover:text-gray-900">Privacy</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-6">
+        @RenderBody()
+    </main>
+
+    <footer class="border-t bg-white mt-8">
+        <div class="max-w-7xl mx-auto px-4 py-4 text-sm text-gray-500">
+            &copy; @DateTime.Now.Year - ToDo
+        </div>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
