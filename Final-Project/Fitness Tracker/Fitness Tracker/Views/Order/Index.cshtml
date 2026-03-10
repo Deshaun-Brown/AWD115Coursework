@@ -33,7 +33,7 @@
     </script>
 }
 }
-
+''
 @{
     ViewData["Title"] = "Products";
 }
@@ -49,7 +49,21 @@
             <h1 class="text-2xl font-semibold tracking-tight">Products</h1>
             <p class="mt-1 text-sm text-slate-600">Manage products in your database.</p>
         </div>
+            <div class="mt-4 flex justify-center">
+            <!-- The controller for products is OrderController (routes defined as /products) -->
+            <form asp-controller="Order" asp-action="Index" method="get" class="flex w-full max-w-md gap-2">
+                <input type="text"
+                       name="searchString"
+                       value="@Context.Request.Query["searchString"]"
+                       placeholder="Search products..."
+                       class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500" />
 
+                <button type="submit"
+                        class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+                    Search
+                </button>
+            </form>
+        </div>
         <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn-primary">
             Add Product
         </a>

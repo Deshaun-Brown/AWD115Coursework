@@ -1,6 +1,7 @@
 ﻿using Fitness_Tracker.Models;
 using Fitness_Tracker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fitness_Tracker.Controllers;
@@ -18,16 +19,27 @@ public class OrderController : Controller
 
     // GET: /products/
     [HttpGet("/products", Name = "Products")]
-    public async Task<IActionResult> Index(int page = 1)
+    public async Task<IActionResult> Index(string searchString, int page = 1)
     {
         const int pageSize = 10;
         if (page < 1) page = 1;
 
-        var totalCount = await _context.Products.CountAsync();
-
-        var products = await _context.Products
+        // Build a query that can be filtered by the optional search string.
+        IQueryable<Product> productsQuery = _context.Products
             .Include(p => p.Category)
-            .OrderBy(p => p.Name)
+            .OrderBy(p => p.Name);
+           
+
+        if (!string.IsNullOrWhiteSpace(searchString))
+        {
+            // Simple case-insensitive contains search. EF Core will translate this to SQL.
+            var normalized = searchString.Trim();
+            productsQuery = productsQuery.Where(p => p.Name != null && p.Name.ToLower().Contains(normalized.ToLower()));
+        }
+
+        var totalCount = await productsQuery.CountAsync();
+
+        var products = await productsQuery
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
