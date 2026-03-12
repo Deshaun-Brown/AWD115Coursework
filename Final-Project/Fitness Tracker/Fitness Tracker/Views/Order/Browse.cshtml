@@ -29,10 +29,25 @@
             @{ var idx = 0; }
             @foreach (var prod in Model.Products)
             {
-                <div style="animation-delay:@(idx * 80)ms" class="rounded border p-4 bg-white animate-fall-in transform transition-transform duration-200 ease-out hover:-translate-y-3 hover:shadow-2xl hover:z-10 will-change-transform relative cursor-pointer">
+                <div style="animation-delay:@(idx * 80)ms" class="rounded border p-4 bg-white animate-fall-in transform transition-transform duration-200 ease-out hover:-translate-y-3 hover:shadow-2xl hover:z-10 will-change-transform relative">
                     <div class="font-semibold">@prod.Name</div>
                     <div class="text-sm text-slate-600">@prod.Description</div>
                     <div class="text-xs text-slate-400 mt-2">@prod.Category?.Name</div>
+                    <div class="mt-4 flex items-center gap-2">
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post" class="flex">
+                            <input type="hidden" name="productId" value="@prod.ProductId" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                                <!-- Heroicons shopping cart outline -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <circle cx="10" cy="20" r="1" />
+                                    <circle cx="18" cy="20" r="1" />
+                                </svg>
+                                Add
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 idx++;
             }
