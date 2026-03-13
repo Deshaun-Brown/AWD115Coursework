@@ -13,7 +13,7 @@ public interface IDatabaseAgent
     Task<int> GetProductCountAsync();
     // Cart related operations
     Task AddToCartAsync(string userId, int productId, int quantity = 1);
-    Task<List<CartItem>> GetCartItemsForUserAsync(string userId);
+    Task<List<Fitness_Tracker.Models.CartItem>> GetCartItemsForUserAsync(string userId);
     Task RemoveCartItemAsync(int cartItemId);
 }
 
@@ -66,7 +66,7 @@ public class DatabaseAgent : IDatabaseAgent
         await _db.SaveChangesAsync();
     }
 
-    public async Task<List<CartItem>> GetCartItemsForUserAsync(string userId)
+    public async Task<List<Fitness_Tracker.Models.CartItem>> GetCartItemsForUserAsync(string userId)
     {
         return await _db.CartItems
             .Where(c => c.UserId == userId)
