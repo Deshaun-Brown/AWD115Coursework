@@ -51,6 +51,19 @@ public class CartController : Controller
         return View(items);
     }
 
+    // GET /cart/count - returns JSON with total quantity
+    [HttpGet("count")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Count()
+    {
+        var userId = _userManager.GetUserId(User);
+        if (string.IsNullOrEmpty(userId)) return Ok(new { count = 0 });
+
+        var items = await _agent.GetCartItemsForUserAsync(userId);
+        var total = items.Sum(i => i.Quantity);
+        return Ok(new { count = total });
+    }
+
     // POST /cart/remove
     [HttpPost("remove")]
     [ValidateAntiForgeryToken]

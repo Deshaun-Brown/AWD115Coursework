@@ -34,7 +34,8 @@
                     <div class="text-sm text-slate-600">@prod.Description</div>
                     <div class="text-xs text-slate-400 mt-2">@prod.Category?.Name</div>
                     <div class="mt-4 flex items-center gap-2">
-                        <form asp-controller="Cart" asp-action="AddToCart" method="post" class="flex">
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post" class="flex js-add-to-cart">
+                            @Html.AntiForgeryToken()
                             <input type="hidden" name="productId" value="@prod.ProductId" />
                             <input type="hidden" name="quantity" value="1" />
                             <button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700">

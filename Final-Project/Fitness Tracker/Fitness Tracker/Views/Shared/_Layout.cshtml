@@ -16,10 +16,28 @@
     var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
     var currentArea = ViewContext.RouteData.Values["area"]?.ToString();
     var currentPage = ViewContext.RouteData.Values["page"]?.ToString();
-    var isProductsIndex = currentController == "Product" && currentAction == "Index";
+    var isProductsIndex = (currentController == "Product" || currentController == "Order") && currentAction == "Index";
     var isIdentityLogin = currentArea == "Identity" && string.Equals(currentPage, "/Account/Login", StringComparison.OrdinalIgnoreCase);
     var isIdentityRegister = currentArea == "Identity" && string.Equals(currentPage, "/Account/Register", StringComparison.OrdinalIgnoreCase);
     var isAdminProductCreate = currentArea == "Admin" && currentController == "Product" && currentAction == "Create";
+}
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject Fitness_Tracker.Data.IDatabaseAgent DatabaseAgent
+
+@{
+    // Server-side cart count so badge is not rendered unless there are items.
+    var serverCartCount = 0;
+    if (User?.Identity?.IsAuthenticated ?? false)
+    {
+        var userId = UserManager.GetUserId(User);
+        if (!string.IsNullOrEmpty(userId))
+        {
+            var items = await DatabaseAgent.GetCartItemsForUserAsync(userId);
+            serverCartCount = items?.Sum(i => i.Quantity) ?? 0;
+        }
+    }
 }
 
      <script src="https://cdn.jsdelivr.net/npm/@@tailwindplus/elements@1" type="module"></script>
@@ -39,69 +57,51 @@
                     <span>Fitness Tracker</span>
                 </a>
 
-                <button id="nav-toggle" type="button"
-                        class="inline-flex items-center rounded-md p-2 text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500 md:hidden"
-                        aria-controls="mobile-nav" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
+                <!-- removed center hamburger; right-side hamburger is used -->
 
                 <!-- Desktop nav -->
-                <div class="hidden items-center gap-2 md:flex">
-                    @if (!isProductsIndex)
-                    {
-                        <a asp-controller="Product" asp-action="Index"
-                           class="btn-link">
-                            Products
-                        </a>
-                    }
-
-                    @if (User?.Identity?.IsAuthenticated ?? false)
-                    {
-                        <form asp-area="Identity" asp-page="/Account/Logout"
-                              asp-route-returnUrl="/"
-                              method="post" class="inline">
-                            <button type="submit" class="btn-link">Logout</button>
-                        </form>
-                    }
-                    else
-                    {   
-                        @if (!isIdentityRegister)
+                <div class="flex items-center gap-2">
+                    <!-- Cart icon with badge -->
+                    <a asp-controller="Cart" asp-action="Index" class="btn-link ml-3 flex items-center gap-2 relative" title="View cart">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="10" cy="20" r="1" />
+                            <circle cx="18" cy="20" r="1" />
+                        </svg>
+                        @if (serverCartCount > 0)
                         {
-                            <a asp-area="Identity" asp-page="/Account/Register" class="btn-link">Register</a>
+                            <span id="cart-count" class="absolute -top-1 -right-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-rose-600 text-xs text-white">@serverCartCount</span>
                         }
-                        @if (!isIdentityLogin)
+                        else
                         {
-                            <a asp-area="Identity" asp-page="/Account/Login" class="btn-link">Login</a>
+                            <span id="cart-count" class="hidden absolute -top-1 -right-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-rose-600 text-xs text-white"></span>
                         }
-                    }
+                    </a>
 
-                    @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin") && !isAdminProductCreate)
-                    {
-                        <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Product</a>
-                    }
+                    <!-- Hamburger (always visible) -->
+                    <button id="nav-toggle" type="button"
+                            class="inline-flex items-center rounded-md p-2 text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-green-500"
+                            aria-controls="mobile-nav" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
                 </div>
             </div>
 
             <!-- Mobile nav -->
-            <div id="mobile-nav" class="hidden border-t border-slate-200 py-3 md:hidden">
+            <div id="mobile-nav" class="hidden border-t border-slate-200 py-3">
                 <div class="flex flex-col gap-2">
                     @if (!isProductsIndex)
                     {
-                        <a asp-controller="Product" asp-action="Index"
-                           class="btn-link">
-                            Products
-                        </a>
+                        <a asp-controller="Order" asp-action="Index" class="btn-link">Products</a>
                     }
 
                     @if (User?.Identity?.IsAuthenticated ?? false)
                     {
-                        <form asp-area="Identity" asp-page="/Account/Logout"
-                              asp-route-returnUrl="/"
-                              method="post" class="inline">
+                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post" class="inline">
                             <button type="submit" class="btn-link">Logout</button>
                         </form>
                     }
@@ -121,6 +121,7 @@
                     {
                         <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Product</a>
                     }
+                    <a asp-controller="Cart" asp-action="Index" class="btn-link">Cart</a>
                 </div>
             </div>
         </nav>
@@ -150,6 +151,55 @@
                 const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
                 toggle.setAttribute('aria-expanded', String(!isExpanded));
                 menu.classList.toggle('hidden');
+            });
+
+            // Update cart count from server via fetch (optional)
+            async function updateCartCount() {
+                try {
+                    const res = await fetch('/cart/count');
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    const el = document.getElementById('cart-count');
+                    if (!el) return;
+                    const count = Number(data?.count) || 0;
+                    if (count > 0) {
+                        el.textContent = String(count);
+                        el.classList.remove('hidden');
+                    } else {
+                        el.textContent = '';
+                        el.classList.add('hidden');
+                    }
+                } catch { }
+            }
+
+            // Try to update on load
+            updateCartCount();
+
+            // Attach listener for AJAX add-to-cart forms to update badge without reload
+            document.addEventListener('submit', async function (e) {
+                const form = e.target;
+                if (!form.classList || !form.classList.contains('js-add-to-cart')) return;
+                e.preventDefault();
+
+                const url = form.action;
+                const formData = new FormData(form);
+                try {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                        body: formData
+                    });
+
+                    // After add, refresh count
+                    await updateCartCount();
+
+                    // If server redirected, follow it
+                    if (res.redirected) {
+                        window.location.href = res.url;
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
             });
         })();
     </script>

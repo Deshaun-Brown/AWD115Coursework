@@ -10,6 +10,8 @@ namespace Fitness_Tracker.Models
     {
         public DbSet<Product> Products => Set<Product>();
         public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Fitness_Tracker.Models.CartItem> CartItems => Set<Fitness_Tracker.Models.CartItem>();
+        public DbSet<CartItem> CartItems => Set<CartItem>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

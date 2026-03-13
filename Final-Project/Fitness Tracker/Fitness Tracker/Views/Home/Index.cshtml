@@ -22,15 +22,17 @@
                    class="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                     Browse Equipment
                 </a>
-                @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin"))
+                @if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    <a asp-area="Admin" asp-controller="Product" asp-action="Create"
-                       class="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                        Add a Product
-                    </a>
+                    if (User.IsInRole("Admin"))
+                    {
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Create"
+                           class="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                            Add a Product
+                        </a>
+                    }
                 }
-
-                @if (!(User?.Identity?.IsAuthenticated ?? false))
+                else
                 {
                     <a asp-area="Identity" asp-page="/Account/Login"
                        class="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">

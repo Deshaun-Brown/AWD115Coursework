@@ -63,9 +63,12 @@
                 </button>
             </form>
         </div>
-        <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn-primary">
-            Add Product
-        </a>
+        @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        {
+            <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn-primary">
+                Add Product
+            </a>
+        }
     </div>
 
     <div class="overflow-hidden rounded-xl border border-slate-200 bg-white">
@@ -98,8 +101,27 @@
     <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">$@p.Price</td>
     <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@p.Quantity</td>
     <td class="whitespace-nowrap px-6 py-4 text-right text-sm">
-        <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link">Edit</a>
-        <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link text-rose-700 hover:bg-rose-50">Delete</a>
+        @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        {
+            <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link">Edit</a>
+            <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link text-rose-700 hover:bg-rose-50">Delete</a>
+        }
+        else
+        {
+            <form asp-controller="Cart" asp-action="AddToCart" method="post" class="inline-block js-add-to-cart">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="productId" value="@p.ProductId" />
+                <input type="hidden" name="quantity" value="1" />
+                <button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="10" cy="20" r="1" />
+                        <circle cx="18" cy="20" r="1" />
+                    </svg>
+                    Buy
+                </button>
+            </form>
+        }
     </td>
 </tr>
                 }

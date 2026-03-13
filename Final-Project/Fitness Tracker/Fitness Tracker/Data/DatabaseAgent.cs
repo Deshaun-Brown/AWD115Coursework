@@ -1,4 +1,5 @@
 using Fitness_Tracker.Models;
+using System.Collections.Generic;
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ public interface IDatabaseAgent
     Task<Product?> GetProductByIdAsync(int id);
     Task<List<Category>> GetAllCategoriesAsync();
     Task<int> GetProductCountAsync();
+    Task<List<Fitness_Tracker.Models.CartItem>> GetCartItemsForUserAsync(string userId);
 }
 
 public class DatabaseAgent : IDatabaseAgent
@@ -41,5 +43,13 @@ public class DatabaseAgent : IDatabaseAgent
     public async Task<int> GetProductCountAsync()
     {
         return await _db.Products.CountAsync();
+    }
+
+    public async Task<List<Fitness_Tracker.Models.CartItem>> GetCartItemsForUserAsync(string userId)
+    {
+        return await _db.CartItems
+            .Where(c => c.UserId == userId)
+            .Include(c => c.Product)
+            .ToListAsync();
     }
 }
