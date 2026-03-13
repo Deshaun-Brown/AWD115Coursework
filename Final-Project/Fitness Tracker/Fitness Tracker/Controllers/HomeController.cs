@@ -8,10 +8,7 @@ namespace Fitness_Tracker.Controllers
     {
         private readonly IDatabaseAgent _agent;
 
-        public HomeController(IDatabaseAgent agent)
-        {
-            _agent = agent;
-        }
+        public HomeController(IDatabaseAgent agent) => _agent = agent;
 
         // GET: /
         public async Task<IActionResult> Index()
