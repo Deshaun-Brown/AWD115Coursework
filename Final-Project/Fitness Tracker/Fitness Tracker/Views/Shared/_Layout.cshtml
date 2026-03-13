@@ -24,21 +24,6 @@
 
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> UserManager
-@inject Fitness_Tracker.Data.IDatabaseAgent DatabaseAgent
-
-@{
-    // Server-side cart count so badge is not rendered unless there are items.
-    var serverCartCount = 0;
-    if (User?.Identity?.IsAuthenticated ?? false)
-    {
-        var userId = UserManager.GetUserId(User);
-        if (!string.IsNullOrEmpty(userId))
-        {
-            var items = await DatabaseAgent.GetCartItemsForUserAsync(userId);
-            serverCartCount = items?.Sum(i => i.Quantity) ?? 0;
-        }
-    }
-}
 
      <script src="https://cdn.jsdelivr.net/npm/@@tailwindplus/elements@1" type="module"></script>
     <!--
@@ -68,14 +53,7 @@
                             <circle cx="10" cy="20" r="1" />
                             <circle cx="18" cy="20" r="1" />
                         </svg>
-                        @if (serverCartCount > 0)
-                        {
-                            <span id="cart-count" class="absolute -top-1 -right-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-rose-600 text-xs text-white">@serverCartCount</span>
-                        }
-                        else
-                        {
-                            <span id="cart-count" class="hidden absolute -top-1 -right-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-rose-600 text-xs text-white"></span>
-                        }
+                        <span id="cart-count" class="hidden absolute -top-1 -right-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-rose-600 text-xs text-white"></span>
                     </a>
 
                     <!-- Hamburger (always visible) -->

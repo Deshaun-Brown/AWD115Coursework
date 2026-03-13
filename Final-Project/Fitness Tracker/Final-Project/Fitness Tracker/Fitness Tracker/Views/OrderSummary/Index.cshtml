@@ -1,0 +1,72 @@
+@model Fitness_Tracker.ViewModels.CartViewModel
+
+@{
+    ViewData["Title"] = "Order Summary";
+}
+
+<div class="mx-auto max-w-6xl">
+    <h1 class="text-2xl font-semibold">Shopping Cart</h1>
+    <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+            <div class="rounded border bg-white p-4">
+                @if (!Model.Items.Any())
+                {
+                    <div class="text-sm text-slate-600">Your cart is empty.</div>
+                }
+                else
+                {
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="flex items-start gap-4 border-b last:border-b-0 py-4">
+                            <img src="@item.ImageUrl" alt="" class="h-20 w-20 rounded object-cover" />
+                            <div class="flex-1">
+                                <div class="font-medium">@item.Name</div>
+                                <div class="text-sm text-slate-500">$@item.Price each</div>
+                                <div class="mt-2 flex items-center gap-3">
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post" class="flex items-center gap-2">
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <input type="number" name="quantity" value="@item.Quantity" min="1" class="w-16 rounded border px-2 py-1 text-sm" />
+                                        <button type="submit" class="text-sm text-indigo-600">Update</button>
+                                    </form>
+                                    <form asp-controller="Cart" asp-action="Remove" method="post">
+                                        <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                                        <button type="submit" class="text-sm text-rose-600">Remove</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-medium">$@item.LineTotal</div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="mt-4">
+                <a asp-controller="Order" asp-action="Browse" class="text-sm text-indigo-600">&larr; Continue shopping</a>
+            </div>
+        </div>
+
+        <aside class="rounded border bg-white p-6">
+            <h3 class="font-medium text-lg">Order Summary</h3>
+            <div class="mt-4 border-t pt-4">
+                <div class="flex justify-between text-sm text-slate-600">
+                    <div>Subtotal (@Model.Items.Sum(i => i.Quantity) items)</div>
+                    <div>$@Model.Subtotal</div>
+                </div>
+                <div class="flex justify-between text-sm text-slate-600 mt-2">
+                    <div>Tax (7%)</div>
+                    <div>$@Model.Tax</div>
+                </div>
+                <div class="flex justify-between font-semibold text-base mt-4">
+                    <div>Order total</div>
+                    <div>$@Model.Total</div>
+                </div>
+
+                <div class="mt-4">
+                    <button class="w-full rounded-md bg-indigo-600 px-4 py-2 text-white">Proceed to Checkout</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>

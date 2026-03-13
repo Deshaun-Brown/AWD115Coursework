@@ -4,14 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fitness_Tracker.Models
 {
-
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : IdentityDbContext<IdentityUser>(options)
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
-        public DbSet<Product> Products => Set<Product>();
-        public DbSet<Category> Categories => Set<Category>();
-        public DbSet<Fitness_Tracker.Models.CartItem> CartItems => Set<Fitness_Tracker.Models.CartItem>();
-        public DbSet<CartItem> CartItems => Set<CartItem>();
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
