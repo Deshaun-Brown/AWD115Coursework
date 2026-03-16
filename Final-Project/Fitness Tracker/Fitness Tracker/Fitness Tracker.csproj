@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Fitness\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Fitness\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Agents.AI" Version="1.0.0-rc1" />
     <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-rc1" />
     <!-- Add Microsoft.Extensions.AI packages to enable the Microsoft.Extensions.AI namespace and helpers -->
@@ -22,6 +30,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.3" />
     <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.72.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
   </ItemGroup>

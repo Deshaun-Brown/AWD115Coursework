@@ -43,6 +43,19 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => {
 })
     .AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+// Register Google external authentication (OpenID Connect/OAuth2)
+builder.Services.AddAuthentication()
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        // Request OpenID Connect scopes
+        googleOptions.Scope.Add("openid");
+        googleOptions.Scope.Add("profile");
+        googleOptions.Scope.Add("email");
+        googleOptions.SaveTokens = true;
+    });
+
 // Require unique email addresses for user accounts to prevent duplicate registrations
 builder.Services.Configure<IdentityOptions>(options =>
 {
