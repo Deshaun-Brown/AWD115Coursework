@@ -1,6 +1,8 @@
 using Fitness_Tracker.Data;
 using Fitness_Tracker.Models;
+using Fitness_Tracker.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using OpenAI;
 using Microsoft.Extensions.AI;
@@ -9,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
  
 builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
 
 // Add session support (ISessionStore) in case middleware is used elsewhere
 builder.Services.AddDistributedMemoryCache();
@@ -42,6 +45,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => {
     options.SignIn.RequireConfirmedAccount = false;
 })
     .AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Register our Development EmailSender
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 // Register Google external authentication (OpenID Connect/OAuth2)
 builder.Services.AddAuthentication()
