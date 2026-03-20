@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Quarterly Sales</title>
+    <!-- Assuming Tailwind is built into this file per standard MVC/Razor layout -->
+    <link rel="stylesheet" href="~/css/output.css" />
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal h-screen flex flex-col">
+
+    <nav class="bg-blue-600 p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a class="text-white text-2xl font-bold no-underline hover:text-gray-200" asp-controller="Home" asp-action="Index">Quarterly Sales</a>
+            
+            <div class="flex space-x-4">
+                <a class="text-white hover:bg-blue-700 px-3 py-2 rounded transition duration-300" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="text-white hover:bg-blue-700 px-3 py-2 rounded transition duration-300" asp-controller="Employee" asp-action="Add">Add Employee</a>
+                <a class="text-white hover:bg-blue-700 px-3 py-2 rounded transition duration-300" asp-controller="Sales" asp-action="Add">Add Sales</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto mt-6 px-4 flex-grow">
+        @RenderBody()
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+        <p>&copy; @DateTime.Now.Year - Quarterly Sales App - Lab</p>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

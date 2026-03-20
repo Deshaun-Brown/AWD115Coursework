@@ -1,0 +1,61 @@
+@model Employee
+@{
+    ViewData["Title"] = "Add Employee";
+}
+
+<div class="container mx-auto p-4 max-w-2xl">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">@ViewData["Title"]</h1>
+
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form asp-action="Add" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-red-500 mb-4 text-sm font-semibold"></div>
+
+            <div class="mb-4">
+                <label asp-for="Firstname" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
+                <input asp-for="Firstname" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span asp-validation-for="Firstname" class="text-red-500 text-xs italic"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Lastname" class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
+                <input asp-for="Lastname" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span asp-validation-for="Lastname" class="text-red-500 text-xs italic"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="DOB" class="block text-gray-700 text-sm font-bold mb-2">Date of Birth</label>
+                <input asp-for="DOB" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span asp-validation-for="DOB" class="text-red-500 text-xs italic"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="DateOfHire" class="block text-gray-700 text-sm font-bold mb-2">Date of Hire</label>
+                <input asp-for="DateOfHire" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span asp-validation-for="DateOfHire" class="text-red-500 text-xs italic"></span>
+            </div>
+
+            <div class="mb-6">
+                <label asp-for="ManagerId" class="block text-gray-700 text-sm font-bold mb-2">Manager</label>
+                <select asp-for="ManagerId" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="0">None</option>
+                    @foreach (var emp in ViewBag.Employees)
+                    {
+                        <option value="@emp.EmployeeId">@emp.Firstname @emp.Lastname</option>
+                    }
+                </select>
+                <span asp-validation-for="ManagerId" class="text-red-500 text-xs italic"></span>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Save
+                </button>
+                <a asp-controller="Home" asp-action="Index" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

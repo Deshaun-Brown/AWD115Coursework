@@ -1,0 +1,55 @@
+@model Sales
+@{
+    ViewData["Title"] = "Add Sales Data";
+}
+
+<div class="container mx-auto p-4 max-w-2xl">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">@ViewData["Title"]</h1>
+
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form asp-action="Add" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-red-500 mb-4 text-sm font-semibold"></div>
+
+            <div class="mb-4">
+                <label asp-for="Quarter" class="block text-gray-700 text-sm font-bold mb-2">Quarter (1-4)</label>
+                <input asp-for="Quarter" type="number" min="1" max="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span asp-validation-for="Quarter" class="text-red-500 text-xs italic"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Year" class="block text-gray-700 text-sm font-bold mb-2">Year</label>
+                <input asp-for="Year" type="number" min="2001" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span asp-validation-for="Year" class="text-red-500 text-xs italic"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Amount" class="block text-gray-700 text-sm font-bold mb-2">Amount</label>
+                <input asp-for="Amount" type="number" step="0.01" min="0.01" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span asp-validation-for="Amount" class="text-red-500 text-xs italic"></span>
+            </div>
+
+            <div class="mb-6">
+                <label asp-for="EmployeeId" class="block text-gray-700 text-sm font-bold mb-2">Employee</label>
+                <select asp-for="EmployeeId" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="">Select an Employee...</option>
+                    @foreach (var emp in ViewBag.Employees)
+                    {
+                        <option value="@emp.EmployeeId">@emp.Firstname @emp.Lastname</option>
+                    }
+                </select>
+                <span asp-validation-for="EmployeeId" class="text-red-500 text-xs italic"></span>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Save
+                </button>
+                <a asp-controller="Home" asp-action="Index" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
