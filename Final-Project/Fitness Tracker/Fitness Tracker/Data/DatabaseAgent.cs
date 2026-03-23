@@ -15,6 +15,8 @@ public interface IDatabaseAgent
     Task<List<CartItem>> GetCartItemsForUserAsync(string userId);
     Task AddToCartAsync(string userId, int productId, int quantity = 1);
     Task RemoveCartItemAsync(int cartItemId);
+    Task<Order?> CheckoutAsync(string userId);
+    Task<Order?> GetOrderByIdForUserAsync(int orderId, string userId);
 
 }
 
@@ -79,5 +81,39 @@ public class DatabaseAgent : IDatabaseAgent
             _db.CartItems.Remove(item);
             await _db.SaveChangesAsync();
         }
+    }
+
+    public async Task<Order?> CheckoutAsync(string userId)
+    {
+        var cartItems = await GetCartItemsForUserAsync(userId);
+        if (!cartItems.Any()) return null;
+
+        var order = new Order
+        {
+            UserId = userId,
+            OrderDate = DateTime.UtcNow,
+            Status = Order.OrderStatus.Pending,
+            TotalAmount = cartItems.Sum(c => (c.Product?.Price ?? 0) * c.Quantity),
+            OrderItems = cartItems.Select(c => new OrderItem
+            {
+                ProductId = c.ProductId,
+                Quantity = c.Quantity,
+                Price = c.Product?.Price ?? 0
+            }).ToList()
+        };
+
+        _db.Orders.Add(order);
+        _db.CartItems.RemoveRange(cartItems);
+        await _db.SaveChangesAsync();
+
+        return order;
+    }
+
+    public async Task<Order?> GetOrderByIdForUserAsync(int orderId, string userId)
+    {
+        return await _db.Orders
+            .Include(o => o.OrderItems)
+            .ThenInclude(oi => oi.Product)
+            .FirstOrDefaultAsync(o => o.OrderId == orderId && o.UserId == userId);
     }
 }

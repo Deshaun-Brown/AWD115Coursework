@@ -76,4 +76,42 @@ public class CartController : Controller
         }
         return RedirectToAction("Index");
     }
+
+    [HttpPost("checkout")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Checkout()
+    {
+        var userId = _userManager.GetUserId(User);
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Challenge();
+        }
+
+        var order = await _agent.CheckoutAsync(userId);
+        if (order == null)
+        {
+            return RedirectToAction("Index");
+        }
+
+        return RedirectToAction("OrderConfirmation", new { orderId = order.OrderId });
+    }
+
+    [HttpGet("OrderConfirmation")]
+    public async Task<IActionResult> OrderConfirmation(int orderId)
+    {
+        var userId = _userManager.GetUserId(User);
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Challenge();
+        }
+
+        var order = await _agent.GetOrderByIdForUserAsync(orderId, userId);
+
+        if (order == null)
+        {
+            return NotFound();
+        }
+
+        return View(order);
+    }
 }
