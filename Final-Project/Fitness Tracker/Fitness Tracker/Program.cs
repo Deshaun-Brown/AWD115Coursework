@@ -35,7 +35,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 
 
-var apiKey = Environment.GetEnvironmentVariable("FITNESS_TRACKER_API_KEY");
+var apiKey = Environment.GetEnvironmentVariable("Fitness_Tracker_API_KEY");
 builder.Services.AddChatClient(sp => new OpenAIClient(apiKey).GetChatClient("gpt-4o").AsIChatClient());
 
 

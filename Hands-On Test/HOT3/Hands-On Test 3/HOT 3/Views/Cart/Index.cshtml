@@ -1,0 +1,83 @@
+@model IEnumerable<Fitness_Tracker.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Your Shopping Cart";
+    decimal cartTotal = Model.Sum(i => (i.Product?.Price ?? 0) * i.Quantity);
+}
+
+<div class="max-w-4xl mx-auto mt-8 mb-16">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">@ViewData["Title"]</h1>
+
+    @if (!Model.Any())
+    {
+        <div class="bg-gray-50 border-l-4 border-gray-400 p-4 rounded-md">
+            <p class="text-gray-700">Your cart is empty.</p>
+        </div>
+        <div class="mt-6">
+            <a asp-controller="Order" asp-action="Browse" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Continue Shopping
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8 border border-gray-200">
+            <ul role="list" class="divide-y divide-gray-200">
+                @foreach (var item in Model)
+                {
+                    <li class="px-4 py-4 sm:px-6 flex flex-col sm:flex-row sm:items-center">
+                        <div class="flex-1 flex flex-col">
+                            <div class="flex justify-between">
+                                <h4 class="text-lg font-medium text-gray-900">
+                                    @item.Product?.Name
+                                </h4>
+                                <p class="ml-4 text-lg font-medium text-gray-900">
+                                    @((item.Product?.Price * item.Quantity)?.ToString("C") ?? "$0.00")
+                                </p>
+                            </div>
+                            
+                            <div class="mt-2 flex-1 flex items-end justify-between text-sm">
+                                <p class="text-gray-500">
+                                    Qty @item.Quantity &times; @(item.Product?.Price.ToString("C") ?? "$0.00")
+                                </p>
+
+                                <div class="flex">
+                                    <form asp-controller="Cart" asp-action="Remove" method="post">
+                                        <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                                        <button type="submit" class="font-medium text-red-600 hover:text-red-500 hover:underline">
+                                            Remove
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="bg-gray-50 rounded-lg px-4 py-6 sm:p-6 lg:p-8 border border-gray-200">
+            <h2 class="sr-only">Order summary</h2>
+            
+            <div class="flow-root">
+                <dl class="-my-4 text-sm divide-y divide-gray-200">
+                    <div class="py-4 flex items-center justify-between">
+                        <dt class="text-base font-medium text-gray-900">Order Total</dt>
+                        <dd class="text-xl font-bold text-gray-900">@cartTotal.ToString("C")</dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <a asp-controller="Order" asp-action="Browse" class="w-full bg-white border border-gray-300 rounded-md shadow-sm py-3 px-4 text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-center">
+                    Continue Shopping
+                </a>
+                <form asp-controller="Cart" asp-action="Checkout" method="post" class="w-full">
+                    <button type="submit" class="w-full bg-green-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-center">
+                        Checkout
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+</div>

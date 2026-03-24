@@ -20,7 +20,7 @@ namespace Fitness_Tracker.Controllers
             {
                 ProductCount = await _agent.GetProductCountAsync(),
                 RecentProducts = products.Take(5).ToList(),
-                AiReady = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FITNESS_TRACKER_API_KEY")),
+                AiReady = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("Fitness_Tracker_API_KEY")),
                 MostExpensiveProductName = mostExpensive?.Name ?? string.Empty,
                 MostExpensiveProductPrice = mostExpensive?.Price
             };

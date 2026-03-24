@@ -1,0 +1,7 @@
+@model HOT_3.Models.Product
+
+@{
+    ViewData["Title"] = ViewBag.Action + " Product";
+}
+
+@await Html.PartialAsync("~/Views/Product/CreateEdit.cshtml", Model)

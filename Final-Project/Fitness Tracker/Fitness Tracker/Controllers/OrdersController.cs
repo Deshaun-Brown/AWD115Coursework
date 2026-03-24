@@ -1,8 +1,8 @@
-using Fitness_Tracker.Models;
+using HOT_3.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fitness_Tracker.Controllers
+namespace HOT_3.Controllers
 {
     [Route("orders")]
     public class OrdersController : Controller

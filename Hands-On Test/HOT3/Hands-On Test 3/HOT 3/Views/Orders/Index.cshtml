@@ -1,0 +1,38 @@
+@model IEnumerable<Fitness_Tracker.Models.Order>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="p-6">
+    <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-semibold">Orders</h1>
+        <a asp-action="Create" asp-controller="Orders" class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm text-white">New Order</a>
+    </div>
+
+    <div class="mt-6 overflow-hidden rounded-xl border border-slate-200 bg-white">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-200">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Order #</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Customer</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 bg-white">
+                @foreach (var o in Model)
+                {
+                    <tr class="hover:bg-slate-50">
+                        <td class="whitespace-nowrap px-6 py-4">@o.OrderId</td>
+                        <td class="whitespace-nowrap px-6 py-4">@o.CustomerName</td>
+                        <td class="whitespace-nowrap px-6 py-4">@o.OrderDate.ToString("yyyy-MM-dd")</td>
+                        <td class="whitespace-nowrap px-6 py-4">@o.Status</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

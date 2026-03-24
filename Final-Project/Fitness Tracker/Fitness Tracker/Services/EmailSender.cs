@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace Fitness_Tracker.Services
+namespace Fitness_tracker.Services
 {
     // A dummy implementation of IEmailSender for development.
     // Instead of sending a real email, it will log the email content to the console/Output window.
