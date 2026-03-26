@@ -21,7 +21,7 @@ namespace Quaterly_Sales_app.Models
         [DataType(DataType.Date)]
         [PastDate(ErrorMessage = "Date of birth must be a valid date in the past.")]
         public DateTime DOB { get; set; }
-
+        
         [Required(ErrorMessage = "Date of Hire is required.")]
         [DataType(DataType.Date)]
         [PastDate(ErrorMessage = "Date of hire must be a valid date in the past.")]

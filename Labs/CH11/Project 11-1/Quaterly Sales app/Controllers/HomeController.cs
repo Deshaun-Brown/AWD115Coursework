@@ -22,14 +22,19 @@ namespace Quaterly_Sales_app.Controllers
                 sales = sales.Where(s => s.EmployeeId == id).ToList();
             }
 
-            ViewBag.EmployeeId = id;
             var employees = context.Employees.ToList();
 
             // Insert 'All' employee selection option at the top of the list
             employees.Insert(0, new Employee { EmployeeId = 0, Firstname = "All", Lastname = string.Empty });
-            ViewBag.Employees = employees;
+            
+            var viewModel = new Quaterly_Sales_app.ViewModels.SalesListViewModel
+            {
+                Sales = sales,
+                Employees = employees,
+                EmployeeId = id
+            };
 
-            return View(sales);
+            return View(viewModel);
         }
     }
 }
