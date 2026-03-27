@@ -1,4 +1,4 @@
-namespace HOT_3.ViewModels;
+namespace Pharmaceuticals.ViewModels;
 
 public sealed class PagedResult<T>
 {

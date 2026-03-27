@@ -1,4 +1,4 @@
-using HOT_3.Models;
+using Fitness_Tracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

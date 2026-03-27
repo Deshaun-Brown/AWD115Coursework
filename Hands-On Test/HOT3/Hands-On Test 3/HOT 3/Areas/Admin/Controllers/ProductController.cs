@@ -1,11 +1,11 @@
-using HOT_3.Models;
-using HOT_3.ViewModels;
+using Pharmaceuticals.Models;
+using Pharmaceuticals.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace HOT_3.Areas.Admin.Controllers;
+namespace Pharmaceuticals.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Route("Admin/product")]

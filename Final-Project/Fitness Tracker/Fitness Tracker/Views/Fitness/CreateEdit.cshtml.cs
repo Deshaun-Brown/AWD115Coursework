@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace 
-    .Views.Fitness
+namespace Fitness_Tracker.Views
 {
     public class CreateEditModel : PageModel
     {

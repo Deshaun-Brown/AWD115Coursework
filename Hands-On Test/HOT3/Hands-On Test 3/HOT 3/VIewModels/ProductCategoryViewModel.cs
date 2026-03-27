@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using HOT_3.Models;
+using Pharmaceuticals.Models;
 
 using System.Collections.Generic;
-using HOT_3.Models;
+using Pharmaceuticals.Models;
 
-namespace HOT_3.ViewModels
+namespace Pharmaceuticals.ViewModels
 {
     public class ProductCategoryViewModel
     {

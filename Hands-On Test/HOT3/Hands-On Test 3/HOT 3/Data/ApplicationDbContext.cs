@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace HOT_3.Models
+namespace Pharmaceuticals.Models
 {
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {

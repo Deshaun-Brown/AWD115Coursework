@@ -1,10 +1,10 @@
-﻿using HOT_3.Models;
-using HOT_3.ViewModels;
+﻿using Pharmaceuticals.Models;
+using Pharmaceuticals.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace HOT_3.Controllers;
+namespace Pharmaceuticals.Controllers;
 
 [Route("product")]
 public class OrderController : Controller
@@ -47,7 +47,7 @@ public class OrderController : Controller
         var model = new ProductCategoryViewModel();
 
         // If the Index view expects a paged result, construct and return it.
-        var paged = new HOT_3.ViewModels.PagedResult<HOT_3.Models.Product>
+        var paged = new Pharmaceuticals.ViewModels.PagedResult<Pharmaceuticals.Models.Product>
         {
             Items = products,
             PageNumber = page,

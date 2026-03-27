@@ -27,7 +27,7 @@ namespace Quaterly_Sales_app.Controllers
                 context.Employees.Add(employee);
                 context.SaveChanges();
                 TempData["message"] = $"Employee {employee.Firstname} {employee.Lastname} added";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Add");
             }
 
             ViewBag.Employees = context.Employees.ToList();

@@ -26,8 +26,8 @@ namespace Quaterly_Sales_app.Controllers
             {
                 context.Sales.Add(sales);
                 context.SaveChanges();
-                TempData["message"] = "Sales data added";
-                return RedirectToAction("Index", "Home");
+                TempData["message"] = $"Sales amount of {sales.Amount:c} added for Quarter {sales.Quarter} {sales.Year}.";
+                return RedirectToAction("Add");
             }
 
             ViewBag.Employees = context.Employees.ToList();

@@ -1,10 +1,10 @@
-using HOT_3.Models;
+using Pharmaceuticals.Models;
 using System.Collections.Generic;
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace HOT_3.Data;
+namespace Pharmaceuticals.Data;
 
 public interface IDatabaseAgent
 {

@@ -19,7 +19,7 @@
 	</Target>
 
   <ItemGroup>
-    <Folder Include="VIewModels\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using HOT_3.Data;
+using Pharmaceuticals.Data;
 using System.Threading.Tasks;
 
-namespace HOT_3.Controllers;
+namespace Pharmaceuticals.Controllers;
 
 [Authorize]
 [Route("cart")]

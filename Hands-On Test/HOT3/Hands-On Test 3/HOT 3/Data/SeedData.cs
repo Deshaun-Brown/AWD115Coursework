@@ -1,9 +1,9 @@
-﻿using HOT_3.Models;
+﻿using Pharmaceuticals.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
-namespace HOT_3.Data;
+namespace Pharmaceuticals.Data;
 
 public static class SeedData
 {

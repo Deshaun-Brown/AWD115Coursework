@@ -1,4 +1,4 @@
-@model Fitness_Tracker.Models.Order
+@model Pharmaceuticals.Models.Order
 
 @{
     ViewData["Title"] = "Create Order";
@@ -23,7 +23,7 @@
         <div>
             <label class="block text-sm font-medium text-slate-700">Status</label>
             <select asp-for="Status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                @foreach (var s in Enum.GetValues(typeof(Fitness_Tracker.Models.Order.OrderStatus)))
+                @foreach (var s in Enum.GetValues(typeof(Pharmaceuticals.Models.Order.OrderStatus)))
                 {
                     <option value="@s">@s</option>
                 }

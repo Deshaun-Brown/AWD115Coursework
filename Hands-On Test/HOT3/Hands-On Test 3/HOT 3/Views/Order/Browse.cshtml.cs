@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Fitness_Tracker.Views.Product
+namespace Pharmaceuticals.Views.Product
 {
     public class BrowseModel : PageModel
     {

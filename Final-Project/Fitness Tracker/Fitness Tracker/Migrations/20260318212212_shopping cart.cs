@@ -2,8 +2,7 @@
 
 #nullable disable
 
-namespace 
-    .Migrations
+namespace Fitness_Tracker.Migrations
 {
     /// <inheritdoc />
     public partial class shoppingcart : Migration

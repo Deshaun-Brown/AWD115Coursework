@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace HOT_3.ViewModels
+namespace Pharmaceuticals.ViewModels
 {
     public class EmployeeCreateViewModel
     {

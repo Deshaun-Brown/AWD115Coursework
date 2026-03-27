@@ -1,4 +1,4 @@
-﻿namespace HOT_3.Models
+﻿namespace Pharmaceuticals.Models
 {
     public class Order
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace HOT_3.Models
+namespace Pharmaceuticals.Models
 {
     public class Employee
     {
@@ -26,7 +26,7 @@ namespace HOT_3.Models
         [DataType(DataType.Date)]
         [Display(Name = "Date of Hire")]
         [PastDateAttribute(ErrorMessage = "Date of Hire must be in the past.")]
-        [CompanyFoundedDate(ErrorMessage = "Date of Hire must not be before 1/1/1995.")]
+        [CompanyFoundedDate(ErrorMessage = "Date of Hire must not be before 1/1/2000.")]
         public DateTime DateOfHire { get; set; }
 
         [Required]

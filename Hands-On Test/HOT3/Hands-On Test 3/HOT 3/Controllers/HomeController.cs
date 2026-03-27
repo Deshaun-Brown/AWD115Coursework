@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace HOT_3.Controllers
+namespace Pharmaceuticals.Controllers
 {
     public class HomeController : Controller
     {

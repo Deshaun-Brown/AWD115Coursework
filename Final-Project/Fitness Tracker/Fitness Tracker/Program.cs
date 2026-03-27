@@ -1,11 +1,11 @@
 using Fitness_Tracker.Data;
 using Fitness_Tracker.Models;
-using Fitness_Tracker.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using OpenAI;
 using Microsoft.Extensions.AI;
+using Fitness_tracker.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

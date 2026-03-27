@@ -1,4 +1,4 @@
-using HOT_3.Models;
+using Pharmaceuticals.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
