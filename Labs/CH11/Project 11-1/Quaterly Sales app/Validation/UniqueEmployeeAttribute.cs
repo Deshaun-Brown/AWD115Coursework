@@ -10,7 +10,7 @@ namespace Quaterly_Sales_app.Validation
             var context = validationContext.GetService(typeof(QuarterlySalesContext)) as QuarterlySalesContext;
             if (context == null) return ValidationResult.Success;
 
-            var employeeToValidate = (Employee)validationContext.ObjectInstance;
+            var employeeToValidate = (Employee.validationContext.ObjectInstance;
 
             var existingEmployee = context.Employees.FirstOrDefault(e =>
                 e.Firstname.ToLower() == employeeToValidate.Firstname.ToLower() &&

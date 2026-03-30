@@ -26,6 +26,7 @@ namespace Quaterly_Sales_app.Models
         [DataType(DataType.Date)]
         [PastDate(ErrorMessage = "Date of hire must be a valid date in the past.")]
         [HireDate]
+        [ValidHireDate]
         public DateTime DateOfHire { get; set; }
 
         [Required(ErrorMessage = "Manager is required.")]

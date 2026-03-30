@@ -6,7 +6,7 @@ namespace Quaterly_Sales_app.Controllers
     public class EmployeeController : Controller
     {
         private QuarterlySalesContext context;
-
+    
         public EmployeeController(QuarterlySalesContext ctx)
         {
             context = ctx;
