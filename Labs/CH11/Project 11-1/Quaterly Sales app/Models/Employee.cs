@@ -33,5 +33,10 @@ namespace Quaterly_Sales_app.Models
         public int ManagerId { get; set; }
 
         public ICollection<Sales> Sales { get; set; } = new List<Sales>();
+
+        internal class validationContext
+        {
+            internal class ObjectInstance;
+        }
     }
 }

@@ -10,7 +10,11 @@ namespace Quaterly_Sales_app.Validation
             var context = validationContext.GetService(typeof(QuarterlySalesContext)) as QuarterlySalesContext;
             if (context == null) return ValidationResult.Success;
 
-            var salesToValidate = (Sales)validationContext.ObjectInstance;
+            var salesToValidate = validationContext.ObjectInstance as Sales;
+            if (salesToValidate == null)
+            {
+                return ValidationResult.Success;
+            }
 
             var existingSale = context.Sales.FirstOrDefault(s =>
                 s.Quarter == salesToValidate.Quarter &&

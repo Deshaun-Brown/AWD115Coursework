@@ -7,7 +7,11 @@ namespace Quaterly_Sales_app.Validation
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            var employee = (Employee)validationContext.ObjectInstance;
+            var employee = validationContext.ObjectInstance as Employee;
+            if (employee == null)
+            {
+                return ValidationResult.Success;
+            }
 
             if (employee.DOB == default || employee.DateOfHire == default)
             {
