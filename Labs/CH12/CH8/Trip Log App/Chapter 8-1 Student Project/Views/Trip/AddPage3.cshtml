@@ -1,0 +1,18 @@
+@model AddTripPage3ViewModel
+
+<h2>Add Things To Do</h2>
+
+<form asp-action="AddPage3" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-row mb-3">
+        <label asp-for="ActivityIds" class="form-label">Activities</label>
+        <select asp-for="ActivityIds" asp-items="ViewBag.Activities" multiple="multiple" class="form-select">
+        </select>
+        <span asp-validation-for="ActivityIds" class="text-danger"></span>
+    </div>
+
+    <div class="button-row">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Cancel" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

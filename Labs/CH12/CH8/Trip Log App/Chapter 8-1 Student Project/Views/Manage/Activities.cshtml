@@ -1,0 +1,35 @@
+@model IEnumerable<Activity>
+@{
+    ViewBag.Title = "Manage Activities";
+}
+
+<h2 class="mt-4">Manage Activities</h2>
+<a asp-action="AddActivity" class="d-block mb-3 font-weight-bold text-decoration-none">Add Activity</a>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-danger">@TempData["Message"]</div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th class="w-75">Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="align-middle">@item.Name</td>
+                <td>
+                    <form asp-action="DeleteActivity" method="post">
+                        <input type="hidden" name="id" value="@item.ActivityId" />
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

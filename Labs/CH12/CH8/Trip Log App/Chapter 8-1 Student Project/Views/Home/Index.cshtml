@@ -1,0 +1,56 @@
+@model IEnumerable<Trip>
+
+<p>
+    <a asp-controller="Trip" asp-action="AddPage1">Add Trip</a>
+</p>
+
+@if (TempData["Message"] is string message && !string.IsNullOrWhiteSpace(message))
+{
+    <div class="message">@message</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Destination</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Accommodations</th>
+            <th>Things To Do</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var trip in Model)
+    {
+        <tr>
+            <td>@trip.Destination?.Name</td>
+            <td>@trip.StartDate.ToShortDateString()</td>
+            <td>@trip.EndDate.ToShortDateString()</td>
+            <td>
+                @trip.Accommodation?.Name<br />
+                @if (!string.IsNullOrWhiteSpace(trip.Accommodation?.Phone))
+                {
+                    <text>Phone: @trip.Accommodation?.Phone</text><br />
+                }
+                @if (!string.IsNullOrWhiteSpace(trip.Accommodation?.Email))
+                {
+                    <text>Email: @trip.Accommodation?.Email</text>
+                }
+            </td>
+            <td>
+                @foreach (var activity in trip.Activities)
+                {
+                    @activity.Name<br />
+                }
+            </td>
+            <td>
+                <form asp-controller="Trip" asp-action="Delete" method="post">
+                    <input type="hidden" name="id" value="@trip.TripId" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

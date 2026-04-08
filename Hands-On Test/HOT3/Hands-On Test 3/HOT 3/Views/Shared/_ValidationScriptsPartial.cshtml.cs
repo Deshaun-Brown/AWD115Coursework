@@ -7,6 +7,9 @@ namespace Pharmaceuticals.Views.Shared
     {
         public void OnGet()
         {
+
+
+
         }
     }
 }

@@ -8,7 +8,8 @@ namespace Fitness_Tracker.Controllers;
 
 [Authorize]
 [Route("cart")]
-public class CartController : Controller
+public 
+    class CartController : Controller
 {
     private readonly IDatabaseAgent _agent;
     private readonly UserManager<IdentityUser> _userManager;
