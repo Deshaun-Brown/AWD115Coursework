@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Pharmaceuticals.Models;
-
-using System.Collections.Generic;
+﻿
 using Pharmaceuticals.Models;
 
 namespace Pharmaceuticals.ViewModels

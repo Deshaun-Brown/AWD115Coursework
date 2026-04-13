@@ -60,6 +60,10 @@ public class ProductController : Controller
 
     [HttpPost("edit/{id:int}/{slug}")]
     [ValidateAntiForgeryToken]
+
+
+
+
     public async Task<IActionResult> Edit(int id, string slug, Product product)
     {
         if (id != product.ProductId)
@@ -122,13 +126,10 @@ public class ProductController : Controller
     [HttpGet]
     public async Task<IActionResult> Browse(string category = "all")
     {
-        var categories = await _context.Categories
-            .Where(c => c.Name == "Fitness Equipment" || c.Name == "Accessories")
-            .ToListAsync();
+        var categories = await _context.Categories.ToListAsync();
 
         var productsQuery = _context.Products.Include(p => p.Category)
-            .Where(p => p.Category != null &&
-                        (p.Category.Name == "Fitness Equipment" || p.Category.Name == "Accessories"));
+            .Where(p => p.Category != null);
 
         var products = category == "all"
             ? await productsQuery.ToListAsync()

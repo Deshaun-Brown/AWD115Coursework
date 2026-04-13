@@ -88,7 +88,7 @@ public class DatabaseAgent : IDatabaseAgent
         var cartItems = await GetCartItemsForUserAsync(userId);
         if (!cartItems.Any()) return null;
 
-        var order = new Order
+        var order = new Order     
         {
             UserId = userId,
             OrderDate = DateTime.UtcNow,

@@ -8,9 +8,6 @@ namespace Pharmaceuticals.Models
 
         public string UserId { get; set; } = string.Empty;
 
-        [Required]
-        [Display(Name = "Medication Name")]
-        public string? Accedameitphin { get; set; }
 
         [Required]
         public int ProductId { get; set; }

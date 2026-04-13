@@ -34,7 +34,7 @@
 }
 }
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "Drugs";
 }
 @* Hero image: mostly top, moved down a little *@
 <img src="~/images/hero-fitness.jpeg"
@@ -45,8 +45,8 @@
 <div class="flex flex-col gap-6">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h1 class="text-2xl font-semibold tracking-tight">Products</h1>
-            <p class="mt-1 text-sm text-slate-600">Manage products in your database.</p>
+            <h1 class="text-2xl font-semibold tracking-tight">Drugs</h1>
+            <p class="mt-1 text-sm text-slate-600">Manage drugs in your database.</p>
         </div>
             <div class="mt-4 flex justify-center">
             <!-- The controller for products is OrderController (routes defined as /products) -->
@@ -54,7 +54,7 @@
                 <input type="text"
                        name="searchString"
                        value="@Context.Request.Query["searchString"]"
-                       placeholder="Search products..."
+                       placeholder="Search drugs..."
                        class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500" />
 
                 <button type="submit"
@@ -66,7 +66,7 @@
         @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
         {
             <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn-primary">
-                Add Product
+                Add Drug
             </a>
         }
     </div>

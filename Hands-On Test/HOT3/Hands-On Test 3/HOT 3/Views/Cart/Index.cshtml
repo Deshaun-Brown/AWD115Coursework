@@ -1,14 +1,13 @@
-@model IEnumerable<Pharmaceuticals.Models.CartItem>
+@model Pharmaceuticals.ViewModels.CartViewModel
 
 @{
     ViewData["Title"] = "Your Shopping Cart";
-    decimal cartTotal = Model.Sum(i => (i.Product?.Price ?? 0) * i.Quantity);
 }
 
 <div class="max-w-4xl mx-auto mt-8 mb-16">
     <h1 class="text-3xl font-bold text-gray-900 mb-8">@ViewData["Title"]</h1>
 
-    @if (!Model.Any())
+    @if (!Model.Items.Any())
     {
         <div class="bg-gray-50 border-l-4 border-gray-400 p-4 rounded-md">
             <p class="text-gray-700">Your cart is empty.</p>
@@ -23,7 +22,7 @@
     {
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8 border border-gray-200">
             <ul role="list" class="divide-y divide-gray-200">
-                @foreach (var item in Model)
+                @foreach (var item in Model.Items)
                 {
                     <li class="px-4 py-4 sm:px-6 flex flex-col sm:flex-row sm:items-center">
                         <div class="flex-1 flex flex-col">
@@ -62,8 +61,12 @@
             <div class="flow-root">
                 <dl class="-my-4 text-sm divide-y divide-gray-200">
                     <div class="py-4 flex items-center justify-between">
+                        <dt class="text-base font-medium text-gray-900">Total Quantity</dt>
+                        <dd class="text-xl font-bold text-gray-900">@Model.TotalQuantity</dd>
+                    </div>
+                    <div class="py-4 flex items-center justify-between">
                         <dt class="text-base font-medium text-gray-900">Order Total</dt>
-                        <dd class="text-xl font-bold text-gray-900">@cartTotal.ToString("C")</dd>
+                        <dd class="text-xl font-bold text-gray-900">@Model.TotalPrice.ToString("C")</dd>
                     </div>
                 </dl>
             </div>

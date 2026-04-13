@@ -29,11 +29,10 @@ namespace Pharmaceuticals.Models
         [CompanyFoundedDate(ErrorMessage = "Date of Hire must not be before 1/1/2000.")]
         public DateTime DateOfHire { get; set; }
 
-        [Required]
         [Display(Name = "Manager")]
-        public int ManagerId { get; set; }
+        public int? ManagerId { get; set; }
 
-        public Employee Manager { get; set; }
+        public Employee? Manager { get; set; }
         
         public ICollection<SalesData> Sales { get; set; }
     }

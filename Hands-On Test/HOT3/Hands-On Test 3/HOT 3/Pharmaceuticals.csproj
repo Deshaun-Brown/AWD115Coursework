@@ -19,10 +19,6 @@
 	</Target>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\css\site.css" />
     <None Include="wwwroot\images\hero-fitness.jpeg" />
     <None Include="wwwroot\images\hero-fitness.jpg" />

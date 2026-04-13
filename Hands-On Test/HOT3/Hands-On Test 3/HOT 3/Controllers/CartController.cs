@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Pharmaceuticals.Data;
-using System.Threading.Tasks;
+using Pharmaceuticals.ViewModels;
 
 namespace Pharmaceuticals.Controllers;
 
@@ -31,6 +31,7 @@ public class CartController : Controller
         }
 
         await _agent.AddToCartAsync(userId, productId, quantity);
+        TempData["Success"] = "Item added to cart successfully.";
 
         // Redirect back to the referrer or to the browse page
         if (Request.Headers.ContainsKey("Referer"))
@@ -48,7 +49,15 @@ public class CartController : Controller
         if (string.IsNullOrEmpty(userId)) return RedirectToPage("/Account/Login", new { area = "Identity" });
 
         var items = await _agent.GetCartItemsForUserAsync(userId);
-        return View(items);
+
+        var model = new CartViewModel
+        {
+            Items = items,
+            TotalQuantity = items.Sum(i => i.Quantity),
+            TotalPrice = items.Sum(i => (i.Product?.Price ?? 0m) * i.Quantity)
+        };
+
+        return View(model);
     }
 
     // GET /cart/count - returns JSON with total quantity
@@ -70,6 +79,7 @@ public class CartController : Controller
     public async Task<IActionResult> Remove(int cartItemId)
     {
         await _agent.RemoveCartItemAsync(cartItemId);
+        TempData["Success"] = "Item removed from cart.";
         if (Request.Headers.ContainsKey("Referer"))
         {
             return Redirect(Request.Headers["Referer"].ToString());

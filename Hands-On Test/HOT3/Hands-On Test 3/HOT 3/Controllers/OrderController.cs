@@ -63,13 +63,10 @@ public class OrderController : Controller
     [HttpGet("/products/browse", Name = "ProductsBrowse")]
     public async Task<IActionResult> Browse(string category = "all")
     {
-        var categories = await _context.Categories
-            .Where(c => c.Name == "Fitness Equipment" || c.Name == "Accessories")
-            .ToListAsync();
+        var categories = await _context.Categories.ToListAsync();
 
         var productsQuery = _context.Products.Include(p => p.Category)
-            .Where(p => p.Category != null &&
-                        (p.Category.Name == "Fitness Equipment" || p.Category.Name == "Accessories"));
+            .Where(p => p.Category != null);
 
         var products = category == "all"
             ? await productsQuery.ToListAsync()

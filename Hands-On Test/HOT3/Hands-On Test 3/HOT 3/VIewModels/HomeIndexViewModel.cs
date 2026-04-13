@@ -10,6 +10,6 @@ public class HomeIndexViewModel
     // Computed answer shown on the home page: most expensive product
     public string MostExpensiveProductName { get; set; } = string.Empty;
     public decimal? MostExpensiveProductPrice { get; set; }
-
-    public bool AiReady { get; set; }
 }
+
+
