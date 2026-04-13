@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using System.Threading.Tasks;
 
 namespace Fitness_Tracker.Areas.Admin.Controllers;
 
@@ -13,10 +16,12 @@ namespace Fitness_Tracker.Areas.Admin.Controllers;
 public class ProductController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly IValidator<Product> _validator;
 
-    public ProductController(ApplicationDbContext context)
+    public ProductController(ApplicationDbContext context, IValidator<Product> validator)
     {
         _context = context;
+        _validator = validator;
     }
 
     [HttpGet("create")]
@@ -31,6 +36,13 @@ public class ProductController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Product product)
     {
+        ModelState.Clear();
+        var validationResult = await _validator.ValidateAsync(product);
+        if (!validationResult.IsValid)
+        {
+            validationResult.AddToModelState(ModelState);
+        }
+
         if (ModelState.IsValid)
         {
             _context.Add(product);
@@ -65,6 +77,13 @@ public class ProductController : Controller
         if (id != product.ProductId)
         {
             return NotFound();
+        }
+
+        ModelState.Clear();
+        var validationResult = await _validator.ValidateAsync(product);
+        if (!validationResult.IsValid)
+        {
+            validationResult.AddToModelState(ModelState);
         }
 
         if (ModelState.IsValid)

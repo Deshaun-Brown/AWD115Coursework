@@ -6,12 +6,17 @@ using Microsoft.EntityFrameworkCore;
 using OpenAI;
 using Microsoft.Extensions.AI;
 using Fitness_tracker.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Fitness_Tracker.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
  
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
 
 // Add session support (ISessionStore) in case middleware is used elsewhere
 builder.Services.AddDistributedMemoryCache();

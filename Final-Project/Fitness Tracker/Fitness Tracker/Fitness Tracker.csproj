@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
     <PackageReference Include="Microsoft.Agents.AI" Version="1.0.0-rc1" />
     <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-rc1" />
     <!-- Add Microsoft.Extensions.AI packages to enable the Microsoft.Extensions.AI namespace and helpers -->
