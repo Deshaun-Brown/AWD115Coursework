@@ -44,7 +44,7 @@ namespace Fitness_Tracker.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("Fitness_Tracker.Models.Category", b =>
@@ -61,7 +61,7 @@ namespace Fitness_Tracker.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Fitness_Tracker.Models.Order", b =>
@@ -91,7 +91,7 @@ namespace Fitness_Tracker.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Fitness_Tracker.Models.OrderItem", b =>
@@ -120,7 +120,7 @@ namespace Fitness_Tracker.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Fitness_Tracker.Models.Product", b =>
@@ -156,7 +156,7 @@ namespace Fitness_Tracker.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

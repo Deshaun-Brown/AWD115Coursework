@@ -19,7 +19,9 @@
     var isProductsIndex = (currentController == "Product" || currentController == "Order") && currentAction == "Index";
     var isIdentityLogin = currentArea == "Identity" && string.Equals(currentPage, "/Account/Login", StringComparison.OrdinalIgnoreCase);
     var isIdentityRegister = currentArea == "Identity" && string.Equals(currentPage, "/Account/Register", StringComparison.OrdinalIgnoreCase);
-    var isAdminProductCreate = currentArea == "Admin" && currentController == "Product" && currentAction == "Create";
+    var isAdminProductCreate = string.Equals(currentArea, "Admin", StringComparison.OrdinalIgnoreCase)
+        && string.Equals(currentController, "Product", StringComparison.OrdinalIgnoreCase)
+        && string.Equals(currentAction, "Create", StringComparison.OrdinalIgnoreCase);
 }
 
 @using Microsoft.AspNetCore.Identity
@@ -97,7 +99,7 @@
 
                     @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin") && !isAdminProductCreate)
                     {
-                        <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Product</a>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn-link">Add Product</a>
                     }
                     <a asp-controller="Cart" asp-action="Index" class="btn-link">Cart</a>
                 </div>

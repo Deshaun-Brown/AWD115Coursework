@@ -1,0 +1,30 @@
+@model Appointment_Scheduling.Models.Appointment
+
+@{
+    ViewData["Title"] = "Create Appointment";
+}
+
+<h1 class="text-xl font-semibold">Create Appointment</h1>
+
+<form asp-action="Create" method="post" class="mt-4 space-y-4">
+    <div>
+        <label asp-for="CustomerId" class="block font-medium">Customer</label>
+        <select asp-for="CustomerId" asp-items="ViewBag.CustomerId" class="mt-1 w-full border p-2">
+            <option value="">-- select --</option>
+        </select>
+        <span asp-validation-for="CustomerId" class="text-red-600"></span>
+    </div>
+
+    <div>
+        <label asp-for="StartDateTime" class="block font-medium">Start (on the hour)</label>
+        <input asp-for="StartDateTime" type="datetime-local" class="mt-1 w-full border p-2" />
+        <span asp-validation-for="StartDateTime" class="text-red-600"></span>
+        <div class="text-sm text-gray-600">Appointments are 1 hour long and must start on the exact hour.</div>
+    </div>
+
+    <button type="submit" class="border px-4 py-2">Create</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

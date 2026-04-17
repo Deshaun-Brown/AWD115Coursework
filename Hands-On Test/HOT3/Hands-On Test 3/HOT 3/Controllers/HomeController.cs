@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pharmaceuticals.ViewModels; // Add this using directive
 
 namespace Pharmaceuticals.Controllers
 {
@@ -13,15 +14,13 @@ namespace Pharmaceuticals.Controllers
 
         public IActionResult Index()
         {
-            var mostExpensiveProduct = _context.Products.OrderByDescending(p => p.Price).FirstOrDefault();
-
-            var model = new ViewModels.HomeIndexViewModel
+            var products = _context.Products.ToList();
+            var viewModel = new HomeIndexViewModel
             {
-                MostExpensiveProductName = mostExpensiveProduct?.Name ?? string.Empty,
-                MostExpensiveProductPrice = mostExpensiveProduct?.Price
+                Products = products
+                // set other properties if needed
             };
-
-            return View(model);
+            return View(viewModel);
         }
     }
 }

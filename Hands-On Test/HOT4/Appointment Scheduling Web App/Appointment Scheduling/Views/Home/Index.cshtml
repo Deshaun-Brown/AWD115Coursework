@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="mx-auto max-w-3xl space-y-6">
+    <div class="rounded border p-6">
+        <h1 class="text-2xl font-semibold">Appointment Scheduling</h1>
+        <p class="mt-2 text-gray-700">
+            Create customers and schedule 1-hour appointments (on the hour).
+        </p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+        <a asp-controller="Customers" asp-action="Index" class="rounded border p-4 hover:bg-gray-50">
+            <div class="font-medium">Customers</div>
+            <div class="text-sm text-gray-600">Create and view customers</div>
+        </a>
+
+        <a asp-controller="Appointments" asp-action="Index" class="rounded border p-4 hover:bg-gray-50">
+            <div class="font-medium">Appointments</div>''
+             
+            <div class="text-sm text-gray-600">Create and view appointments</div>
+        </a>
+    </div>
+
+    <div class="rounded border p-6">
+        <div class="font-medium">Administration</div>
+        <div class="mt-2">
+            <a asp-area="Admin" asp-controller="Appointments" asp-action="Index" class="underline">
+                Manage appointments (Admin Area)
+            </a>
+        </div>
+    </div>
+</div>

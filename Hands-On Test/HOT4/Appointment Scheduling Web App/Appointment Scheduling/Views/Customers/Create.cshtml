@@ -1,0 +1,27 @@
+@model Appointment_Scheduling.Models.Customer
+
+@{
+    ViewData["Title"] = "Create Customer";
+}
+
+<h1 class="text-xl font-semibold">Create Customer</h1>
+
+<form asp-action="Create" method="post" class="mt-4 space-y-4">
+    <div>
+        <label asp-for="Username" class="block font-medium"></label>
+        <input asp-for="Username" class="mt-1 w-full border p-2" />
+        <span asp-validation-for="Username" class="text-red-600"></span>
+    </div>
+
+    <div>
+        <label asp-for="PhoneNumber" class="block font-medium"></label>
+        <input asp-for="PhoneNumber" class="mt-1 w-full border p-2" />
+        <span asp-validation-for="PhoneNumber" class="text-red-600"></span>
+    </div>
+
+    <button type="submit" class="border px-4 py-2">Create</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

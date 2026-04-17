@@ -1,8 +1,7 @@
 using FluentValidation;
 using Fitness_Tracker.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace Fitness_Tracker.Validators
 {

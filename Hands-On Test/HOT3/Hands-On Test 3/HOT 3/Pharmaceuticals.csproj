@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\css\site.css" />
-    <None Include="wwwroot\images\hero-fitness.jpeg" />
     <None Include="wwwroot\images\hero-fitness.jpg" />
     <None Include="wwwroot\images\icons\eye-off.svg" />
     <None Include="wwwroot\images\icons\eye.svg" />
@@ -35,6 +34,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Products\" />
   </ItemGroup>
 
 </Project>	

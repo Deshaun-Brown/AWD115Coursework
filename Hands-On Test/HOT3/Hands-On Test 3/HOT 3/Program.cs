@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Server=(localdb)\\mssqllocaldb;Database=HOT3Db;Trusted_Connection=True;MultipleActiveResultSets=true"));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -19,13 +19,16 @@ builder.Services.AddScoped<IDatabaseAgent, DatabaseAgent>();
 
 var app = builder.Build();
 
-// Call SeedData
+
+// Seed Admin role and user
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    try 
+    try
     {
         await SeedData.InitializeAsync(services);
+
+       
     }
     catch (Exception ex)
     {
@@ -35,17 +38,21 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseStaticFiles();
-app.UseRouting();
+
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = true;
+});
+
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

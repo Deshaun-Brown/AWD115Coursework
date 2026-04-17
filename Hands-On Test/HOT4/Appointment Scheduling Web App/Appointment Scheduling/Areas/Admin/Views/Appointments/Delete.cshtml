@@ -1,0 +1,18 @@
+@model Appointment_Scheduling.Models.Appointment
+
+@{
+    ViewData["Title"] = "Admin - Delete Appointment";
+}
+
+<h1 class="text-xl font-semibold">Admin - Delete Appointment</h1>
+
+<div class="mt-4">
+    <div><span class="font-medium">Start:</span> @Model.StartDateTime.ToString("g")</div>
+    <div><span class="font-medium">Customer:</span> @Model.Customer?.Username</div>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post" class="mt-4">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="border px-4 py-2">Delete</button>
+    <a asp-action="Index" class="ml-2 underline">Cancel</a>
+</form>

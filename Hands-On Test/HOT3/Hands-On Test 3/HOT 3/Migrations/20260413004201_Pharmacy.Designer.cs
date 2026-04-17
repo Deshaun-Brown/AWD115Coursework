@@ -77,7 +77,12 @@ namespace HOT_3.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.
+                
+                
+                
+                
+                ", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");

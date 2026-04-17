@@ -1,0 +1,31 @@
+@model IReadOnlyList<Appointment_Scheduling.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Admin - Appointments";
+}
+
+<h1 class="text-xl font-semibold">Admin - Appointments</h1>
+
+<table class="mt-4 w-full border-collapse">
+    <thead>
+        <tr class="border-b">
+            <th class="py-2 text-left">Start</th>
+            <th class="py-2 text-left">Customer</th>
+            <th class="py-2 text-left">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var a in Model)
+    {
+        <tr class="border-b">
+            <td class="py-2">@a.StartDateTime.ToString("g")</td>
+            <td class="py-2">@a.Customer?.Username</td>
+            <td class="py-2 space-x-2">
+                <a asp-area="Admin" asp-controller="Appointments" asp-action="Details" asp-route-id="@a.Id" class="underline">Details</a>
+                <a asp-area="Admin" asp-controller="Appointments" asp-action="Edit" asp-route-id="@a.Id" class="underline">Edit</a>
+                <a asp-area="Admin" asp-controller="Appointments" asp-action="Delete" asp-route-id="@a.Id" class="underline">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

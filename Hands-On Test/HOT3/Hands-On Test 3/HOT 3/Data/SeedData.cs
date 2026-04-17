@@ -1,7 +1,7 @@
 ﻿using Pharmaceuticals.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+
 
 namespace Pharmaceuticals.Data;
 
@@ -90,7 +90,7 @@ public static class SeedData
             {
                 Name = "Ibuprofen",
                 Description = "Pain reliever and fever reducer.",
-                ImageUrl = "/images/ibuprofen.jpg",
+                ImageUrl = "/wwwroot/images/coughing-young-man-on-light-background-2BFADBK.jpg",
                 Price = 8.99m,
                 Quantity = 200,
                 Category = otc
@@ -99,7 +99,7 @@ public static class SeedData
             {
                 Name = "Vitamin C 1000mg",
                 Description = "Daily vitamin C supplement for immune support.",
-                ImageUrl = "/images/vitaminc.jpg",
+                ImageUrl = "/images/20250412_033020761_iOS.jpg",
                 Price = 12.99m,
                 Quantity = 100,
                 Category = vitamins
@@ -108,7 +108,7 @@ public static class SeedData
             {
                 Name = "Lisinopril",
                 Description = "Medication used to treat high blood pressure.",
-                ImageUrl = "/images/lisinopril.jpg",
+                ImageUrl = "/images/coughing-young-man-on-light-600w-1704402550.jpg",
                 Price = 24.99m,
                 Quantity = 75,
                 Category = prescription
@@ -117,7 +117,7 @@ public static class SeedData
             {
                 Name = "Acetaminophen",
                 Description = "Pain reliever and fever reducer.",
-                ImageUrl = "/images/acetaminophen.jpg",
+                ImageUrl = "/wwwroot/images/Pills.jpg",
                 Price = 7.99m,
                 Quantity = 150,
                 Category = otc
@@ -126,7 +126,7 @@ public static class SeedData
             {
                 Name = "Omega-3 Fish Oil",
                 Description = "Supports heart, brain, and joint health.",
-                ImageUrl = "/images/fish-oil.jpg",
+                ImageUrl = "/images/hero-fitness.jpg",
                 Price = 19.99m,
                 Quantity = 120,
                 Category = vitamins
@@ -135,7 +135,7 @@ public static class SeedData
             {
                 Name = "Metformin",
                 Description = "Used to treat type 2 diabetes.",
-                ImageUrl = "/images/metformin.jpg",
+                ImageUrl = "/images/coughing-young-man-on-light-background-2BFADBK.jpg",
                 Price = 18.99m,
                 Quantity = 90,
                 Category = prescription
@@ -144,7 +144,7 @@ public static class SeedData
             {
                 Name = "Antacid Chews",
                 Description = "Fast relief of heartburn and acid indigestion.",
-                ImageUrl = "/images/antacid.jpg",
+                ImageUrl = "/wwwroot/images/coughing.jpg",
                 Price = 6.49m,
                 Quantity = 110,
                 Category = otc
@@ -153,7 +153,7 @@ public static class SeedData
             {
                 Name = "Vitamin D3 5000 IU",
                 Description = "Supports bone and immune health.",
-                ImageUrl = "/images/vitamind.jpg",
+                ImageUrl = "/wwwroot/images/20250412_033020761_iOS.jpg",
                 Price = 14.49m,
                 Quantity = 140,
                 Category = vitamins
@@ -162,7 +162,7 @@ public static class SeedData
             {
                 Name = "Atorvastatin",
                 Description = "Statin medication to treat high cholesterol.",
-                ImageUrl = "/images/atorvastatin.jpg",
+                ImageUrl = "/wwwroot/images/coughing-young-man-on-light-background-2BFADBK.jpg",
                 Price = 29.99m,
                 Quantity = 60,
                 Category = prescription
@@ -171,7 +171,7 @@ public static class SeedData
             {
                 Name = "Cough Syrup",
                 Description = "Soothes cough and throat irritation.",
-                ImageUrl = "/images/cough-syrup.jpg",
+                ImageUrl = "/images/coughing.jpg",
                 Price = 10.99m,
                 Quantity = 85,
                 Category = otc
@@ -180,7 +180,7 @@ public static class SeedData
             {
                 Name = "Multivitamin for Men",
                 Description = "Comprehensive daily nutrition for men.",
-                ImageUrl = "/images/multi-men.jpg",
+                ImageUrl = "/images/hero-fitness.jpg",
                 Price = 22.99m,
                 Quantity = 90,
                 Category = vitamins
@@ -189,7 +189,7 @@ public static class SeedData
             {
                 Name = "Multivitamin for Women",
                 Description = "Comprehensive daily nutrition for women.",
-                ImageUrl = "/images/multi-women.jpg",
+                ImageUrl = "/images/hero-fitness.jpg",
                 Price = 22.99m,
                 Quantity = 90,
                 Category = vitamins
@@ -198,7 +198,7 @@ public static class SeedData
             {
                 Name = "Levothyroxine",
                 Description = "Treats hypothyroidism (underactive thyroid).",
-                ImageUrl = "/images/levothyroxine.jpg",
+                ImageUrl = "/images/the-woman-coughed-and-covered-her-mouth-with-her-hand-and-sat-on-the-bed-free-photo.jpg",
                 Price = 16.99m,
                 Quantity = 100,
                 Category = prescription
@@ -207,7 +207,7 @@ public static class SeedData
             {
                 Name = "Loratadine",
                 Description = "Non-drowsy allergy relief 24-hour.",
-                ImageUrl = "/images/loratadine.jpg",
+                ImageUrl = "/images/Pills.jpg",
                 Price = 15.99m,
                 Quantity = 70,
                 Category = otc
@@ -216,7 +216,7 @@ public static class SeedData
             {
                 Name = "Melatonin 5mg",
                 Description = "Supports restful sleep.",
-                ImageUrl = "/images/melatonin.jpg",
+                ImageUrl = "/images/coughing-young-man-on-light-background-2BFADBK.jpg",
                 Price = 9.99m,
                 Quantity = 130,
                 Category = vitamins
@@ -225,7 +225,7 @@ public static class SeedData
             {
                 Name = "Albuterol Inhaler",
                 Description = "Bronchodilator for asthma relief.",
-                ImageUrl = "/images/albuterol.jpg",
+                ImageUrl = "/images/coughing.jpg",
                 Price = 45.99m,
                 Quantity = 40,
                 Category = prescription
@@ -234,7 +234,7 @@ public static class SeedData
             {
                 Name = "Hydrocortisone Cream",
                 Description = "Itch and rash relief anti-itch cream.",
-                ImageUrl = "/images/hydrocortisone.jpg",
+                ImageUrl = "/images/20250412_033020761_iOS.jpg",
                 Price = 8.49m,
                 Quantity = 95,
                 Category = otc
@@ -243,7 +243,7 @@ public static class SeedData
             {
                 Name = "Zinc 50mg",
                 Description = "Supports immune system function.",
-                ImageUrl = "/images/zinc.jpg",
+                ImageUrl = "/images/Pills.jpg",
                 Price = 11.99m,
                 Quantity = 115,
                 Category = vitamins
@@ -252,7 +252,7 @@ public static class SeedData
             {
                 Name = "Probiotics 50 Billion CFU",
                 Description = "Digestive and immune support.",
-                ImageUrl = "/images/probiotics.jpg",
+                ImageUrl = "/images/hero-fitness.jpg",
                 Price = 28.99m,
                 Quantity = 65,
                 Category = vitamins

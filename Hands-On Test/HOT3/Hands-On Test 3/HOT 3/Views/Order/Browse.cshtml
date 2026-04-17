@@ -48,6 +48,11 @@
                                 Add
                             </button>
                         </form>
+                        @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                        {
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@prod.ProductId" asp-route-slug="@prod.Slug" class="inline-flex items-center gap-1 rounded-md bg-yellow-400 px-2 py-1 text-xs font-semibold text-gray-900 hover:bg-yellow-500">Edit</a>
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@prod.ProductId" asp-route-slug="@prod.Slug" class="inline-flex items-center gap-1 rounded-md bg-red-100 px-2 py-1 text-xs font-semibold text-red-700 hover:bg-red-200">Delete</a>
+                        }
                     </div>
                 </div>
                 idx++;

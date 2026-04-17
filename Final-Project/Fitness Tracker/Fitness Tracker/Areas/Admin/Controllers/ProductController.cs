@@ -6,12 +6,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using System.Threading.Tasks;
-
 namespace Fitness_Tracker.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Route("Admin/product")]
+[Route("admin/product")]
 [Authorize(Roles = "Admin")]
 public class ProductController : Controller
 {
@@ -29,7 +27,8 @@ public class ProductController : Controller
     {
         ViewBag.Action = "Create";
         ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "Name");
-        return View("CreateEdit", new Product());
+        // Explicit view paths ensure we resolve the correct view under the Admin area.
+        return View("~/Areas/Admin/Views/Product/CreateEdit.cshtml", new Product());
     }
 
     [HttpPost("create")]
@@ -53,7 +52,7 @@ public class ProductController : Controller
 
         ViewBag.Action = "Create";
         ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "Name", product.CategoryId);
-        return View("CreateEdit", product);
+        return View("~/Areas/Admin/Views/Product/CreateEdit.cshtml", product);
     }
 
     [HttpGet("edit/{id:int}/{slug}")]
@@ -67,7 +66,7 @@ public class ProductController : Controller
 
         ViewBag.Action = "Edit";
         ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "Name", product.CategoryId);
-        return View("CreateEdit", product);
+        return View("~/Areas/Admin/Views/Product/CreateEdit.cshtml", product);
     }
 
     [HttpPost("edit/{id:int}/{slug}")]
@@ -108,7 +107,7 @@ public class ProductController : Controller
 
         ViewBag.Action = "Edit";
         ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "Name", product.CategoryId);
-        return View("CreateEdit", product);
+        return View("~/Areas/Admin/Views/Product/CreateEdit.cshtml", product);
     }
 
     [HttpGet("delete/{id:int}/{slug}")]
@@ -118,7 +117,7 @@ public class ProductController : Controller
             .Include(p => p.Category)
             .FirstOrDefaultAsync(m => m.ProductId == id);
 
-        return product is null ? NotFound() : View(product);
+        return product is null ? NotFound() : View("~/Areas/Admin/Views/Product/Delete.cshtml", product);
     }
 
     [HttpPost("delete/{id:int}/{slug}")]

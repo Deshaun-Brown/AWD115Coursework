@@ -2,14 +2,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Fitness_Tracker.Data;
-using System.Threading.Tasks;
 
 namespace Fitness_Tracker.Controllers;
 
 [Authorize]
 [Route("cart")]
-public 
-    class CartController : Controller
+public class CartController : Controller
 {
     private readonly IDatabaseAgent _agent;
     private readonly UserManager<IdentityUser> _userManager;
@@ -78,6 +76,7 @@ public
         return RedirectToAction("Index");
     }
 
+    // POST /cart/checkout
     [HttpPost("checkout")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Checkout()
@@ -94,10 +93,11 @@ public
             return RedirectToAction("Index");
         }
 
-        return RedirectToAction("OrderConfirmation", new { orderId = order.OrderId });
+        return RedirectToAction(nameof(OrderConfirmation), new { orderId = order.OrderId });
     }
 
-    [HttpGet("OrderConfirmation")]
+    // GET /cart/orderconfirmation?orderId=123
+    [HttpGet("orderconfirmation")]
     public async Task<IActionResult> OrderConfirmation(int orderId)
     {
         var userId = _userManager.GetUserId(User);
@@ -107,7 +107,6 @@ public
         }
 
         var order = await _agent.GetOrderByIdForUserAsync(orderId, userId);
-
         if (order == null)
         {
             return NotFound();
@@ -115,4 +114,9 @@ public
 
         return View(order);
     }
+
+
 }
+
+   
+   

@@ -13,6 +13,12 @@
 
         <div class="px-6 py-6">
             <div class="rounded-lg border border-rose-200 bg-rose-50 p-4">
+                @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                {
+                    <div class="mb-4 flex justify-center">
+                        <img src="@Model.ImageUrl" alt="@Model.Name" class="h-32 w-32 object-contain rounded-lg border-2 border-yellow-100 bg-yellow-50" />
+                    </div>
+                }
                 <div class="font-medium text-rose-900">@Model.Name</div>
                 <div class="mt-1 text-sm text-rose-800">@Model.Description</div>
             </div>

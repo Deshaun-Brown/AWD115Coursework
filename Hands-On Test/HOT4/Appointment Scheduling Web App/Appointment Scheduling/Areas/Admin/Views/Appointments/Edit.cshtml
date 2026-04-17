@@ -1,0 +1,32 @@
+@model Appointment_Scheduling.Models.Appointment
+
+@{
+    ViewData["Title"] = "Admin - Edit Appointment";
+}
+
+<h1 class="text-xl font-semibold">Admin - Edit Appointment</h1>
+
+<form asp-action="Edit" method="post" class="mt-4 space-y-4">
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        <label asp-for="CustomerId" class="block font-medium">Customer</label>
+        <select asp-for="CustomerId" asp-items="ViewBag.CustomerId" class="mt-1 w-full border p-2">
+            <option value="">-- select --</option>
+        </select>
+        <span asp-validation-for="CustomerId" class="text-red-600"></span>
+    </div>
+
+    <div>
+        <label asp-for="StartDateTime" class="block font-medium">Start (on the hour)</label>
+        <input asp-for="StartDateTime" type="datetime-local" class="mt-1 w-full border p-2" />
+        <span asp-validation-for="StartDateTime" class="text-red-600"></span>
+    </div>
+
+    <button type="submit" class="border px-4 py-2">Save</button>
+    <a asp-action="Index" class="ml-2 underline">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

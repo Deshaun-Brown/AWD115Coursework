@@ -1,7 +1,4 @@
 using Fitness_Tracker.Models;
-using System.Collections.Generic;
-using System;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fitness_Tracker.Data;
