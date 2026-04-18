@@ -1,0 +1,7 @@
+@model Pharmaceuticals.Models.Product
+
+@{
+    ViewData["Title"] = ViewBag.Action + " Drug";
+}
+
+@await Html.PartialAsync("~/views/drugs/createedit.cshtml", Model)

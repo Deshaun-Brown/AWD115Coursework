@@ -1,0 +1,177 @@
+@model Pharmaceuticals.ViewModels.PagedResult<Pharmaceuticals.Models.Product>
+
+
+@if (TempData["Success"] != null)
+{
+    <div class="mb-4 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+        @TempData["Success"]
+    </div>
+
+@section Scripts {
+    <script>
+        (function () {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const items = document.querySelectorAll('.js-fall-item');
+                items.forEach((el, i) => {
+                    // staggered delay
+                    el.style.animationDelay = (i * 80) + 'ms';
+                    el.classList.add('animate-fall-in');
+
+                    const onEnd = function () {
+                        // clean up so animation doesn't replay
+                        el.classList.remove('animate-fall-in');
+                        el.style.animationDelay = '';
+                        el.removeEventListener('animationend', onEnd);
+                    };
+
+                    el.addEventListener('animationend', onEnd);
+                });
+            });
+        })();
+    </script>
+}
+}
+@{
+    ViewData["Title"] = "Drugs";
+}
+@* Hero image: mostly top, moved down a little *@
+<div class="w-full bg-gradient-to-r from-yellow-100 to-yellow-50 rounded-xl mb-8 flex items-center justify-center h-48">
+    <img src="~/images/amoxicillin.jpg" alt="Amoxicillin" class="h-40 rounded-lg shadow-md border-4 border-yellow-300 bg-white object-contain" />
+</div>
+
+<div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold tracking-tight">Drugs</h1>
+            <p class="mt-1 text-sm text-slate-600">Manage drugs in your database.</p>
+        </div>
+            <div class="mt-4 flex justify-center">
+            <!-- The controller for products is OrderController (routes defined as /products) -->
+            <form asp-controller="Order" asp-action="Index" method="get" class="flex w-full max-w-md gap-2">
+                <input type="text"
+                       name="searchString"
+                       value="@Context.Request.Query["searchString"]"
+                       placeholder="Search drugs..."
+                       class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-blue-500" />
+
+                <button type="submit"
+                        class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+                    Search
+                </button>
+            </form>
+        </div>
+        @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        {
+            <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn-primary">
+                Add Drug
+            </a>
+        }
+    </div>
+
+    <div class="overflow-hidden rounded-xl border border-slate-200 bg-white">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-200">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Category</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Price</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Qty</th>
+                        <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 bg-white">
+                @foreach (var p in Model.Items)
+                {
+                    <tr class="js-fall-item hover:bg-slate-50">
+    <td class="whitespace-nowrap px-6 py-4">
+        <div class="rounded border p-4 bg-white transform transition-transform duration-200 ease-out hover:-translate-y-3 hover:shadow-2xl hover:z-10 relative will-change-transform">
+            <div class="font-medium">@p.Name</div>
+            <div class="text-sm text-slate-600 line-clamp-1">@p.Description</div>
+        </div>
+    </td>
+    <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">
+        <div class="px-0 py-0">
+            @(p.Category?.Name ?? "—")
+        </div>
+    </td>
+    <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">$@p.Price</td>
+    <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@p.Quantity</td>
+    <td class="whitespace-nowrap px-6 py-4 text-right text-sm">
+        @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        {
+            <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link">Edit</a>
+            <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link text-rose-700 hover:bg-rose-50">Delete</a>
+        }
+        else
+        {
+            <form asp-controller="Cart" asp-action="AddToCart" method="post" class="inline-block js-add-to-cart">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="productId" value="@p.ProductId" />
+                <input type="hidden" name="quantity" value="1" />
+                <button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="10" cy="20" r="1" />
+                        <circle cx="18" cy="20" r="1" />
+                    </svg>
+                    Buy
+                </button>
+            </form>
+        }
+    </td>
+</tr>
+                }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav class="flex items-center justify-between" aria-label="Pagination">
+            <div class="text-sm text-slate-600">
+                Page <span class="font-medium text-slate-900">@Model.PageNumber</span> of <span class="font-medium text-slate-900">@Model.TotalPages</span>
+                <span class="ml-2">(@Model.TotalCount total)</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+                @if (Model.HasPreviousPage)
+                {
+                    <a asp-route="Products" asp-route-page="@(Model.PageNumber - 1)"
+                       class="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+                        Previous
+                    </a>
+                }
+                else
+                {
+                    <span class="cursor-not-allowed rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-400">
+                        Previous
+                    </span>
+                }
+
+                @if (Model.HasNextPage)
+                {
+                    <a asp-route="Products" asp-route-page="@(Model.PageNumber + 1)"
+                       class="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+                        Next
+                    </a>
+                }
+                else
+                {
+                    <span class="cursor-not-allowed rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-400">
+                        Next
+                    </span>
+                }
+            </div>
+        </nav>
+    }
+
+    <img src="~/images/hero-fitness.jpg"
+         alt="Fitness equipment"
+         class="h-56 w-full rounded-xl object-cover"
+         style="object-position: center 12%;" />
+</div>
