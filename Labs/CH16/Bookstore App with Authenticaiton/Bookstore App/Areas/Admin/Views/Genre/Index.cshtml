@@ -1,0 +1,46 @@
+@model Bookstore_App.Areas.Admin.Models.ManageGenresViewModel
+@{
+    ViewData["Title"] = "Manage Genres";
+}
+
+<section class="space-y-4">
+    <partial name="~/Areas/Admin/Views/Shared/_AdminTabs.cshtml" />
+
+    <h1 class="text-3xl font-semibold text-slate-900">Manage Genres</h1>
+
+    <form asp-action="Add" method="post" class="flex items-center gap-2">
+        @Html.AntiForgeryToken()
+        <input type="text" name="name" placeholder="Genre name" class="rounded border border-slate-300 px-3 py-2 text-sm" />
+        <button type="submit" class="rounded bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700">Add a Genre</button>
+    </form>
+
+    <div class="overflow-x-auto rounded border border-slate-300 bg-white">
+        <table class="min-w-full text-left text-sm">
+            <thead class="bg-slate-100 text-slate-800">
+                <tr>
+                    <th class="border-b border-slate-300 px-3 py-2">Select a Genre</th>
+                    <th class="border-b border-slate-300 px-3 py-2"></th>
+                    <th class="border-b border-slate-300 px-3 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var genre in Model.Genres)
+                {
+                    <tr class="border-b border-slate-200">
+                        <td class="px-3 py-2">@genre.Name</td>
+                        <td class="px-3 py-2">
+                            <button type="button" class="rounded bg-blue-500 px-3 py-1 text-white opacity-70" disabled>Edit</button>
+                        </td>
+                        <td class="px-3 py-2">
+                            <form asp-action="Delete" method="post" class="inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@genre.Id" />
+                                <button type="submit" class="rounded bg-blue-700 px-3 py-1 text-white hover:bg-blue-800">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

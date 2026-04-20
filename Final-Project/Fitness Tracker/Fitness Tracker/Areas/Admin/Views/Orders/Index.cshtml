@@ -1,0 +1,49 @@
+@model IEnumerable<Fitness_Tracker.Models.Order>
+
+@{
+    ViewData["Title"] = "Manage Orders";
+}
+
+<div class="mx-auto max-w-6xl">
+    <div class="mb-6 flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold">@ViewData["Title"]</h1>
+            <p class="text-sm text-slate-600">View, create, edit, and delete orders.</p>
+        </div>
+        <a asp-area="Admin" asp-controller="Orders" asp-action="Create" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">Create Order</a>
+    </div>
+
+    <div class="overflow-hidden rounded-xl border border-slate-200 bg-white">
+        <table class="min-w-full divide-y divide-slate-200">
+            <thead class="bg-slate-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Order #</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Customer</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Date</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Items</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Total</th>
+                    <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 bg-white">
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-800">@order.OrderId</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-800">@order.CustomerName</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@order.OrderDate.ToString("yyyy-MM-dd")</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@order.Status</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@order.OrderItems.Count</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@order.TotalAmount.ToString("C")</td>
+                        <td class="whitespace-nowrap px-6 py-4 text-right text-sm space-x-3">
+                            <a asp-area="Admin" asp-controller="Orders" asp-action="Confirmation" asp-route-orderId="@order.OrderId" class="text-indigo-700 hover:underline">Details</a>
+                            <a asp-area="Admin" asp-controller="Orders" asp-action="Edit" asp-route-id="@order.OrderId" class="text-slate-700 hover:underline">Edit</a>
+                            <a asp-area="Admin" asp-controller="Orders" asp-action="Delete" asp-route-id="@order.OrderId" class="text-rose-700 hover:underline">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

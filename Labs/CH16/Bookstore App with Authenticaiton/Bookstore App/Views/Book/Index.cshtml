@@ -1,0 +1,83 @@
+@model BookListViewModel
+@{
+    ViewData["Title"] = "Books";
+}
+
+<div class="mb-4 flex items-center justify-between">
+    <h1 class="text-2xl font-semibold">Books</h1>
+    <a asp-action="Create" class="rounded bg-slate-900 px-4 py-2 text-sm text-white">Add Book</a>
+</div>
+
+<table class="min-w-full rounded-lg bg-white shadow-sm">
+    <thead>
+        <tr class="border-b text-left text-sm text-slate-500">
+            <th class="p-3">Title</th>
+            <th class="p-3">Author</th>
+            <th class="p-3">Genre</th>
+            <th class="p-3">Price</th>
+            <th class="p-3">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+            <tr class="border-b text-sm">
+                <td class="p-3">@book.Title</td>
+                <td class="p-3">@book.Author.FullName</td>
+                <td class="p-3">@book.Genre.Name</td>
+                <td class="p-3">@book.Price.ToString("C")</td>
+                <td>
+                    <form asp-controller="Cart" asp-action="Add" method="post" class="inline add-to-cart-form">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@book.Id" />
+                        <input type="hidden" name="bookId" value="@book.Id" />
+                        <input type="hidden" name="quantity" value="1" />
+                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                        <button type="submit" class="mr-2 rounded bg-slate-900 px-2 py-1 text-xs text-white hover:bg-slate-800">Add Book</button>
+                    </form>
+                    <a asp-action="Edit" asp-route-id="@book.Id" class="mr-3 text-blue-600">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@book.Id" class="text-red-600">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const forms = document.querySelectorAll('.add-to-cart-form');
+
+            forms.forEach(form => {
+                form.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        alert('Could not add book to cart.');
+                        return;
+                    }
+
+                    const btn = form.querySelector('button[type="submit"]');
+                    const original = btn.textContent;
+                    btn.textContent = 'Added';
+                    btn.classList.remove('bg-slate-900');
+                    btn.classList.add('bg-emerald-600');
+
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.classList.remove('bg-emerald-600');
+                        btn.classList.add('bg-slate-900');
+                    }, 900);
+                });
+            });
+        });
+    </script>
+}

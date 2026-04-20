@@ -2,33 +2,41 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="mx-auto max-w-3xl space-y-6">
-    <div class="rounded border p-6">
-        <h1 class="text-2xl font-semibold">Appointment Scheduling</h1>
-        <p class="mt-2 text-gray-700">
-            Create customers and schedule 1-hour appointments (on the hour).
+<div class="space-y-6">
+    <section class="hero-panel">
+        <p class="eyebrow">Parallax scheduling</p>
+        <h1 class="hero-title">Plan every appointment in one place</h1>
+        <p class="hero-copy">
+            Create customers, schedule exact-hour appointments, and manage the full calendar from the admin area.
         </p>
-    </div>
 
-    <div class="grid gap-4 sm:grid-cols-2">
-        <a asp-controller="Customers" asp-action="Index" class="rounded border p-4 hover:bg-gray-50">
+        <div class="hero-actions">
+            <a asp-controller="Appointments" asp-action="Index" class="theme-button">View appointments</a>
+            <a asp-controller="Customers" asp-action="Index" class="theme-button theme-button-secondary">Manage customers</a>
+        </div>
+    </section>
+
+    <section class="grid gap-4 sm:grid-cols-2">
+        <a asp-controller="Customers" asp-action="Index" class="rounded border p-6 hover:bg-gray-50">
             <div class="font-medium">Customers</div>
-            <div class="text-sm text-gray-600">Create and view customers</div>
+            <div class="mt-2 text-sm text-gray-600">Create and view customers</div>
         </a>
 
-        <a asp-controller="Appointments" asp-action="Index" class="rounded border p-4 hover:bg-gray-50">
-            <div class="font-medium">Appointments</div>''
-             
-            <div class="text-sm text-gray-600">Create and view appointments</div>
+        <a asp-controller="Appointments" asp-action="Index" class="rounded border p-6 hover:bg-gray-50">
+            <div class="font-medium">Appointments</div>
+            <div class="mt-2 text-sm text-gray-600">Create and view appointments</div>
         </a>
-    </div>
+    </section>
 
-    <div class="rounded border p-6">
+    <section class="rounded border p-6">
         <div class="font-medium">Administration</div>
-        <div class="mt-2">
+        <p class="mt-2 text-sm text-gray-700">
+            Use the admin area to edit, view, and delete appointments.
+        </p>
+        <div class="mt-4">
             <a asp-area="Admin" asp-controller="Appointments" asp-action="Index" class="underline">
-                Manage appointments (Admin Area)
+                Open the Admin Area
             </a>
         </div>
-    </div>
+    </section>
 </div>

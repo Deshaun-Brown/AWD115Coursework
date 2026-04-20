@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin - Appointment Scheduling</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-shell">
+            <a class="brand" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Dashboard</a>
+
+            <div class="nav-actions">
+                <nav class="desktop-nav" aria-label="Admin Primary">
+                    <a class="nav-link nav-link-primary" asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a>
+                    <a class="nav-link" asp-area="Admin" asp-controller="Appointments" asp-action="Index">Appointments</a>
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Public Site</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container app-main">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-shell">
+            <span>&copy; 2026 - Appointment Scheduling Admin</span>
+            <a asp-area="" asp-controller="Home" asp-action="Index">Back to public site</a>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

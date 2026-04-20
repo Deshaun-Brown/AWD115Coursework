@@ -1,0 +1,107 @@
+@model Fitness_Tracker.ViewModels.AdminOrderFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Order";
+}
+
+<div class="mx-auto max-w-5xl rounded-xl border border-slate-200 bg-white">
+    <div class="border-b border-slate-200 px-6 py-4">
+        <h1 class="text-lg font-semibold">@ViewData["Title"] #@Model.OrderId</h1>
+        <p class="mt-1 text-sm text-slate-600">Update order details and manage products in this order.</p>
+    </div>
+
+    <div class="grid gap-6 px-6 py-6 lg:grid-cols-2">
+        <form asp-area="Admin" asp-controller="Orders" asp-action="Edit" asp-route-id="@Model.OrderId" method="post" class="rounded-lg border border-slate-200 p-4">
+            @Html.AntiForgeryToken()
+            <div class="grid gap-4">
+                <div>
+                    <label asp-for="CustomerName" class="block text-sm font-medium text-slate-700"></label>
+                    <input asp-for="CustomerName" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" />
+                    <span asp-validation-for="CustomerName" class="mt-1 block text-sm text-rose-700"></span>
+                </div>
+
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <div>
+                        <label asp-for="OrderDate" class="block text-sm font-medium text-slate-700"></label>
+                        <input asp-for="OrderDate" type="datetime-local" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" />
+                    </div>
+                    <div>
+                        <label asp-for="Status" class="block text-sm font-medium text-slate-700"></label>
+                        <select asp-for="Status" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+                            @foreach (var status in Enum.GetValues<Fitness_Tracker.Models.Order.OrderStatus>())
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-end gap-2">
+                <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="rounded-md px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Back</a>
+                <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">Save</button>
+            </div>
+        </form>
+
+        <div class="space-y-6">
+            <div class="rounded-lg border border-slate-200 p-4">
+                <h2 class="text-base font-semibold">Add Product</h2>
+                <form asp-area="Admin" asp-controller="Orders" asp-action="AddItem" asp-route-id="@Model.OrderId" method="post" class="mt-4 grid gap-4">
+                    @Html.AntiForgeryToken()
+                    <div>
+                        <label asp-for="SelectedProductId" class="block text-sm font-medium text-slate-700">Product</label>
+                        <select asp-for="SelectedProductId" asp-items="Model.Products" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+                            <option value="">-- Select a product --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label asp-for="SelectedQuantity" class="block text-sm font-medium text-slate-700">Quantity</label>
+                        <input asp-for="SelectedQuantity" min="1" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" />
+                    </div>
+                    <button type="submit" class="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700">Add Item</button>
+                </form>
+            </div>
+
+            <div class="rounded-lg border border-slate-200 p-4">
+                <h2 class="text-base font-semibold">Current Items</h2>
+                <div class="mt-4 overflow-hidden rounded-md border border-slate-200">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Product</th>
+                                <th class="px-4 py-2 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Qty</th>
+                                <th class="px-4 py-2 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Price</th>
+                                <th class="px-4 py-2 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Total</th>
+                                <th class="px-4 py-2 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="px-4 py-2 text-sm text-slate-800">@item.ProductName</td>
+                                <td class="px-4 py-2 text-right text-sm text-slate-700">@item.Quantity</td>
+                                <td class="px-4 py-2 text-right text-sm text-slate-700">@item.Price.ToString("C")</td>
+                                <td class="px-4 py-2 text-right text-sm text-slate-700">@item.LineTotal.ToString("C")</td>
+                                <td class="px-4 py-2 text-right text-sm">
+                                    <form asp-area="Admin" asp-controller="Orders" asp-action="RemoveItem" asp-route-orderItemId="@item.OrderItemId" method="post" class="inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="text-rose-700 hover:underline">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 text-right text-sm font-semibold text-slate-800">
+                    Current Total: @Model.Items.Sum(i => i.LineTotal).ToString("C")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

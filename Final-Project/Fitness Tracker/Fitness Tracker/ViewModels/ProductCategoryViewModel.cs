@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Fitness_Tracker.Models;
+﻿using Fitness_Tracker.Models;
 
-using System.Collections.Generic;
-using Fitness_Tracker.Models;
+
 
 namespace Fitness_Tracker.ViewModels
 {

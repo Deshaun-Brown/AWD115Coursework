@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Create Role";
+}
+
+<div class="mx-auto max-w-2xl rounded-xl border border-slate-200 bg-white">
+    <div class="border-b border-slate-200 px-6 py-4">
+        <h1 class="text-lg font-semibold">@ViewData["Title"]</h1>
+        <p class="mt-1 text-sm text-slate-600">Add a new role to the application.</p>
+    </div>
+
+    <form asp-area="Admin" asp-controller="Roles" asp-action="Create" method="post" class="px-6 py-6">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="mb-4 rounded-md border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"></div>
+
+        <div>
+            <label for="name" class="block text-sm font-medium text-slate-700">Role Name</label>
+            <input id="name" name="name" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" />
+        </div>
+
+        <div class="mt-6 flex items-center justify-end gap-2">
+            <a asp-area="Admin" asp-controller="Roles" asp-action="Index" class="rounded-md px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Cancel</a>
+            <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">Create</button>
+        </div>
+    </form>
+</div>

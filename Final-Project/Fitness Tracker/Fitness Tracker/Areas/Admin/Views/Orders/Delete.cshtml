@@ -1,0 +1,47 @@
+@model Fitness_Tracker.Models.Order
+
+@{
+    ViewData["Title"] = "Delete Order";
+}
+
+<div class="mx-auto max-w-4xl rounded-xl border border-rose-200 bg-white">
+    <div class="border-b border-rose-200 bg-rose-50 px-6 py-4">
+        <h1 class="text-lg font-semibold text-rose-900">@ViewData["Title"] #@Model.OrderId</h1>
+        <p class="mt-1 text-sm text-rose-700">This action will permanently delete the order and all order items.</p>
+    </div>
+
+    <div class="px-6 py-6">
+        <p class="text-sm text-slate-700"><span class="font-semibold">Customer:</span> @Model.CustomerName</p>
+        <p class="text-sm text-slate-700"><span class="font-semibold">Date:</span> @Model.OrderDate.ToString("g")</p>
+        <p class="text-sm text-slate-700"><span class="font-semibold">Status:</span> @Model.Status</p>
+        <p class="text-sm text-slate-700"><span class="font-semibold">Total:</span> @Model.TotalAmount.ToString("C")</p>
+
+        <div class="mt-6 overflow-hidden rounded-md border border-slate-200">
+            <table class="min-w-full divide-y divide-slate-200">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Product</th>
+                        <th class="px-4 py-2 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Qty</th>
+                        <th class="px-4 py-2 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Price</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 bg-white">
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr>
+                        <td class="px-4 py-2 text-sm text-slate-800">@(item.Product?.Name ?? "Unknown")</td>
+                        <td class="px-4 py-2 text-right text-sm text-slate-700">@item.Quantity</td>
+                        <td class="px-4 py-2 text-right text-sm text-slate-700">@item.Price.ToString("C")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+
+        <form asp-area="Admin" asp-controller="Orders" asp-action="DeleteConfirmed" asp-route-id="@Model.OrderId" method="post" class="mt-6 flex items-center justify-end gap-2">
+            @Html.AntiForgeryToken()
+            <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="rounded-md px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Cancel</a>
+            <button type="submit" class="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700">Delete</button>
+        </form>
+    </div>
+</div>

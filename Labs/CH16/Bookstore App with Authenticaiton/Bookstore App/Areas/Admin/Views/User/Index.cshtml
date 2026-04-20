@@ -1,0 +1,76 @@
+@model Bookstore_App.Areas.Admin.Models.ManageUsersViewModel
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<section class="space-y-4">
+    <partial name="~/Areas/Admin/Views/Shared/_AdminTabs.cshtml" />
+
+    <h1 class="text-3xl font-semibold text-slate-900">Manage Users</h1>
+
+    <a class="text-blue-600 hover:underline" asp-controller="Account" asp-action="Register" asp-area="">Add a User</a>
+
+    <div class="overflow-x-auto rounded border border-slate-300 bg-white">
+        <table class="min-w-full text-left text-sm">
+            <thead class="bg-slate-100 text-slate-800">
+                <tr>
+                    <th class="border-b border-slate-300 px-3 py-2">Username</th>
+                    <th class="border-b border-slate-300 px-3 py-2">Roles</th>
+                    <th class="border-b border-slate-300 px-3 py-2"></th>
+                    <th class="border-b border-slate-300 px-3 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr class="border-b border-slate-200">
+                        <td class="px-3 py-2">@user.UserName</td>
+                        <td class="px-3 py-2">@user.RolesText</td>
+                        <td class="px-3 py-2">
+                            <form asp-action="AddToAdmin" method="post" class="inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit" class="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600">Add To Admin</button>
+                            </form>
+                        </td>
+                        <td class="px-3 py-2">
+                            <form asp-action="RemoveFromAdmin" method="post" class="inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit" class="rounded bg-blue-700 px-3 py-1 text-white hover:bg-blue-800">Remove From Admin</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="text-2xl font-semibold text-slate-900">Manage Roles</h2>
+
+    <div class="overflow-x-auto rounded border border-slate-300 bg-white">
+        <table class="min-w-full text-left text-sm">
+            <thead class="bg-slate-100 text-slate-800">
+                <tr>
+                    <th class="border-b border-slate-300 px-3 py-2">Role</th>
+                    <th class="border-b border-slate-300 px-3 py-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model.Roles)
+                {
+                    <tr class="border-b border-slate-200">
+                        <td class="px-3 py-2">@role</td>
+                        <td class="px-3 py-2">
+                            <form asp-action="DeleteRole" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="roleName" value="@role" />
+                                <button type="submit" class="rounded bg-red-500 px-3 py-1 text-white hover:bg-red-600" @(role.Equals("Admin", StringComparison.OrdinalIgnoreCase) ? "disabled" : null)>Delete Role</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

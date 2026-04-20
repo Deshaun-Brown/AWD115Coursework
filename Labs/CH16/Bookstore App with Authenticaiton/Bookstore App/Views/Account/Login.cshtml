@@ -1,0 +1,38 @@
+@model Bookstore_App.Models.Account.LoginViewModel
+@{
+    ViewData["Title"] = "Log In";
+}
+
+<section class="mx-auto max-w-md rounded-lg bg-white p-6 shadow">
+    <h1 class="mb-4 text-2xl font-semibold text-slate-900">Log In</h1>
+
+    <form asp-controller="Account" asp-action="Login" method="post" class="space-y-4">
+        @Html.AntiForgeryToken()
+        <input asp-for="ReturnUrl" type="hidden" />
+
+        <div asp-validation-summary="ModelOnly" class="text-sm text-red-600"></div>
+
+        <div>
+            <label asp-for="UserName" class="mb-1 block text-sm font-medium text-slate-700"></label>
+            <input asp-for="UserName" class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none" />
+            <span asp-validation-for="UserName" class="text-sm text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="Password" class="mb-1 block text-sm font-medium text-slate-700"></label>
+            <input asp-for="Password" type="password" class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none" />
+            <span asp-validation-for="Password" class="text-sm text-red-600"></span>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <input asp-for="RememberMe" class="h-4 w-4 rounded border-slate-300" />
+            <label asp-for="RememberMe" class="text-sm text-slate-700"></label>
+        </div>
+
+        <button type="submit" class="w-full rounded-md bg-slate-900 px-4 py-2 text-white hover:bg-slate-800">Log In</button>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

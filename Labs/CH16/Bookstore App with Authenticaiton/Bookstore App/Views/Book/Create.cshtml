@@ -1,0 +1,38 @@
+@model Book
+@{
+    ViewData["Title"] = "Create Book";
+}
+
+<h1 class="mb-4 text-2xl font-semibold">Create Book</h1>
+<form asp-action="Create" method="post" class="space-y-4 rounded-lg bg-white p-4 shadow-sm">
+    <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+    <div>
+        <label asp-for="Title" class="block text-sm font-medium"></label>
+        <input asp-for="Title" class="mt-1 w-full rounded border p-2" />
+    </div>
+    <div>
+        <label asp-for="Isbn" class="block text-sm font-medium"></label>
+        <input asp-for="Isbn" class="mt-1 w-full rounded border p-2" />
+    </div>
+    <div>
+        <label asp-for="Price" class="block text-sm font-medium"></label>
+        <input asp-for="Price" class="mt-1 w-full rounded border p-2" />
+    </div>
+    <div>
+        <label asp-for="PublishDate" class="block text-sm font-medium"></label>
+        <input asp-for="PublishDate" type="date" class="mt-1 w-full rounded border p-2" />
+    </div>
+    <div>
+        <label asp-for="AuthorId" class="block text-sm font-medium"></label>
+        <select asp-for="AuthorId" asp-items="ViewBag.AuthorOptions" class="mt-1 w-full rounded border p-2"></select>
+    </div>
+    <div>
+        <label asp-for="GenreId" class="block text-sm font-medium"></label>
+        <select asp-for="GenreId" asp-items="ViewBag.GenreOptions" class="mt-1 w-full rounded border p-2"></select>
+    </div>
+    <div class="flex gap-2">
+        <button class="rounded bg-slate-900 px-4 py-2 text-sm text-white" type="submit">Save</button>
+        <a asp-action="Index" class="rounded border px-4 py-2 text-sm">Cancel</a>
+    </div>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

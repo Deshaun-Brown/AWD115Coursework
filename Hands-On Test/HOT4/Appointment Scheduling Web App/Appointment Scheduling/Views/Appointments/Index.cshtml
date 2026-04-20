@@ -4,25 +4,42 @@
     ViewData["Title"] = "Appointments";
 }
 
-<div class="flex items-center justify-between">
-    <h1 class="text-xl font-semibold">Appointments</h1>
-    <a asp-action="Create" class="border px-4 py-2">New Appointment</a>
-</div>
+<section class="hero-panel">
+    <p class="eyebrow">Public schedule</p>
+    <h1 class="hero-title" style="font-size: clamp(1.8rem, 4vw, 2.6rem);">Appointments</h1>
+    <p class="hero-copy">All users can create and view appointments. Times must be in the future and on the hour.</p>
+    <div class="hero-actions">
+        <a asp-action="Create" class="theme-button">New appointment</a>
+        <a asp-controller="Customers" asp-action="Index" class="theme-button theme-button-secondary">View customers</a>
+    </div>
+</section>
 
-<table class="mt-4 w-full border-collapse">
-    <thead>
-        <tr class="border-b">
-            <th class="py-2 text-left">Start</th>
-            <th class="py-2 text-left">Customer</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var a in Model)
+<section class="mt-4 rounded border p-6">
+    @if (Model.Count == 0)
     {
-        <tr class="border-b">
-            <td class="py-2">@a.StartDateTime.ToString("g")</td>
-            <td class="py-2">@a.Customer?.Username</td>
-        </tr>
+        <div class="rounded border p-6 text-center">
+            <div class="font-medium">No appointments yet</div>
+            <p class="mt-2 text-sm text-gray-600">Schedule the first appointment to populate the calendar.</p>
+        </div>
     }
-    </tbody>
-</table>
+    else
+    {
+        <table>
+            <thead>
+                <tr class="border-b">
+                    <th class="py-2 text-left">Start</th>
+                    <th class="py-2 text-left">Customer</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var a in Model)
+            {
+                <tr class="border-b">
+                    <td class="py-2">@a.StartDateTime.ToString("g")</td>
+                    <td class="py-2">@a.Customer?.Username</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</section>

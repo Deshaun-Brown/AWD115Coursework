@@ -4,25 +4,42 @@
     ViewData["Title"] = "Customers";
 }
 
-<div class="flex items-center justify-between">
-    <h1 class="text-xl font-semibold">Customers</h1>
-    <a asp-action="Create" class="border px-4 py-2">New Customer</a>
-</div>
+<section class="hero-panel">
+    <p class="eyebrow">Customer directory</p>
+    <h1 class="hero-title" style="font-size: clamp(1.8rem, 4vw, 2.6rem);">Manage your customers</h1>
+    <p class="hero-copy">Create customers once and reuse them when scheduling appointments.</p>
+    <div class="hero-actions">
+        <a asp-action="Create" class="theme-button">New customer</a>
+        <a asp-controller="Appointments" asp-action="Index" class="theme-button theme-button-secondary">View appointments</a>
+    </div>
+</section>
 
-<table class="mt-4 w-full border-collapse">
-    <thead>
-        <tr class="border-b">
-            <th class="py-2 text-left">Username</th>
-            <th class="py-2 text-left">Phone</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var c in Model)
+<section class="mt-4 rounded border p-6">
+    @if (Model.Count == 0)
     {
-        <tr class="border-b">
-            <td class="py-2">@c.Username</td>
-            <td class="py-2">@c.PhoneNumber</td>
-        </tr>
+        <div class="rounded border p-6 text-center">
+            <div class="font-medium">No customers yet</div>
+            <p class="mt-2 text-sm text-gray-600">Add your first customer to begin scheduling appointments.</p>
+        </div>
     }
-    </tbody>
-</table>
+    else
+    {
+        <table>
+            <thead>
+                <tr class="border-b">
+                    <th class="py-2 text-left">Username</th>
+                    <th class="py-2 text-left">Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var c in Model)
+            {
+                <tr class="border-b">
+                    <td class="py-2">@c.Username</td>
+                    <td class="py-2">@c.PhoneNumber</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</section>

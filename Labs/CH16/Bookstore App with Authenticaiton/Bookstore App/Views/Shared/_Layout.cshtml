@@ -1,49 +1,111 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@using System.Text.Json
+@{
+    var cartCount = 0;
+    if (User.Identity?.IsAuthenticated ?? false)
+    {
+        var cartJson = Context?.Request.Cookies["bookstore_cart"];
+        if (!string.IsNullOrWhiteSpace(cartJson))
+        {
+            try
+            {
+                var cart = JsonSerializer.Deserialize<Dictionary<int, int>>(cartJson);
+                if (cart is not null)
+                {
+                    cartCount = cart.Values.Sum();
+                }
+            }
+            catch
+            {
+                cartCount = 0;
+            }
+        }
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Bookstore_App</title>
+    <title>@ViewData["Title"] - Tuxedo Books</title>
     <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Bookstore_App.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bookstore_App</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+<body class="bg-slate-100 text-slate-900">
+    <header class="bg-slate-900 text-white">
+        <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-2 text-sm">
+            <div class="flex items-center gap-6">
+                <a class="text-base tracking-wide" style="font-family: 'Cinzel', serif;" asp-controller="Home" asp-action="Index">Tuxedo Books</a>
+                <div class="flex gap-4">
+                    <a class="inline-flex items-center gap-2 hover:underline" asp-controller="Home" asp-action="Index">
+                        <img src ="~/icons/icons8-home-32.png" alt="Home" class="h-4 w-4" />
+                        <span>Home</span>
+                    </a>
+
+                    <a class="hover:underline" asp-controller="Book" asp-action="StaffPick">Staff Pick</a>
+
+                    <a class="inline-flex items-center gap-2 hover:underline" asp-controller="Book" asp-action="Index">
+                        <img src="~/icons/book.png" alt="Books" class="h-4 w-4" />
+                        <span>Books</span>
+                    </a>
+
+                    <a class="inline-flex items-center gap-2 hover:underline" asp-controller="Author" asp-action="Index">
+                        <img src="~/icons/feather.png" alt="" class="h-4 w-4" />
+                        <span>Authors</span>
+                    </a>
                 </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a class="hover:underline" asp-controller="Cart" asp-action="Index">Cart @(User.Identity?.IsAuthenticated ?? false ? $"({cartCount})" : "(0)")</a>
+
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    var lastName = User.FindFirstValue(ClaimTypes.Surname) ?? User.Identity!.Name ?? "User";
+
+                    <div class="inline-flex items-center gap-2 rounded-md bg-slate-800 px-2 py-1">
+                        <span aria-hidden="true">👤</span>
+                        <span>@lastName</span>
+                    </div>
+
+                    <form asp-controller="Account" asp-action="Logout" method="post" class="inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="hover:underline">Log Out</button>
+                    </form>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="hover:underline" asp-area="Admin" asp-controller="User" asp-action="Index" title="Admin Settings" aria-label="Admin Settings">
+        ⚙️
+    </a>
+                    }
+                }
+                else
+                {
+                    <a class="hover:underline" asp-controller="Account" asp-action="Register">Register</a>
+                    <a class="hover:underline" asp-controller="Account" asp-action="Login">Log In</a>
+                }
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Bookstore_App - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <main class="mx-auto max-w-6xl px-4 py-6">
+        @if (TempData["SuccessMessage"] is string successMessage)
+        {
+            <div class="mb-4 rounded border border-emerald-300 bg-emerald-50 px-4 py-3 text-emerald-800">
+                @successMessage
+            </div>
+        }
+
+        @RenderBody()
+    </main>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

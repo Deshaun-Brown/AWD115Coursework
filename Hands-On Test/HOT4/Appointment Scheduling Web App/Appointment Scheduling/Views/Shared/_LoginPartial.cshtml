@@ -1,17 +1,13 @@
 ﻿@using System.Security.Principal
 
-<ul class="navbar-nav">
+<div class="auth-shell">
 @if (User.Identity?.IsAuthenticated == true)
 {
-        <span class="navbar-text text-dark">Hello @User.Identity?.Name!</span>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">Sign out</a>
-        </li>
+    <span class="auth-greeting">Hello @User.Identity?.Name!</span>
+    <a class="nav-link nav-link-primary auth-link" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">Sign out</a>
 }
 else
 {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Sign in</a>
-        </li>
+    <a class="nav-link nav-link-primary auth-link" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Sign in</a>
 }
-</ul>
+</div>

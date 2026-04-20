@@ -4,28 +4,38 @@
     ViewData["Title"] = "Admin - Edit Appointment";
 }
 
-<h1 class="text-xl font-semibold">Admin - Edit Appointment</h1>
+<section class="hero-panel">
+    <p class="eyebrow">Admin editor</p>
+    <h1 class="hero-title" style="font-size: clamp(1.8rem, 4vw, 2.4rem);">Edit appointment</h1>
+    <p class="hero-copy">Update the customer or start time while enforcing all scheduling validation rules.</p>
+</section>
 
-<form asp-action="Edit" method="post" class="mt-4 space-y-4">
-    <input type="hidden" asp-for="Id" />
+<section class="mt-4 rounded border p-6">
+    <form asp-action="Edit" method="post" class="space-y-4">
+        <div asp-validation-summary="All" class="text-red-600"></div>
 
-    <div>
-        <label asp-for="CustomerId" class="block font-medium">Customer</label>
-        <select asp-for="CustomerId" asp-items="ViewBag.CustomerId" class="mt-1 w-full border p-2">
-            <option value="">-- select --</option>
-        </select>
-        <span asp-validation-for="CustomerId" class="text-red-600"></span>
-    </div>
+        <input type="hidden" asp-for="Id" />
 
-    <div>
-        <label asp-for="StartDateTime" class="block font-medium">Start (on the hour)</label>
-        <input asp-for="StartDateTime" type="datetime-local" class="mt-1 w-full border p-2" />
-        <span asp-validation-for="StartDateTime" class="text-red-600"></span>
-    </div>
+        <div>
+            <label asp-for="CustomerId" class="block font-medium">Customer</label>
+            <select asp-for="CustomerId" asp-items="ViewBag.CustomerId" class="mt-1 w-full">
+                <option value="">-- select --</option>
+            </select>
+            <span asp-validation-for="CustomerId" class="text-red-600"></span>
+        </div>
 
-    <button type="submit" class="border px-4 py-2">Save</button>
-    <a asp-action="Index" class="ml-2 underline">Back</a>
-</form>
+        <div>
+            <label asp-for="StartDateTime" class="block font-medium">Start (on the hour)</label>
+            <input asp-for="StartDateTime" asp-format="{0:yyyy-MM-ddTHH:mm}" type="datetime-local" class="mt-1 w-full" />
+            <span asp-validation-for="StartDateTime" class="text-red-600"></span>
+        </div>
+
+        <div class="hero-actions">
+            <button type="submit" class="theme-button">Save changes</button>
+            <a asp-action="Index" class="theme-button theme-button-secondary">Back</a>
+        </div>
+    </form>
+</section>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

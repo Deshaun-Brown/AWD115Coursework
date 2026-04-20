@@ -1,0 +1,39 @@
+@model IEnumerable<Fitness_Tracker.ViewModels.AdminRoleListItemViewModel>
+
+@{
+    ViewData["Title"] = "Manage Roles";
+}
+
+<div class="mx-auto max-w-5xl">
+    <div class="mb-6 flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-semibold">@ViewData["Title"]</h1>
+            <p class="text-sm text-slate-600">Create and remove application roles.</p>
+        </div>
+        <a asp-area="Admin" asp-controller="Roles" asp-action="Create" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">Create Role</a>
+    </div>
+
+    <div class="overflow-hidden rounded-xl border border-slate-200 bg-white">
+        <table class="min-w-full divide-y divide-slate-200">
+            <thead class="bg-slate-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Role</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Users</th>
+                    <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 bg-white">
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td class="px-6 py-4 text-sm text-slate-800">@role.Name</td>
+                    <td class="px-6 py-4 text-sm text-slate-600">@role.UserCount</td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <a asp-area="Admin" asp-controller="Roles" asp-action="Delete" asp-route-id="@role.Id" class="text-rose-700 hover:underline">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

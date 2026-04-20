@@ -1,5 +1,6 @@
 using Appointment_Scheduling.Data;
 using Appointment_Scheduling.Models;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,12 @@ namespace Appointment_Scheduling.Areas.Admin.Controllers;
 public class AppointmentsController : Controller
 {
     private readonly ApplicationDbContext _db;
+    private readonly IValidator<Appointment> _validator;
 
-    public AppointmentsController(ApplicationDbContext db)
+    public AppointmentsController(ApplicationDbContext db, IValidator<Appointment> validator)
     {
         _db = db;
+        _validator = validator;
     }
 
     public async Task<IActionResult> Index()
@@ -41,6 +44,12 @@ public class AppointmentsController : Controller
     public async Task<IActionResult> Edit(int id, Appointment appointment)
     {
         if (id != appointment.Id) return BadRequest();
+
+        var validationResult = await _validator.ValidateAsync(appointment);
+        foreach (var error in validationResult.Errors)
+        {
+            ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+        }
 
         if (!ModelState.IsValid)
         {

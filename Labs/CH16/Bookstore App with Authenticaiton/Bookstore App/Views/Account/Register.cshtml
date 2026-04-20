@@ -1,0 +1,61 @@
+@model Bookstore_App.Models.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="mx-auto max-w-md rounded-lg bg-white p-6 shadow">
+    <h1 class="mb-4 text-2xl font-semibold text-slate-900">Register</h1>
+
+    <form asp-controller="Account" asp-action="Register" method="post" class="space-y-4">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="text-sm text-red-600"></div>
+
+        <div>
+            <label asp-for="FirstName" class="mb-1 block text-sm font-medium text-slate-700"></label>
+            <input asp-for="FirstName" class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none" />
+            <span asp-validation-for="FirstName" class="text-sm text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="LastName" class="mb-1 block text-sm font-medium text-slate-700"></label>
+            <input asp-for="LastName" class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none" />
+            <span asp-validation-for="LastName" class="text-sm text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="Email" class="mb-1 block text-sm font-medium text-slate-700"></label>
+            <input asp-for="Email" class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none" />
+            <span asp-validation-for="Email" class="text-sm text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="UserName" class="mb-1 block text-sm font-medium text-slate-700"></label>
+            <input asp-for="UserName" class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none" />
+            <span asp-validation-for="UserName" class="text-sm text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="Password" class="mb-1 block text-sm font-medium text-slate-700"></label>
+            <input asp-for="Password" class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none" />
+            <span asp-validation-for="Password" class="text-sm text-red-600"></span>
+        </div>
+
+        <div>
+            <label asp-for="ConfirmPassword" class="mb-1 block text-sm font-medium text-slate-700"></label>
+            <input asp-for="ConfirmPassword" class="w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none" />
+            <span asp-validation-for="ConfirmPassword" class="text-sm text-red-600"></span>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <input asp-for="IsAdmin" class="h-4 w-4 rounded border-slate-300" />
+            <label asp-for="IsAdmin" class="text-sm text-slate-700">Register as Admin</label>
+        </div>
+
+        <button type="submit" class="w-full rounded-md bg-slate-900 px-4 py-2 text-white hover:bg-slate-800">Register</button>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

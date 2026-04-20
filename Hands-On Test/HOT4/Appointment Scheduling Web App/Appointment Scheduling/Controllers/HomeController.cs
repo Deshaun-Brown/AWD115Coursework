@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 namespace Appointment_Scheduling.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()

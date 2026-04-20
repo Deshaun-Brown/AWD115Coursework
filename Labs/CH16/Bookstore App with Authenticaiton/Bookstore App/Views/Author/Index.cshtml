@@ -1,0 +1,32 @@
+@model AuthorListViewModel
+@{
+    ViewData["Title"] = "Authors";
+}
+
+<div class="mb-4 flex items-center justify-between">
+    <h1 class="text-2xl font-semibold">Authors</h1>
+    <a asp-action="Create" class="rounded bg-slate-900 px-4 py-2 text-sm text-white">Add Author</a>
+</div>
+
+<table class="min-w-full rounded-lg bg-white shadow-sm">
+    <thead>
+        <tr class="border-b text-left text-sm text-slate-500">
+            <th class="p-3">Name</th>
+            <th class="p-3">Bio</th>
+            <th class="p-3"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var author in Model.Authors)
+        {
+            <tr class="border-b text-sm">
+                <td class="p-3">@author.FullName</td>
+                <td class="p-3">@author.Bio</td>
+                <td class="p-3 text-right">
+                    <a asp-action="Edit" asp-route-id="@author.Id" class="mr-3 text-blue-600">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@author.Id" class="text-red-600">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

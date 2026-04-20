@@ -4,28 +4,47 @@
     ViewData["Title"] = "Admin - Appointments";
 }
 
-<h1 class="text-xl font-semibold">Admin - Appointments</h1>
+<section class="hero-panel">
+    <p class="eyebrow">Admin dashboard</p>
+    <h1 class="hero-title" style="font-size: clamp(1.8rem, 4vw, 2.6rem);">Appointment management</h1>
+    <p class="hero-copy">Edit, review, and delete appointments from the administrative area.</p>
+    <div class="hero-actions">
+        <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="theme-button theme-button-secondary">Back to admin dashboard</a>
+    </div>
+</section>
 
-<table class="mt-4 w-full border-collapse">
-    <thead>
-        <tr class="border-b">
-            <th class="py-2 text-left">Start</th>
-            <th class="py-2 text-left">Customer</th>
-            <th class="py-2 text-left">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var a in Model)
+<section class="mt-4 rounded border p-6">
+    @if (Model.Count == 0)
     {
-        <tr class="border-b">
-            <td class="py-2">@a.StartDateTime.ToString("g")</td>
-            <td class="py-2">@a.Customer?.Username</td>
-            <td class="py-2 space-x-2">
-                <a asp-area="Admin" asp-controller="Appointments" asp-action="Details" asp-route-id="@a.Id" class="underline">Details</a>
-                <a asp-area="Admin" asp-controller="Appointments" asp-action="Edit" asp-route-id="@a.Id" class="underline">Edit</a>
-                <a asp-area="Admin" asp-controller="Appointments" asp-action="Delete" asp-route-id="@a.Id" class="underline">Delete</a>
-            </td>
-        </tr>
+        <div class="rounded border p-6 text-center">
+            <div class="font-medium">No appointments to manage</div>
+            <p class="mt-2 text-sm text-gray-600">Public users must create the appointments first.</p>
+        </div>
     }
-    </tbody>
-</table>
+    else
+    {
+        <table>
+            <thead>
+                <tr class="border-b">
+                    <th class="py-2 text-left">Start</th>
+                    <th class="py-2 text-left">Customer</th>
+                    <th class="py-2 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var a in Model)
+            {
+                <tr class="border-b">
+                    <td class="py-2">@a.StartDateTime.ToString("g")</td>
+                    <td class="py-2">@a.Customer?.Username</td>
+                    <td class="py-2 space-x-2">
+                        <a asp-area="Admin" asp-controller="Appointments" asp-action="Details" asp-route-id="@a.Id" class="underline">Details</a>
+                        <a asp-area="Admin" asp-controller="Appointments" asp-action="Edit" asp-route-id="@a.Id" class="underline">Edit</a>
+                        <a asp-area="Admin" asp-controller="Appointments" asp-action="Delete" asp-route-id="@a.Id" class="underline">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</section>

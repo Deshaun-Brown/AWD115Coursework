@@ -4,15 +4,21 @@
     ViewData["Title"] = "Admin - Appointment Details";
 }
 
-<h1 class="text-xl font-semibold">Admin - Appointment Details</h1>
+<section class="hero-panel">
+    <p class="eyebrow">Admin detail view</p>
+    <h1 class="hero-title" style="font-size: clamp(1.8rem, 4vw, 2.4rem);">Appointment #@Model.Id</h1>
+    <p class="hero-copy">Review the exact appointment record before editing or deleting.</p>
+</section>
 
-<div class="mt-4 space-y-2">
-    <div><span class="font-medium">Id:</span> @Model.Id</div>
-    <div><span class="font-medium">Start:</span> @Model.StartDateTime.ToString("g")</div>
-    <div><span class="font-medium">Customer:</span> @Model.Customer?.Username</div>
-</div>
+<section class="mt-4 rounded border p-6">
+    <div class="space-y-2">
+        <div><span class="font-medium">Id:</span> @Model.Id</div>
+        <div><span class="font-medium">Start:</span> @Model.StartDateTime.ToString("g")</div>
+        <div><span class="font-medium">Customer:</span> @Model.Customer?.Username</div>
+    </div>
 
-<div class="mt-4 space-x-2">
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="underline">Edit</a>
-    <a asp-action="Index" class="underline">Back</a>
-</div>
+    <div class="hero-actions mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="theme-button">Edit</a>
+        <a asp-action="Index" class="theme-button theme-button-secondary">Back to admin list</a>
+    </div>
+</section>

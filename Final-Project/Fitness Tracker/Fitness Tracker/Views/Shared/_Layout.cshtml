@@ -97,9 +97,12 @@
                         }
                     }
 
-                    @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin") && !isAdminProductCreate)
+                    @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin"))
                     {
                         <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn-link">Add Product</a>
+                        <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="btn-link">Manage Orders</a>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="btn-link">Manage Users</a>
+                        <a asp-area="Admin" asp-controller="Roles" asp-action="Index" class="btn-link">Manage Roles</a>
                     }
                     <a asp-controller="Cart" asp-action="Index" class="btn-link">Cart</a>
                 </div>

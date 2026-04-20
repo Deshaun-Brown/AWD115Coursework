@@ -1,0 +1,39 @@
+@model Fitness_Tracker.ViewModels.AdminUserListItemViewModel
+
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<div class="mx-auto max-w-2xl rounded-xl border border-rose-200 bg-white">
+    <div class="border-b border-rose-200 bg-rose-50 px-6 py-4">
+        <h1 class="text-lg font-semibold text-rose-900">@ViewData["Title"]</h1>
+        <p class="mt-1 text-sm text-rose-700">This action cannot be undone.</p>
+    </div>
+
+    <div class="px-6 py-6">
+        <p class="text-sm text-slate-700"><span class="font-semibold">Email:</span> @Model.Email</p>
+
+        <div class="mt-4">
+            <p class="text-sm font-semibold text-slate-700">Roles</p>
+            @if (Model.Roles.Any())
+            {
+                <ul class="mt-2 list-disc pl-5 text-sm text-slate-600">
+                    @foreach (var role in Model.Roles)
+                    {
+                        <li>@role</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="mt-2 text-sm text-slate-500">No roles assigned.</p>
+            }
+        </div>
+
+        <form asp-area="Admin" asp-controller="Users" asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post" class="mt-6 flex items-center justify-end gap-2">
+            @Html.AntiForgeryToken()
+            <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="rounded-md px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">Cancel</a>
+            <button type="submit" class="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700">Delete</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+@model Appointment_Scheduling.Areas.Admin.Models.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<section class="hero-panel">
+    <p class="eyebrow">Admin area</p>
+    <h1 class="hero-title" style="font-size: clamp(1.8rem, 4vw, 2.6rem);">Appointment management dashboard</h1>
+    <p class="hero-copy">
+        Use this separate admin view to review appointment operations before editing or deleting records.
+    </p>
+</section>
+
+<section class="mt-4 grid gap-4 sm:grid-cols-2">
+    <div class="rounded border p-6">
+        <div class="font-medium">Appointments</div>
+        <div class="mt-2 text-2xl font-semibold">@Model.AppointmentCount</div>
+        <div class="mt-2 text-sm text-gray-600">Total appointments in the database</div>
+    </div>
+
+    <div class="rounded border p-6">
+        <div class="font-medium">Customers</div>
+        <div class="mt-2 text-2xl font-semibold">@Model.CustomerCount</div>
+        <div class="mt-2 text-sm text-gray-600">Registered customers available for scheduling</div>
+    </div>
+
+    <div class="rounded border p-6 sm:col-span-2">
+        <div class="font-medium">Upcoming appointments</div>
+        <div class="mt-2 text-2xl font-semibold">@Model.UpcomingAppointmentCount</div>
+        <div class="mt-2 text-sm text-gray-600">Appointments occurring now or in the future</div>
+    </div>
+</section>
+
+<section class="mt-4 grid gap-4 sm:grid-cols-2">
+    <a asp-area="Admin" asp-controller="Appointments" asp-action="Index" class="rounded border p-6 hover:bg-gray-50">
+        <div class="font-medium">Manage appointments</div>
+        <div class="mt-2 text-sm text-gray-600">View, edit, and delete scheduled appointments</div>
+    </a>
+
+    <a asp-area="" asp-controller="Appointments" asp-action="Index" class="rounded border p-6 hover:bg-gray-50">
+        <div class="font-medium">Public appointments</div>
+        <div class="mt-2 text-sm text-gray-600">See the public read-only schedule</div>
+    </a>
+</section>

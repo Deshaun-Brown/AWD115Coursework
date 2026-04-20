@@ -1,0 +1,27 @@
+@model Author
+@{
+    ViewData["Title"] = "Edit Author";
+}
+
+<h1 class="mb-4 text-2xl font-semibold">Edit Author</h1>
+<form asp-action="Edit" method="post" class="space-y-4 rounded-lg bg-white p-4 shadow-sm">
+    <input asp-for="Id" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+    <div>
+        <label asp-for="FirstName" class="block text-sm font-medium"></label>
+        <input asp-for="FirstName" class="mt-1 w-full rounded border p-2" />
+    </div>
+    <div>
+        <label asp-for="LastName" class="block text-sm font-medium"></label>
+        <input asp-for="LastName" class="mt-1 w-full rounded border p-2" />
+    </div>
+    <div>
+        <label asp-for="Bio" class="block text-sm font-medium"></label>
+        <textarea asp-for="Bio" class="mt-1 w-full rounded border p-2"></textarea>
+    </div>
+    <div class="flex gap-2">
+        <button class="rounded bg-slate-900 px-4 py-2 text-sm text-white" type="submit">Save</button>
+        <a asp-action="Index" class="rounded border px-4 py-2 text-sm">Cancel</a>
+    </div>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
