@@ -18,7 +18,7 @@ public class GenreController : Controller
         _context = context;
     }
 
-    [HttpGet]
+    [HttpGet] 
     public async Task<IActionResult> Index()
     {
         var vm = new ManageGenresViewModel

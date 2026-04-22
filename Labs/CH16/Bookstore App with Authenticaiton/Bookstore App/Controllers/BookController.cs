@@ -149,14 +149,29 @@ public class BookController : Controller
     }
 
     [HttpGet]
-    public IActionResult StaffPick()
+    public async Task<IActionResult> StaffPick()
     {
-        var seededIds = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 };
-        var index = Random.Shared.Next(seededIds.Length);
-        var bookId = seededIds[index];
+        var count = await _context.Books.CountAsync();
+        if (count == 0)
+        {
+            return RedirectToAction(nameof(Index));
+        }
 
-        TempData["StaffPickBookId"] = bookId;
-        return RedirectToAction("Index", new { staffPickId = bookId });
+        var randomIndex = Random.Shared.Next(count);
+
+        var book = await _context.Books
+            .Include(b => b.Author)
+            .Include(b => b.Genre)
+            .OrderBy(b => b.Id)
+            .Skip(randomIndex)
+            .FirstOrDefaultAsync();
+
+        if (book is null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(book);
     }
 
     private async Task LoadOptionsAsync(int? selectedAuthorId = null, int? selectedGenreId = null)
