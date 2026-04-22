@@ -19,7 +19,7 @@
         <div>
             <label asp-for="CustomerId" class="block font-medium">Customer</label>
             <select asp-for="CustomerId" asp-items="ViewBag.CustomerId" class="mt-1 w-full">
-                <option value="">-- select --</option>
+                <option value="0">-- select --</option>
             </select>
             <span asp-validation-for="CustomerId" class="text-red-600"></span>
         </div>

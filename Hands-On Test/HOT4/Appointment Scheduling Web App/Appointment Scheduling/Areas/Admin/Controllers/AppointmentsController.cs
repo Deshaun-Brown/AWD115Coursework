@@ -45,6 +45,11 @@ public class AppointmentsController : Controller
     {
         if (id != appointment.Id) return BadRequest();
 
+        if (appointment.StartDateTime <= DateTime.Now)
+        {
+            ModelState.AddModelError(nameof(Appointment.StartDateTime), "Appointment start date/time must be in the future.");
+        }
+
         var validationResult = await _validator.ValidateAsync(appointment);
         foreach (var error in validationResult.Errors)
         {

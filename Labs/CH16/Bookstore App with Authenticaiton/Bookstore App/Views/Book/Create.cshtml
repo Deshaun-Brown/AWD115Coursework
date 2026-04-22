@@ -5,30 +5,36 @@
 
 <h1 class="mb-4 text-2xl font-semibold">Create Book</h1>
 <form asp-action="Create" method="post" class="space-y-4 rounded-lg bg-white p-4 shadow-sm">
-    <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+    <div asp-validation-summary="All" class="text-red-600"></div>
     <div>
         <label asp-for="Title" class="block text-sm font-medium"></label>
         <input asp-for="Title" class="mt-1 w-full rounded border p-2" />
+        <span asp-validation-for="Title" class="text-sm text-red-600"></span>
     </div>
     <div>
         <label asp-for="Isbn" class="block text-sm font-medium"></label>
         <input asp-for="Isbn" class="mt-1 w-full rounded border p-2" />
+        <span asp-validation-for="Isbn" class="text-sm text-red-600"></span>
     </div>
     <div>
         <label asp-for="Price" class="block text-sm font-medium"></label>
         <input asp-for="Price" class="mt-1 w-full rounded border p-2" />
+        <span asp-validation-for="Price" class="text-sm text-red-600"></span>
     </div>
     <div>
         <label asp-for="PublishDate" class="block text-sm font-medium"></label>
         <input asp-for="PublishDate" type="date" class="mt-1 w-full rounded border p-2" />
+        <span asp-validation-for="PublishDate" class="text-sm text-red-600"></span>
     </div>
     <div>
-        <label asp-for="AuthorId" class="block text-sm font-medium"></label>
-        <select asp-for="AuthorId" asp-items="ViewBag.AuthorOptions" class="mt-1 w-full rounded border p-2"></select>
+        <label for="authorName" class="block text-sm font-medium">Author</label>
+        <input id="authorName" name="authorName" value="@ViewBag.AuthorName" class="mt-1 w-full rounded border p-2" />
+        <span class="text-sm text-red-600 field-validation-valid" data-valmsg-for="authorName" data-valmsg-replace="true"></span>
     </div>
     <div>
-        <label asp-for="GenreId" class="block text-sm font-medium"></label>
-        <select asp-for="GenreId" asp-items="ViewBag.GenreOptions" class="mt-1 w-full rounded border p-2"></select>
+        <label for="genreName" class="block text-sm font-medium">Genre</label>
+        <input id="genreName" name="genreName" value="@ViewBag.GenreName" class="mt-1 w-full rounded border p-2" />
+        <span class="text-sm text-red-600 field-validation-valid" data-valmsg-for="genreName" data-valmsg-replace="true"></span>
     </div>
     <div class="flex gap-2">
         <button class="rounded bg-slate-900 px-4 py-2 text-sm text-white" type="submit">Save</button>

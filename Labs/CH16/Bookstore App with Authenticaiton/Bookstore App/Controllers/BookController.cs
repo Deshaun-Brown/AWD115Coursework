@@ -31,19 +31,68 @@ public class BookController : Controller
     public async Task<IActionResult> Create()
     {
         var book = new Book { PublishDate = DateOnly.FromDateTime(DateTime.Today) };
-        await LoadOptionsAsync();
         return View(book);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Book book)
+    public async Task<IActionResult> Create(Book book, string authorName, string genreName)
     {
+        authorName = (authorName ?? string.Empty).Trim();
+        genreName = (genreName ?? string.Empty).Trim();
+
+        if (string.IsNullOrWhiteSpace(authorName))
+        {
+            ModelState.AddModelError("authorName", "The Author field is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(genreName))
+        {
+            ModelState.AddModelError("genreName", "The Genre field is required.");
+        }
+
         if (!ModelState.IsValid)
         {
-            await LoadOptionsAsync();
+            ViewBag.AuthorName = authorName;
+            ViewBag.GenreName = genreName;
             return View(book);
         }
+
+        var isbnExists = await _context.Books.AnyAsync(b => b.Isbn == book.Isbn);
+        if (isbnExists)
+        {
+            ModelState.AddModelError(nameof(Book.Isbn), "A book with this ISBN already exists.");
+            ViewBag.AuthorName = authorName;
+            ViewBag.GenreName = genreName;
+            return View(book);
+        }
+
+        var author = await _context.Authors
+            .FirstOrDefaultAsync(a => (a.FirstName + " " + a.LastName) == authorName);
+
+        if (author is null)
+        {
+            var parts = authorName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var firstName = parts.FirstOrDefault() ?? authorName;
+            var lastName = parts.Length > 1 ? string.Join(' ', parts.Skip(1)) : firstName;
+
+            author = new Author
+            {
+                FirstName = firstName,
+                LastName = lastName
+            };
+            _context.Authors.Add(author);
+        }
+
+        var genre = await _context.Genres.FirstOrDefaultAsync(g => g.Name == genreName);
+        if (genre is null)
+        {
+            genre = new Genre { Name = genreName };
+            _context.Genres.Add(genre);
+        }
+
+        book.Author = author;
+        book.Genre = genre;
 
         _context.Books.Add(book);
         await _context.SaveChangesAsync();

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
+
+
 namespace Appointment_Scheduling.Controllers;
 
 public class AppointmentsController : Controller
@@ -39,6 +41,11 @@ public class AppointmentsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Appointment appointment)
     {
+        if (appointment.StartDateTime <= DateTime.Now)
+        {
+            ModelState.AddModelError(nameof(Appointment.StartDateTime), "Appointment start date/time must be in the future.");
+        }
+
         var validationResult = await _validator.ValidateAsync(appointment);
         foreach (var error in validationResult.Errors)
         {

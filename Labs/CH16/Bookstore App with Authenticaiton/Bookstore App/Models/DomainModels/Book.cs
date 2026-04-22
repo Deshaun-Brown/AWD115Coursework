@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Bookstore_App.Models.DomainModels;
 
@@ -21,6 +22,9 @@ public class Book
     public int GenreId { get; set; }
     public int AuthorId { get; set; }
 
+    [ValidateNever]
     public Genre Genre { get; set; } = null!;
+
+    [ValidateNever]
     public Author Author { get; set; } = null!;
 }
