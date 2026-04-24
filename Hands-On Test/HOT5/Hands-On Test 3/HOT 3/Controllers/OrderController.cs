@@ -1,8 +1,8 @@
 ﻿using Pharmaceuticals.Models;
 using Pharmaceuticals.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Pharmaceuticals.Data;
 
 namespace Pharmaceuticals.Controllers;
 

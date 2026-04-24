@@ -13,6 +13,20 @@
             <hr class="mb-4 border-gray-200" />
             <div asp-validation-summary="ModelOnly" class="text-red-500 text-sm mb-4" role="alert"></div>
             
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label asp-for="Input.FirstName" class="block text-sm font-medium text-gray-700">First Name</label>
+                    <input asp-for="Input.FirstName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-required="true" placeholder="John" />
+                    <span asp-validation-for="Input.FirstName" class="text-red-500 text-sm"></span>
+                </div>
+                
+                <div>
+                    <label asp-for="Input.LastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+                    <input asp-for="Input.LastName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-required="true" placeholder="Doe" />
+                    <span asp-validation-for="Input.LastName" class="text-red-500 text-sm"></span>
+                </div>
+            </div>
+            
             <div>
                 <label asp-for="Input.Email" class="block text-sm font-medium text-gray-700">Email</label>
                 <input asp-for="Input.Email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" autocomplete="username" aria-required="true" placeholder="name@example.com" />

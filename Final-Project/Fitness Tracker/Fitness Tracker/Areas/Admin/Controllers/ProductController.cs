@@ -47,7 +47,7 @@ public class ProductController : Controller
             _context.Add(product);
             await _context.SaveChangesAsync();
             TempData["Success"] = "Product added successfully!";
-            return RedirectToAction("Index", "Product", new { area = "" });
+            return RedirectToRoute("Products");
         }
 
         ViewBag.Action = "Create";
@@ -102,7 +102,7 @@ public class ProductController : Controller
                 throw;
             }
 
-            return RedirectToAction("Index", "Product", new { area = "" });
+            return RedirectToRoute("Products");
         }
 
         ViewBag.Action = "Edit";
@@ -134,7 +134,7 @@ public class ProductController : Controller
 
         }
 
-        return RedirectToAction("Index", "Product", new { area = "" });
+        return RedirectToRoute("Products");
     }
 
     [HttpGet]

@@ -10,4 +10,9 @@
     <WebStackScaffolding_ControllerDialogWidth>650</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_DbContextDialogWidth>650</WebStackScaffolding_DbContextDialogWidth>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Update="wwwroot\images\ERD\Dataset.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
 </Project>

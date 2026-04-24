@@ -17,7 +17,7 @@ public static class SeedData
         try
         {
             var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
-            var userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
+            var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
             var config = serviceProvider.GetService<IConfiguration>();
 
             if (roleManager != null && userManager != null)
@@ -36,7 +36,14 @@ public static class SeedData
                 var adminUser = await userManager.FindByEmailAsync(adminEmail);
                 if (adminUser == null)
                 {
-                    adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+                    adminUser = new ApplicationUser 
+                    { 
+                        UserName = adminEmail, 
+                        Email = adminEmail, 
+                        EmailConfirmed = true,
+                        FirstName = "Admin",
+                        LastName = "User"
+                    };
                     var result = await userManager.CreateAsync(adminUser, adminPassword);
                     if (result.Succeeded)
                     {

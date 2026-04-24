@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Fitness_Tracker.Agents;
-using Microsoft.AspNetCore.Antiforgery;
+
 
 namespace Fitness_Tracker.Controllers;
 

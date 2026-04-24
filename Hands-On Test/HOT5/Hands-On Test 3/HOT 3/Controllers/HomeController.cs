@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Pharmaceuticals.ViewModels; // Add this using directive
+using Pharmaceuticals.Data;
+using Pharmaceuticals.ViewModels;
 
 namespace Pharmaceuticals.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Models.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(Models.ApplicationDbContext context)
+        public HomeController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -18,7 +19,6 @@ namespace Pharmaceuticals.Controllers
             var viewModel = new HomeIndexViewModel
             {
                 Products = products
-                // set other properties if needed
             };
             return View(viewModel);
         }

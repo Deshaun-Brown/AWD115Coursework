@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Identity;
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Pharmaceuticals.Models;
 
-namespace Pharmaceuticals.Models
+namespace Pharmaceuticals.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
