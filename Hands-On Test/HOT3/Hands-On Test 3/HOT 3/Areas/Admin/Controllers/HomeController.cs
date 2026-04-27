@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pharmaceuticals.Data;
+using Pharmaceuticals.Models;
 
 namespace Pharmaceuticals.Areas.Admin.Controllers;
 

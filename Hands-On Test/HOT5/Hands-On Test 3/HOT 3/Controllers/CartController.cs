@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Pharmaceuticals.Data;
+using Pharmaceuticals.Models;
 using Pharmaceuticals.ViewModels;
 
 namespace Pharmaceuticals.Controllers;
@@ -11,9 +12,9 @@ namespace Pharmaceuticals.Controllers;
 public class CartController : Controller
 {
     private readonly IDatabaseAgent _agent;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public CartController(IDatabaseAgent agent, UserManager<IdentityUser> userManager)
+    public CartController(IDatabaseAgent agent, UserManager<ApplicationUser> userManager)
     {
         _agent = agent;
         _userManager = userManager;
@@ -106,7 +107,7 @@ public class CartController : Controller
         return RedirectToAction("OrderConfirmation", new { orderId = order.OrderId });
     }
 
-    [HttpGet("OrderConfirmation")]
+    [HttpGet("orderconfirmation")]
     public async Task<IActionResult> OrderConfirmation(int orderId)
     {
         var userId = _userManager.GetUserId(User);

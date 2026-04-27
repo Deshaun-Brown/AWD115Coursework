@@ -256,6 +256,15 @@ public static class SeedData
                 Price = 28.99m,
                 Quantity = 65,
                 Category = vitamins
+            },
+            new Product
+            {
+                Name = "Aspirin 81mg",
+                Description = "Low-dose aspirin for heart health support.",
+                ImageUrl = "/images/Pills.jpg",
+                Price = 5.99m,
+                Quantity = 125,
+                Category = otc
             }
         };
 

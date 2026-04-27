@@ -13,6 +13,7 @@ builder.Services.AddRouting(options =>
 {
     options.LowercaseUrls = true;
     options.LowercaseQueryStrings = true;
+    options.AppendTrailingSlash = true;
 });
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -39,5 +40,11 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Seed data on startup
+using (var scope = app.Services.CreateScope())
+{
+    await SeedData.InitializeAsync(scope.ServiceProvider);
+}
 
 app.Run();

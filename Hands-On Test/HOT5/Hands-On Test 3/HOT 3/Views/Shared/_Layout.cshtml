@@ -16,10 +16,27 @@
     var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
     var currentArea = ViewContext.RouteData.Values["area"]?.ToString();
     var currentPage = ViewContext.RouteData.Values["page"]?.ToString();
+    
+    // Navigation link helper functions
+    Func<string, string, string, bool> isCurrentPage = (area, controller, action) =>
+    {
+        return (string.IsNullOrEmpty(area) ? "" : area).Equals(currentArea ?? "", StringComparison.OrdinalIgnoreCase) &&
+               controller.Equals(currentController ?? "", StringComparison.OrdinalIgnoreCase) &&
+               action.Equals(currentAction ?? "", StringComparison.OrdinalIgnoreCase);
+    };
+    
+    Func<string, bool> isCurrentArea = (area) =>
+    {
+        return area.Equals(currentArea ?? "", StringComparison.OrdinalIgnoreCase);
+    };
+
     var isProductsIndex = (currentController == "Product" || currentController == "Order") && currentAction == "Index";
     var isIdentityLogin = currentArea == "Identity" && string.Equals(currentPage, "/Account/Login", StringComparison.OrdinalIgnoreCase);
     var isIdentityRegister = currentArea == "Identity" && string.Equals(currentPage, "/Account/Register", StringComparison.OrdinalIgnoreCase);
     var isAdminProductCreate = currentArea == "Admin" && currentController == "Product" && currentAction == "Create";
+    var isDrugsOrOrder = (currentController == "Order" || currentController == "Product") && currentArea != "Admin";
+    var isCart = currentController == "Cart";
+    var isAdmin = currentArea == "Admin";
 }
 
 @using Microsoft.AspNetCore.Identity
@@ -74,18 +91,35 @@
             <!-- Mobile nav -->
             <div id="mobile-nav" class="hidden border-t border-slate-200 py-3">
                 <div class="flex flex-col gap-2">
-                    @if (!isProductsIndex)
+                    @if (isDrugsOrOrder)
                     {
-                        <a asp-controller="Order" asp-action="Index" class="btn-link">Drugs</a>
+                        <a asp-controller="Order" asp-action="Browse" class="btn-link font-semibold text-blue-600 border-b-2 border-blue-600 pb-1">Drugs</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Order" asp-action="Browse" class="btn-link">Drugs</a>
                     }
 
+                    @if (isCart)
+                    {
+                        <a asp-controller="Cart" asp-action="Index" class="btn-link font-semibold text-blue-600 border-b-2 border-blue-600 pb-1">Cart</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Cart" asp-action="Index" class="btn-link">Cart</a>
+                    }
 
                     @if (User?.Identity?.IsAuthenticated ?? false)
                     {
-                        if (User.IsInRole("Admin"))
+                        @if (isAdmin)
                         {
-                            <a href="/admin" class="nav-link">Admin</a>
+                            <a asp-area="Admin" asp-controller="UserManager" asp-action="Index" class="btn-link font-semibold text-blue-600 border-b-2 border-blue-600 pb-1">Admin</a>
                         }
+                        else if (User.IsInRole("Admin"))
+                        {
+                            <a asp-area="Admin" asp-controller="UserManager" asp-action="Index" class="btn-link">Admin</a>
+                        }
+
                         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post" class="inline">
                             <button type="submit" class="btn-link">Logout</button>
                         </form>
@@ -101,12 +135,6 @@
                             <a asp-area="Identity" asp-page="/Account/Login" class="btn-link">Login</a>
                         }
                     }
-
-                    @if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin") && !isAdminProductCreate)
-                    {
-                        <a asp-area="Admin" asp-controller="Product" asp-action="Create">Add Drug</a>
-                    }
-                    <a asp-controller="Cart" asp-action="Index" class="btn-link">Cart</a>
                 </div>
             </div>
         </nav>
@@ -114,6 +142,18 @@
 
     <!-- reduced top padding so page hero sits closer to the top of the viewport -->
     <main class="mx-auto w-full max-w-6xl px-4 pt-4 pb-8 sm:px-6 lg:px-8">
+        @if (TempData["Success"] != null)
+        {
+            <div class="mb-4 rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                @TempData["Success"]
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="mb-4 rounded-md border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+                @TempData["Error"]
+            </div>
+        }
         @RenderBody()
     </main>
 
@@ -189,104 +229,6 @@
         })();
     </script>
 
-    <!-- Global AI Agent widget (bottom-right) -->
-    <div id="aiAgentWidget" class="fixed inset-x-4 bottom-6 z-50 flex justify-end">
-        <div id="aiAgentPanel" class="hidden w-[360px] max-w-full rounded-xl border border-slate-200 bg-white shadow-lg">
-            <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
-                <div class="text-sm font-medium">Store Agent</div>
-                <button id="aiAgentClose" class="text-slate-500 hover:text-slate-700">✕</button>
-            </div>
-            <div class="px-3 py-2">
-                <ul id="layoutChatMessages" class="max-h-48 space-y-2 overflow-auto text-sm text-slate-700"></ul>
-
-                <form id="layoutChatForm" class="mt-3 flex gap-2">
-                    <input id="layoutQuestionInput" type="text" autocomplete="off" placeholder="Ask about drugs or inventory..."
-                           class="min-w-0 flex-1 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm" />
-                    <button id="layoutSendBtn" type="submit"
-                            class="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700">
-                        Send
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <button id="aiAgentToggle" title="Ask the store agent"
-                class="ml-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-green-600 text-white shadow-md hover:bg-green-700">
-            💬
-        </button>
-    </div>
-
-    <script>
-        (function () {
-            const toggle = document.getElementById('aiAgentToggle');
-            const panel = document.getElementById('aiAgentPanel');
-            const closeBtn = document.getElementById('aiAgentClose');
-            const chatForm = document.getElementById('layoutChatForm');
-            const questionInput = document.getElementById('layoutQuestionInput');
-            const chatMessages = document.getElementById('layoutChatMessages');
-            const sendBtn = document.getElementById('layoutSendBtn');
-
-            function addMessage(who, text, toneClass) {
-                const li = document.createElement('li');
-                const label = document.createElement('div');
-                label.className = 'text-xs text-slate-500';
-                label.textContent = who;
-
-                const bubble = document.createElement('div');
-                bubble.className = `rounded-md px-3 py-2 text-sm ${toneClass}`;
-                bubble.textContent = text;
-
-                li.appendChild(label);
-                li.appendChild(bubble);
-                chatMessages.appendChild(li);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            if (toggle && panel) {
-                toggle.addEventListener('click', () => panel.classList.toggle('hidden'));
-            }
-            if (closeBtn && panel) {
-                closeBtn.addEventListener('click', () => panel.classList.add('hidden'));
-            }
-
-            if (chatForm) {
-                chatForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const question = questionInput.value.trim();
-                    if (!question) return;
-
-                    addMessage('You', question, 'bg-indigo-100');
-                    questionInput.value = '';
-                    sendBtn.disabled = true;
-                    sendBtn.textContent = '...';
-
-                    try {
-                        const res = await fetch('/api/chat/ask', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ question })
-                        });
-
-                        const data = await res.json();
-                        if (res.ok) {
-                            addMessage('StoreAgent', data.answer || 'No answer.', 'bg-gray-100');
-                        } else {
-                            addMessage('StoreAgent', data?.error || 'Sorry, something went wrong.', 'bg-red-100');
-                        }
-                    } catch (err) {
-                        addMessage('StoreAgent', 'Network error. Try again.', 'bg-red-100');
-                    } finally {
-                        sendBtn.disabled = false;
-                        sendBtn.textContent = 'Send';
-                    }
-                });
-            }
-        })();
-    </script>
-
     @RenderSection("Scripts", required: false)
-    @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
 </body>
 </html>

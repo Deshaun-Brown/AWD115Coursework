@@ -1,16 +1,15 @@
-using Pharmaceuticals.Models;
+using Pharmaceuticals.Data;
 using Pharmaceuticals.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Pharmaceuticals.Data;
-
+using Pharmaceuticals.Models;
 
 namespace Pharmaceuticals.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Route("Admin/product")]
+[Route("admin/product")]
 [Authorize(Roles = "Admin")]
 public class ProductController : Controller
 {
@@ -19,6 +18,16 @@ public class ProductController : Controller
     public ProductController(ApplicationDbContext context)
     {
         _context = context;
+    }
+
+    [HttpGet("index")]
+    public async Task<IActionResult> Index()
+    {
+        var products = await _context.Products
+            .Include(p => p.Category)
+            .OrderBy(p => p.Name)
+            .ToListAsync();
+        return View("~/Areas/Admin/Views/Product/Index.cshtml", products);
     }
 
     [HttpGet("create")]
@@ -38,7 +47,7 @@ public class ProductController : Controller
             _context.Add(product);
             await _context.SaveChangesAsync();
             TempData["Success"] = "Product added successfully!";
-            return RedirectToAction("Index", "Product", new { area = "" });
+            return RedirectToAction("Index", "Product", new { area = "Admin" });
         }
 
         ViewBag.Action = "Create";
@@ -55,6 +64,11 @@ public class ProductController : Controller
             return NotFound();
         }
 
+        if (!string.Equals(slug, product.Slug, StringComparison.OrdinalIgnoreCase))
+        {
+            return RedirectToAction(nameof(Edit), new { id = product.ProductId, slug = product.Slug });
+        }
+
         ViewBag.Action = "Edit";
         ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "Name", product.CategoryId);
         return View("CreateEdit", product);
@@ -62,10 +76,6 @@ public class ProductController : Controller
 
     [HttpPost("edit/{id:int}/{slug}")]
     [ValidateAntiForgeryToken]
-
-
-
-
     public async Task<IActionResult> Edit(int id, string slug, Product product)
     {
         if (id != product.ProductId)
@@ -90,7 +100,7 @@ public class ProductController : Controller
                 throw;
             }
 
-            return RedirectToAction("Index", "Product", new { area = "" });
+            return RedirectToAction("Index", "Product", new { area = "Admin" });
         }
 
         ViewBag.Action = "Edit";
@@ -105,12 +115,21 @@ public class ProductController : Controller
             .Include(p => p.Category)
             .FirstOrDefaultAsync(m => m.ProductId == id);
 
-        return product is null ? NotFound() : View(product);
+        if (product is null)
+        {
+            return NotFound();
+        }
+
+        if (!string.Equals(slug, product.Slug, StringComparison.OrdinalIgnoreCase))
+        {
+            return RedirectToAction(nameof(Delete), new { id = product.ProductId, slug = product.Slug });
+        }
+
+        return View(product);
     }
 
     [HttpPost("delete/{id:int}/{slug}")]
     [ValidateAntiForgeryToken]
-
     public async Task<IActionResult> DeleteConfirmed(int id, string slug)
     {
         var product = await _context.Products.FindAsync(id);
@@ -119,10 +138,9 @@ public class ProductController : Controller
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             TempData["Success"] = "Product deleted successfully!";
-
         }
 
-        return RedirectToAction("Index", "Product", new { area = "" });
+        return RedirectToAction("Index", "Product", new { area = "Admin" });
     }
 
     [HttpGet]

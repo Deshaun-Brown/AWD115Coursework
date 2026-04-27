@@ -17,18 +17,17 @@
     var currentArea = ViewContext.RouteData.Values["area"]?.ToString();
     var currentPage = ViewContext.RouteData.Values["page"]?.ToString();
     
-    // Navigation link helper functions
-    Func<string, string, string, bool> isCurrentPage = (area, controller, action) =>
+    bool IsCurrentPage(string? area, string controller, string action)
     {
         return (string.IsNullOrEmpty(area) ? "" : area).Equals(currentArea ?? "", StringComparison.OrdinalIgnoreCase) &&
                controller.Equals(currentController ?? "", StringComparison.OrdinalIgnoreCase) &&
                action.Equals(currentAction ?? "", StringComparison.OrdinalIgnoreCase);
-    };
-    
-    Func<string, string, bool> isCurrentArea = (area) =>
+    }
+
+    bool IsCurrentArea(string area)
     {
         return area.Equals(currentArea ?? "", StringComparison.OrdinalIgnoreCase);
-    };
+    }
 
     var isProductsIndex = (currentController == "Product" || currentController == "Order") && currentAction == "Index";
     var isIdentityLogin = currentArea == "Identity" && string.Equals(currentPage, "/Account/Login", StringComparison.OrdinalIgnoreCase);
@@ -44,14 +43,7 @@
 @inject UserManager<ApplicationUser> UserManager
 
      <script src="https://cdn.jsdelivr.net/npm/@@tailwindplus/elements@1" type="module"></script>
-    <!--
-      This example requires updating your template:
-
-      ```
-      <html class="h-full bg-gray-900">
-      <body class="h-full">
-      ```
-    -->
+ 
     <header class="border-b border-slate-200 bg-white">
         <nav class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">

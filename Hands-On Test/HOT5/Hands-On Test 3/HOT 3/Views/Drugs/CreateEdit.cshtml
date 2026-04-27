@@ -1,5 +1,4 @@
-﻿
-@model Pharmaceuticals.Models.Product
+﻿@model Pharmaceuticals.Models.Product
 
 @{
     var action = (ViewBag.Action as string) ?? "Create";
@@ -38,6 +37,14 @@
                     <label asp-for="Description" class="block text-sm font-medium text-slate-700"></label>
                     <textarea asp-for="Description" rows="4" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"></textarea>
                     <span asp-validation-for="Description" class="mt-1 block text-sm text-rose-700"></span>
+                </div>
+
+                <div>
+                    <label asp-for="CategoryId" class="block text-sm font-medium text-slate-700"></label>
+                    <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+                        <option value="">-- Select category --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="mt-1 block text-sm text-rose-700"></span>
                 </div>
 
                 <div>

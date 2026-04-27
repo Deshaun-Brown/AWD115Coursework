@@ -24,6 +24,7 @@ namespace Pharmaceuticals.Models
 
         // FK + Navigation (many Products -> one Category)
         [Required(ErrorMessage = "Please select a category.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please select a category.")]
         public int CategoryId { get; set; }
 
         public Category? Category { get; set; }

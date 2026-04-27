@@ -5,8 +5,6 @@
     ViewData["Title"] = "Log in";
 }
 
-
-
 <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg border border-gray-200 animate-3d-slide-in">
     <h1 class="text-2xl font-bold mb-6 text-center text-gray-900">@ViewData["Title"]</h1>
     <section>
@@ -43,7 +41,7 @@
                     <a id="forgot-password" asp-page="./ForgotPassword" class="font-medium text-blue-600 hover:text-blue-500">Forgot your password?</a>
                 </p>
                 <p>
-                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="font-medium text-blue-600 hover:text-blue-500">Register as a new user</a>
+                    Need to register? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="font-medium text-blue-600 hover:text-blue-500">Click here.</a>
                 </p>
                 <p>
                     <a id="resend-confirmation" asp-page="./ResendEmailConfirmation" class="font-medium text-blue-600 hover:text-blue-500">Resend email confirmation</a>

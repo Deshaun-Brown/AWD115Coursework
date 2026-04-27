@@ -1,5 +1,5 @@
-﻿
-@model Pharmaceuticals.Models.Product
+﻿@model Pharmaceuticals.Models.Product
+@using Microsoft.AspNetCore.Mvc.Rendering
 
 @{
     var action = (ViewBag.Action as string) ?? "Create";
@@ -58,6 +58,16 @@
                         <input asp-for="Quantity" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20" />
                         <span asp-validation-for="Quantity" class="mt-1 block text-sm text-rose-700"></span>
                     </div>
+                </div>
+
+                <div>
+                    <label asp-for="CategoryId" class="block text-sm font-medium text-slate-700">Category</label>
+                    <select asp-for="CategoryId"
+                            asp-items="@(ViewBag.Categories as SelectList)"
+                            class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+                        <option value="0">-- Select a category --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="mt-1 block text-sm text-rose-700"></span>
                 </div>
             </div>
 

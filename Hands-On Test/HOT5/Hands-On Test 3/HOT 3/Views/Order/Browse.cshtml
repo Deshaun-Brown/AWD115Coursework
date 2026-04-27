@@ -7,7 +7,7 @@
         <h3 class="font-semibold mb-2">Category</h3>
         <ul>
             <li>
-                <a href="@Url.RouteUrl("ProductsBrowse", new { category = "all" })"
+                <a href="@Url.RouteUrl("ProductsBrowse", new { category = "all", page = 1 })"
                    class="@(Model.SelectedCategory == "all" ? "font-bold text-green-600" : "text-slate-700")">
                     All
                 </a>
@@ -15,7 +15,7 @@
             @foreach (var cat in Model.Categories)
             {
                 <li>
-                    <a href="@Url.RouteUrl("ProductsBrowse", new { category = cat.Name })"
+                    <a href="@Url.RouteUrl("ProductsBrowse", new { category = cat.Name, page = 1 })"
                        class="@(Model.SelectedCategory == cat.Name ? "font-bold text-green-600" : "text-slate-700")">
                         @cat.Name
                     </a>
@@ -33,13 +33,15 @@
                     <div class="font-semibold">@prod.Name</div>
                     <div class="text-sm text-slate-600">@prod.Description</div>
                     <div class="text-xs text-slate-400 mt-2">@prod.Category?.Name</div>
-                    <div class="mt-4 flex items-center gap-2">
+                    <div class="mt-4 flex items-center gap-2 flex-wrap">
+                        <a asp-controller="Order" asp-action="Details" asp-route-id="@prod.ProductId" class="inline-flex items-center gap-2 rounded-md bg-slate-100 px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-200">
+                            View
+                        </a>
                         <form asp-controller="Cart" asp-action="AddToCart" method="post" class="flex js-add-to-cart">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="productId" value="@prod.ProductId" />
                             <input type="hidden" name="quantity" value="1" />
                             <button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700">
-                                <!-- Heroicons shopping cart outline -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-linecap="round" stroke-linejoin="round" />
                                     <circle cx="10" cy="20" r="1" />
@@ -58,5 +60,29 @@
                 idx++;
             }
         </div>
+
+        @{
+            var pageNumber = (int)(ViewBag.PageNumber ?? 1);
+            var pageSize = (int)(ViewBag.PageSize ?? 10);
+            var totalCount = (int)(ViewBag.TotalCount ?? Model.Products.Count);
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+        }
+
+        @if (totalPages > 1)
+        {
+            <div class="mt-6 flex items-center justify-center gap-2">
+                <a href="@Url.RouteUrl("ProductsBrowse", new { category = Model.SelectedCategory, page = Math.Max(1, pageNumber - 1) })"
+                   class="rounded border px-3 py-1 text-sm @(pageNumber <= 1 ? "pointer-events-none opacity-50" : "hover:bg-slate-100")">Prev</a>
+
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <a href="@Url.RouteUrl("ProductsBrowse", new { category = Model.SelectedCategory, page = i })"
+                       class="rounded border px-3 py-1 text-sm @(i == pageNumber ? "bg-indigo-600 text-white border-indigo-600" : "hover:bg-slate-100")">@i</a>
+                }
+
+                <a href="@Url.RouteUrl("ProductsBrowse", new { category = Model.SelectedCategory, page = Math.Min(totalPages, pageNumber + 1) })"
+                   class="rounded border px-3 py-1 text-sm @(pageNumber >= totalPages ? "pointer-events-none opacity-50" : "hover:bg-slate-100")">Next</a>
+            </div>
+        }
     </div>
 </div>
