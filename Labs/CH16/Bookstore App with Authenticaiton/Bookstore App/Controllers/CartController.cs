@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Security.Claims;
 using Bookstore_App.Models.DataLayer;
 using Bookstore_App.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ namespace Bookstore_App.Controllers;
 
 public class CartController : Controller
 {
-    private const string CartCookieName = "bookstore_cart";
+    private const string CartCookieBaseName = "bookstore_cart";
     private readonly BookstoreContext _context;
 
     public CartController(BookstoreContext context)
@@ -21,7 +22,8 @@ public class CartController : Controller
     {
         if (!(User.Identity?.IsAuthenticated ?? false))
         {
-            Response.Cookies.Delete("bookstore_cart");
+            // Keep anonymous users with an empty cart to avoid leaking authenticated carts
+            Response.Cookies.Delete(CartCookieBaseName);
             return View(new CartViewModel());
         }
 
@@ -62,7 +64,7 @@ public class CartController : Controller
     {
         if (!(User.Identity?.IsAuthenticated ?? false))
         {
-            Response.Cookies.Delete("bookstore_cart");
+            // Do not allow anonymous add to authenticated users' carts
             return RedirectToAction("Login", "Account", new { returnUrl = returnUrl });
         }
 
@@ -107,6 +109,11 @@ public class CartController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Remove(int id)
     {
+        if (!(User.Identity?.IsAuthenticated ?? false))
+        {
+            return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("Index", "Cart") });
+        }
+
         var cart = ReadCart();
         if (cart.ContainsKey(id))
         {
@@ -117,9 +124,24 @@ public class CartController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    private string GetCartCookieName()
+    {
+        if (User.Identity?.IsAuthenticated ?? false)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                return CartCookieBaseName + "_" + userId;
+            }
+        }
+
+        return CartCookieBaseName;
+    }
+
     private Dictionary<int, int> ReadCart()
     {
-        var json = Request.Cookies[CartCookieName];
+        var cookieName = GetCartCookieName();
+        var json = Request.Cookies[cookieName];
         if (string.IsNullOrWhiteSpace(json))
         {
             return new Dictionary<int, int>();
@@ -131,7 +153,8 @@ public class CartController : Controller
     private void WriteCart(Dictionary<int, int> cart)
     {
         var json = JsonSerializer.Serialize(cart);
-        Response.Cookies.Append(CartCookieName, json, new CookieOptions
+        var cookieName = GetCartCookieName();
+        Response.Cookies.Append(cookieName, json, new CookieOptions
         {
             Expires = DateTimeOffset.UtcNow.AddDays(14),
             IsEssential = true,

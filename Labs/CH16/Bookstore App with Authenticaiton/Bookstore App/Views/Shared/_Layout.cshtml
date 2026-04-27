@@ -4,7 +4,9 @@
     var cartCount = 0;
     if (User.Identity?.IsAuthenticated ?? false)
     {
-        var cartJson = Context?.Request.Cookies["bookstore_cart"];
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var cartCookieName = string.IsNullOrWhiteSpace(userId) ? "bookstore_cart" : $"bookstore_cart_{userId}";
+        var cartJson = Context?.Request.Cookies[cartCookieName];
         if (!string.IsNullOrWhiteSpace(cartJson))
         {
             try
@@ -40,21 +42,21 @@
     <header class="bg-slate-900 text-white">
         <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-2 text-sm">
             <div class="flex items-center gap-6">
-                <a class="text-base tracking-wide" style="font-family: 'Cinzel', serif;" asp-controller="Home" asp-action="Index">Tuxedo Books</a>
+                <a class="text-base tracking-wide" style="font-family: 'Cinzel', serif;" asp-area="" asp-controller="Home" asp-action="Index">Tuxedo Books</a>
                 <div class="flex gap-4">
-                    <a class="inline-flex items-center gap-2 hover:underline" asp-controller="Home" asp-action="Index">
+                    <a class="inline-flex items-center gap-2 hover:underline" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src ="~/icons/icons8-home-32.png" alt="Home" class="h-4 w-4" />
                         <span>Home</span>
                     </a>
 
-                    <a class="hover:underline" asp-controller="Book" asp-action="StaffPick">Staff Pick</a>
+                    <a class="hover:underline" asp-area="" asp-controller="Book" asp-action="StaffPick">Staff Pick</a>
 
-                    <a class="inline-flex items-center gap-2 hover:underline" asp-controller="Book" asp-action="Index">
+                    <a class="inline-flex items-center gap-2 hover:underline" asp-area="" asp-controller="Book" asp-action="Index">
                         <img src="~/icons/book.png" alt="Books" class="h-4 w-4" />
                         <span>Books</span>
                     </a>
 
-                    <a class="inline-flex items-center gap-2 hover:underline" asp-controller="Author" asp-action="Index">
+                    <a class="inline-flex items-center gap-2 hover:underline" asp-area="" asp-controller="Author" asp-action="Index">
                         <img src="~/icons/feather.png" alt="" class="h-4 w-4" />
                         <span>Authors</span>
                     </a>
@@ -62,7 +64,7 @@
             </div>
 
             <div class="flex items-center gap-4">
-                <a class="hover:underline" asp-controller="Cart" asp-action="Index">Cart @(User.Identity?.IsAuthenticated ?? false ? $"({cartCount})" : "(0)")</a>
+                <a class="hover:underline" asp-area="" asp-controller="Cart" asp-action="Index">Cart @(User.Identity?.IsAuthenticated ?? false ? $"({cartCount})" : "(0)")</a>
 
                 @if (User.Identity?.IsAuthenticated ?? false)
                 {
@@ -85,8 +87,8 @@
                 }
                 else
                 {
-                    <a class="hover:underline" asp-controller="Account" asp-action="Register">Register</a>
-                    <a class="hover:underline" asp-controller="Account" asp-action="Login">Log In</a>
+                    <a class="hover:underline" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                    <a class="hover:underline" asp-area="" asp-controller="Account" asp-action="Login">Log In</a>
                 }
             </div>
         </nav>

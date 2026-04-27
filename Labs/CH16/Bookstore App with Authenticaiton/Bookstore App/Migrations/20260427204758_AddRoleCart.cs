@@ -5,7 +5,7 @@
 namespace Bookstore_App.Migrations
 {
     /// <inheritdoc />
-    public partial class AddUser3 : Migration
+    public partial class AddRoleCart : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

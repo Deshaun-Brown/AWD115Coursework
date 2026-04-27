@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookstore_App.Migrations
 {
     [DbContext(typeof(BookstoreContext))]
-    [Migration("20260419192200_AddIdentityFlow")]
-    partial class AddIdentityFlow
+    [Migration("20260427201537_AddDatabase1")]
+    partial class AddDatabase1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,6 +144,276 @@ namespace Bookstore_App.Migrations
                             Price = 44.99m,
                             PublishDate = new DateOnly(2019, 9, 13),
                             Title = "The Pragmatic Programmer"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AuthorId = 1,
+                            GenreId = 1,
+                            Isbn = "9780385537030",
+                            Price = 14.99m,
+                            PublishDate = new DateOnly(2011, 9, 13),
+                            Title = "The Night Circus"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AuthorId = 2,
+                            GenreId = 2,
+                            Isbn = "9780593135204",
+                            Price = 18.99m,
+                            PublishDate = new DateOnly(2021, 5, 4),
+                            Title = "Project Hail Mary"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AuthorId = 3,
+                            GenreId = 3,
+                            Isbn = "9781250301697",
+                            Price = 13.99m,
+                            PublishDate = new DateOnly(2019, 5, 1),
+                            Title = "The Silent Patient"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AuthorId = 1,
+                            GenreId = 1,
+                            Isbn = "9780393592389",
+                            Price = 15.99m,
+                            PublishDate = new DateOnly(2018, 2, 20),
+                            Title = "Educated"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AuthorId = 2,
+                            GenreId = 2,
+                            Isbn = "9780316341370",
+                            Price = 12.99m,
+                            PublishDate = new DateOnly(2018, 4, 10),
+                            Title = "Circe"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AuthorId = 3,
+                            GenreId = 3,
+                            Isbn = "9780553418026",
+                            Price = 11.99m,
+                            PublishDate = new DateOnly(2014, 2, 11),
+                            Title = "The Martian"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            AuthorId = 1,
+                            GenreId = 1,
+                            Isbn = "9780071767903",
+                            Price = 12.49m,
+                            PublishDate = new DateOnly(2011, 8, 30),
+                            Title = "The Song of Achilles"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            AuthorId = 2,
+                            GenreId = 2,
+                            Isbn = "9780735211292",
+                            Price = 16.99m,
+                            PublishDate = new DateOnly(2018, 10, 16),
+                            Title = "Atomic Habits"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            AuthorId = 3,
+                            GenreId = 3,
+                            Isbn = "9780735219090",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(2018, 8, 14),
+                            Title = "Where the Crawdads Sing"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            AuthorId = 1,
+                            GenreId = 1,
+                            Isbn = "9780525559474",
+                            Price = 14.49m,
+                            PublishDate = new DateOnly(2020, 8, 13),
+                            Title = "The Midnight Library"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            AuthorId = 2,
+                            GenreId = 2,
+                            Isbn = "9780143034902",
+                            Price = 13.49m,
+                            PublishDate = new DateOnly(2016, 9, 6),
+                            Title = "A Gentleman in Moscow"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            AuthorId = 3,
+                            GenreId = 3,
+                            Isbn = "9780525479988",
+                            Price = 15.49m,
+                            PublishDate = new DateOnly(2020, 6, 2),
+                            Title = "The Vanishing Half"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            AuthorId = 1,
+                            GenreId = 1,
+                            Isbn = "9780743273565",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(1925, 4, 10),
+                            Title = "The Great Gatsby"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            AuthorId = 2,
+                            GenreId = 2,
+                            Isbn = "9780061120084",
+                            Price = 7.99m,
+                            PublishDate = new DateOnly(1960, 7, 11),
+                            Title = "To Kill a Mockingbird"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            AuthorId = 3,
+                            GenreId = 3,
+                            Isbn = "9781485550464",
+                            Price = 9.99m,
+                            PublishDate = new DateOnly(1813, 1, 28),
+                            Title = "Pride and Prejudice"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            AuthorId = 1,
+                            GenreId = 1,
+                            Isbn = "9780316769488",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(1951, 7, 16),
+                            Title = "The Catcher in the Rye"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            AuthorId = 2,
+                            GenreId = 2,
+                            Isbn = "9780439708180",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(1997, 9, 1),
+                            Title = "Harry Potter and the Sorcerer's Stone"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            AuthorId = 3,
+                            GenreId = 3,
+                            Isbn = "9780547928227",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(1937, 9, 21),
+                            Title = "The Hobbit"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            AuthorId = 1,
+                            GenreId = 1,
+                            Isbn = "9780307474278",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(2003, 3, 18),
+                            Title = "The Da Vinci Code"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            AuthorId = 23,
+                            GenreId = 8,
+                            Isbn = "9780062315007",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(1988, 4, 15),
+                            Title = "The Alchemist"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            AuthorId = 24,
+                            GenreId = 9,
+                            Isbn = "9781933372399",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(2008, 4, 17),
+                            Title = "The Angel's Game"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            AuthorId = 25,
+                            GenreId = 10,
+                            Isbn = "9781944910034",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(2001, 4, 17),
+                            Title = "The Shadow of the Wind"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            AuthorId = 26,
+                            GenreId = 11,
+                            Isbn = "9789603649662",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(1987, 9, 4),
+                            Title = "Norwegian Wood"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            AuthorId = 27,
+                            GenreId = 12,
+                            Isbn = "9780679775430",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(1994, 9, 1),
+                            Title = "The Wind-Up Bird Chronicle"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            AuthorId = 28,
+                            GenreId = 13,
+                            Isbn = "9781400079278",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(2002, 9, 12),
+                            Title = "Kafka on the Shore"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            AuthorId = 29,
+                            GenreId = 14,
+                            Isbn = "9780307706870",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(2009, 4, 16),
+                            Title = "1Q84"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            AuthorId = 30,
+                            GenreId = 15,
+                            Isbn = "9781594483295",
+                            Price = 10.99m,
+                            PublishDate = new DateOnly(2007, 9, 6),
+                            Title = "The Brief Wondrous Life of Oscar Wao"
                         });
                 });
 

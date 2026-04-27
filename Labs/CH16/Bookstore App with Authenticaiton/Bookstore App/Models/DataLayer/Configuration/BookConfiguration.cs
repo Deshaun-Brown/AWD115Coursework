@@ -45,14 +45,14 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
             new Book { Id = 20, AuthorId = 2, GenreId = 2, Isbn = "9780439708180", Price = 10.99m, PublishDate = new DateOnly(1997, 9, 1), Title = "Harry Potter and the Sorcerer's Stone" },
             new Book { Id = 21, AuthorId = 3, GenreId = 3, Isbn = "9780547928227", Price = 10.99m, PublishDate = new DateOnly(1937, 9, 21), Title = "The Hobbit" },
             new Book { Id = 22, AuthorId = 1, GenreId = 1, Isbn = "9780307474278", Price = 10.99m, PublishDate = new DateOnly(2003, 3, 18), Title = "The Da Vinci Code" },
-            new Book { Id = 23, Title = "The Alchemist", Isbn = "9780062315007", Price = 10.99m, PublishDate = new DateOnly(1988, 4, 15), GenreId = 8, AuthorId = 23 },
-            new Book { Id = 24, Title = "The Angel's Game", Isbn = "9781933372399", Price = 10.99m, PublishDate = new DateOnly(2008, 4, 17), GenreId = 9, AuthorId = 24 },
-            new Book { Id = 25, Title = "The Shadow of the Wind", Isbn = "9781944910034", Price = 10.99m, PublishDate = new DateOnly(2001, 4, 17), GenreId = 10, AuthorId = 25 },
-            new Book { Id = 26, Title = "Norwegian Wood", Isbn = "9789603649662", Price = 10.99m, PublishDate = new DateOnly(1987, 9, 4), GenreId = 11, AuthorId = 26 },
-            new Book { Id = 27, Title = "The Wind-Up Bird Chronicle", Isbn = "9780679775430", Price = 10.99m, PublishDate = new DateOnly(1994, 9, 1), GenreId = 12, AuthorId = 27 },
-            new Book { Id = 28, Title = "Kafka on the Shore", Isbn = "9781400079278", Price = 10.99m, PublishDate = new DateOnly(2002, 9, 12), GenreId = 13, AuthorId = 28 },
-            new Book { Id = 29, Title = "1Q84", Isbn = "9780307706870", Price = 10.99m, PublishDate = new DateOnly(2009, 4, 16), GenreId = 14, AuthorId = 29 },
-            new Book { Id = 30, Title = "The Brief Wondrous Life of Oscar Wao", Isbn = "9781594483295", Price = 10.99m, PublishDate = new DateOnly(2007, 9, 6), GenreId = 15, AuthorId = 30 }
+            new Book { Id = 23, AuthorId = 1, GenreId = 1, Isbn = "9780062315007", Price = 10.99m, PublishDate = new DateOnly(1988, 4, 15), Title = "The Alchemist" },
+            new Book { Id = 24, AuthorId = 2, GenreId = 2, Isbn = "9781933372399", Price = 10.99m, PublishDate = new DateOnly(2008, 4, 17), Title = "The Angel's Game" },
+            new Book { Id = 25, AuthorId = 3, GenreId = 3, Isbn = "9781944910034", Price = 10.99m, PublishDate = new DateOnly(2001, 4, 17), Title = "The Shadow of the Wind" },
+            new Book { Id = 26, AuthorId = 1, GenreId = 1, Isbn = "9789603649662", Price = 10.99m, PublishDate = new DateOnly(1987, 9, 4), Title = "Norwegian Wood" },
+            new Book { Id = 27, AuthorId = 2, GenreId = 2, Isbn = "9780679775430", Price = 10.99m, PublishDate = new DateOnly(1994, 9, 1), Title = "The Wind-Up Bird Chronicle" },
+            new Book { Id = 28, AuthorId = 3, GenreId = 3, Isbn = "9781400079278", Price = 10.99m, PublishDate = new DateOnly(2002, 9, 12), Title = "Kafka on the Shore" },
+            new Book { Id = 29, AuthorId = 1, GenreId = 1, Isbn = "9780307706870", Price = 10.99m, PublishDate = new DateOnly(2009, 4, 16), Title = "1Q84" },
+            new Book { Id = 30, AuthorId = 2, GenreId = 2, Isbn = "9781594483295", Price = 10.99m, PublishDate = new DateOnly(2007, 9, 6), Title = "The Brief Wondrous Life of Oscar Wao" }
         );
     }
 }

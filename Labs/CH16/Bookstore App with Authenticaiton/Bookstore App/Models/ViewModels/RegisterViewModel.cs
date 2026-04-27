@@ -20,7 +20,9 @@ public partial class RegisterViewModel
     public string ConfirmPassword { get; set; } = null!;
 
     public bool IsAdmin { get; set; }
-    public string UserName { get; internal set; }
+
+    [Required]
+    public string UserName { get; set; } = string.Empty;
 
     public string Username
     {

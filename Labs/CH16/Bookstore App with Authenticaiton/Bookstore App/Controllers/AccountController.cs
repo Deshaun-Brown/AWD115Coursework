@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Bookstore_App.Models.Account;
 using System.Security.Claims;
+using System.Text.Json;
 
 
 
@@ -15,6 +16,7 @@ public class AccountController : Controller
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private const string CartCookieBaseName = "bookstore_cart";
 
     public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
     {
@@ -71,7 +73,7 @@ public class AccountController : Controller
 
         if (model.IsAdmin)
         {
-            if (!await _roleManager.RoleExistsAsync("Admin"))
+            if (!await _role_manager_check())
             {
                 await _roleManager.CreateAsync(new IdentityRole("Admin"));
             }
@@ -80,8 +82,63 @@ public class AccountController : Controller
         }
 
         await _signInManager.SignInAsync(user, isPersistent: false);
+
+        // Migrate anonymous cart into per-user cart
+        await MigrateAnonymousCartToUserAsync(user.Id);
+
         TempData["SuccessMessage"] = "Registration successful. Welcome to Tuxedo Books!";
         return RedirectToAction("Index", "Home");
+    }
+
+    private async Task<bool> _role_manager_check()
+    {
+        return await _roleManager.RoleExistsAsync("Admin");
+    }
+
+    private async Task MigrateAnonymousCartToUserAsync(string userId)
+    {
+        try
+        {
+            var anonJson = Request.Cookies[CartCookieBaseName];
+            if (string.IsNullOrWhiteSpace(anonJson)) return;
+
+            var anonCart = JsonSerializer.Deserialize<Dictionary<int, int>>(anonJson) ?? new Dictionary<int, int>();
+            if (anonCart.Count == 0) 
+            {
+                Response.Cookies.Delete(CartCookieBaseName);
+                return;
+            }
+
+            var userCookieName = CartCookieBaseName + "_" + userId;
+            var existingJson = Request.Cookies[userCookieName];
+            var existingCart = string.IsNullOrWhiteSpace(existingJson)
+                ? new Dictionary<int, int>()
+                : JsonSerializer.Deserialize<Dictionary<int, int>>(existingJson) ?? new Dictionary<int,int>();
+
+            // Merge
+            foreach (var kvp in anonCart)
+            {
+                if (existingCart.ContainsKey(kvp.Key)) existingCart[kvp.Key] += kvp.Value;
+                else existingCart[kvp.Key] = kvp.Value;
+            }
+
+            var mergedJson = JsonSerializer.Serialize(existingCart);
+            Response.Cookies.Append(userCookieName, mergedJson, new CookieOptions
+            {
+                Expires = DateTimeOffset.UtcNow.AddDays(14),
+                IsEssential = true,
+                HttpOnly = false,
+                SameSite = SameSiteMode.Lax,
+                Secure = Request.IsHttps
+            });
+
+            // Remove anonymous cookie
+            Response.Cookies.Delete(CartCookieBaseName);
+        }
+        catch
+        {
+            // ignore migration errors
+        }
     }
 
     [HttpGet]
@@ -111,7 +168,7 @@ public class AccountController : Controller
             return View(model);
         }
 
-        var user = await _userManager.FindByNameAsync(userName);
+        var user = await _userManager.FindByNameAsync(userName) ?? await _userManager.FindByEmailAsync(userName);
         if (user is null)
         {
             ModelState.AddModelError(string.Empty, "Invalid UserName or password.");
@@ -133,6 +190,9 @@ public class AccountController : Controller
 
         await _signInManager.SignInWithClaimsAsync(user, model.RememberMe, claims);
 
+        // Migrate anonymous cart into per-user cart
+        await MigrateAnonymousCartToUserAsync(user.Id);
+
         if (!string.IsNullOrWhiteSpace(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
         {
             return Redirect(model.ReturnUrl);
@@ -145,11 +205,20 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
+        // capture user id before sign out
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         await _signInManager.SignOutAsync();
 
-        // Clear cart on logout
-        Response.Cookies.Delete("bookstore_cart");
+        // Clear anonymous cart and user-specific cart
+        Response.Cookies.Delete(CartCookieBaseName);
+        if (!string.IsNullOrWhiteSpace(userId))
+        {
+            Response.Cookies.Delete(CartCookieBaseName + "_" + userId);
+        }
 
         return RedirectToAction("Index", "Home");
     }
+
+    // ... rest of controller unchanged ...
 }

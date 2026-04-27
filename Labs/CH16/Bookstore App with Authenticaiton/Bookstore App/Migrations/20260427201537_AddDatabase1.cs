@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Bookstore_App.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIdentityFlow : Migration
+    public partial class AddDatabase1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -245,9 +245,43 @@ namespace Bookstore_App.Migrations
                 columns: new[] { "Id", "AuthorId", "GenreId", "Isbn", "Price", "PublishDate", "Title" },
                 values: new object[,]
                 {
+                    { 23, 1, 1, "9780062315007", 10.99m, new DateOnly(1988, 4, 15), "The Alchemist" },
+                    { 24, 2, 2, "9781933372399", 10.99m, new DateOnly(2008, 4, 17), "The Angel's Game" },
+                    { 25, 3, 3, "9781944910034", 10.99m, new DateOnly(2001, 4, 17), "The Shadow of the Wind" },
+                    { 26, 1, 1, "9789603649662", 10.99m, new DateOnly(1987, 9, 4), "Norwegian Wood" },
+                    { 27, 2, 2, "9780679775430", 10.99m, new DateOnly(1994, 9, 1), "The Wind-Up Bird Chronicle" },
+                    { 28, 3, 3, "9781400079278", 10.99m, new DateOnly(2002, 9, 12), "Kafka on the Shore" },
+                    { 29, 1, 1, "9780307706870", 10.99m, new DateOnly(2009, 4, 16), "1Q84" },
+                    { 30, 2, 2, "9781594483295", 10.99m, new DateOnly(2007, 9, 6), "The Brief Wondrous Life of Oscar Wao" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "AuthorId", "GenreId", "Isbn", "Price", "PublishDate", "Title" },
+                values: new object[,]
+                {
                     { 1, 1, 1, "9780451524935", 14.99m, new DateOnly(1949, 6, 8), "1984" },
                     { 2, 2, 2, "9780062316097", 19.99m, new DateOnly(2011, 1, 1), "Sapiens" },
-                    { 3, 3, 3, "9780135957059", 44.99m, new DateOnly(2019, 9, 13), "The Pragmatic Programmer" }
+                    { 3, 3, 3, "9780135957059", 44.99m, new DateOnly(2019, 9, 13), "The Pragmatic Programmer" },
+                    { 4, 1, 1, "9780385537030", 14.99m, new DateOnly(2011, 9, 13), "The Night Circus" },
+                    { 5, 2, 2, "9780593135204", 18.99m, new DateOnly(2021, 5, 4), "Project Hail Mary" },
+                    { 6, 3, 3, "9781250301697", 13.99m, new DateOnly(2019, 5, 1), "The Silent Patient" },
+                    { 7, 1, 1, "9780393592389", 15.99m, new DateOnly(2018, 2, 20), "Educated" },
+                    { 8, 2, 2, "9780316341370", 12.99m, new DateOnly(2018, 4, 10), "Circe" },
+                    { 9, 3, 3, "9780553418026", 11.99m, new DateOnly(2014, 2, 11), "The Martian" },
+                    { 10, 1, 1, "9780071767903", 12.49m, new DateOnly(2011, 8, 30), "The Song of Achilles" },
+                    { 11, 2, 2, "9780735211292", 16.99m, new DateOnly(2018, 10, 16), "Atomic Habits" },
+                    { 12, 3, 3, "9780735219090", 10.99m, new DateOnly(2018, 8, 14), "Where the Crawdads Sing" },
+                    { 13, 1, 1, "9780525559474", 14.49m, new DateOnly(2020, 8, 13), "The Midnight Library" },
+                    { 14, 2, 2, "9780143034902", 13.49m, new DateOnly(2016, 9, 6), "A Gentleman in Moscow" },
+                    { 15, 3, 3, "9780525479988", 15.49m, new DateOnly(2020, 6, 2), "The Vanishing Half" },
+                    { 16, 1, 1, "9780743273565", 10.99m, new DateOnly(1925, 4, 10), "The Great Gatsby" },
+                    { 17, 2, 2, "9780061120084", 7.99m, new DateOnly(1960, 7, 11), "To Kill a Mockingbird" },
+                    { 18, 3, 3, "9781485550464", 9.99m, new DateOnly(1813, 1, 28), "Pride and Prejudice" },
+                    { 19, 1, 1, "9780316769488", 10.99m, new DateOnly(1951, 7, 16), "The Catcher in the Rye" },
+                    { 20, 2, 2, "9780439708180", 10.99m, new DateOnly(1997, 9, 1), "Harry Potter and the Sorcerer's Stone" },
+                    { 21, 3, 3, "9780547928227", 10.99m, new DateOnly(1937, 9, 21), "The Hobbit" },
+                    { 22, 1, 1, "9780307474278", 10.99m, new DateOnly(2003, 3, 18), "The Da Vinci Code" }
                 });
 
             migrationBuilder.CreateIndex(

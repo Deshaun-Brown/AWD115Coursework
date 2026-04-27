@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookstore_App.Migrations
 {
     [DbContext(typeof(BookstoreContext))]
-    [Migration("20260422151356_AddNewUsers")]
-    partial class AddNewUsers
+    [Migration("20260427203447_AddDatabase2")]
+    partial class AddDatabase2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -338,8 +338,8 @@ namespace Bookstore_App.Migrations
                         new
                         {
                             Id = 23,
-                            AuthorId = 23,
-                            GenreId = 8,
+                            AuthorId = 1,
+                            GenreId = 1,
                             Isbn = "9780062315007",
                             Price = 10.99m,
                             PublishDate = new DateOnly(1988, 4, 15),
@@ -348,8 +348,8 @@ namespace Bookstore_App.Migrations
                         new
                         {
                             Id = 24,
-                            AuthorId = 24,
-                            GenreId = 9,
+                            AuthorId = 2,
+                            GenreId = 2,
                             Isbn = "9781933372399",
                             Price = 10.99m,
                             PublishDate = new DateOnly(2008, 4, 17),
@@ -358,8 +358,8 @@ namespace Bookstore_App.Migrations
                         new
                         {
                             Id = 25,
-                            AuthorId = 25,
-                            GenreId = 10,
+                            AuthorId = 3,
+                            GenreId = 3,
                             Isbn = "9781944910034",
                             Price = 10.99m,
                             PublishDate = new DateOnly(2001, 4, 17),
@@ -368,8 +368,8 @@ namespace Bookstore_App.Migrations
                         new
                         {
                             Id = 26,
-                            AuthorId = 26,
-                            GenreId = 11,
+                            AuthorId = 1,
+                            GenreId = 1,
                             Isbn = "9789603649662",
                             Price = 10.99m,
                             PublishDate = new DateOnly(1987, 9, 4),
@@ -378,8 +378,8 @@ namespace Bookstore_App.Migrations
                         new
                         {
                             Id = 27,
-                            AuthorId = 27,
-                            GenreId = 12,
+                            AuthorId = 2,
+                            GenreId = 2,
                             Isbn = "9780679775430",
                             Price = 10.99m,
                             PublishDate = new DateOnly(1994, 9, 1),
@@ -388,8 +388,8 @@ namespace Bookstore_App.Migrations
                         new
                         {
                             Id = 28,
-                            AuthorId = 28,
-                            GenreId = 13,
+                            AuthorId = 3,
+                            GenreId = 3,
                             Isbn = "9781400079278",
                             Price = 10.99m,
                             PublishDate = new DateOnly(2002, 9, 12),
@@ -398,8 +398,8 @@ namespace Bookstore_App.Migrations
                         new
                         {
                             Id = 29,
-                            AuthorId = 29,
-                            GenreId = 14,
+                            AuthorId = 1,
+                            GenreId = 1,
                             Isbn = "9780307706870",
                             Price = 10.99m,
                             PublishDate = new DateOnly(2009, 4, 16),
@@ -408,8 +408,8 @@ namespace Bookstore_App.Migrations
                         new
                         {
                             Id = 30,
-                            AuthorId = 30,
-                            GenreId = 15,
+                            AuthorId = 2,
+                            GenreId = 2,
                             Isbn = "9781594483295",
                             Price = 10.99m,
                             PublishDate = new DateOnly(2007, 9, 6),
