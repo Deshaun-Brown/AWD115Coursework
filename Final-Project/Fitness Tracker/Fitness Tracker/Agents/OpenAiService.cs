@@ -19,27 +19,37 @@ public class OpenAiService : IOpenAiService
 
     public async Task<string> GetChatCompletionAsync(string prompt, string model = "gpt-4o")
     {
-        var request = new
+        try
         {
-            model,
-            messages = new[] { new { role = "user", content = prompt } }
-        };
-
-        using var resp = await _http.PostAsJsonAsync("v1/chat/completions", request);
-        resp.EnsureSuccessStatusCode();
-
-        using var stream = await resp.Content.ReadAsStreamAsync();
-        using var doc = await JsonDocument.ParseAsync(stream);
-
-        if (doc.RootElement.TryGetProperty("choices", out var choices) &&
-            choices.ValueKind == JsonValueKind.Array && choices.GetArrayLength() > 0)
-        {
-            var first = choices[0];
-            if (first.TryGetProperty("message", out var message) &&
-                message.TryGetProperty("content", out var content))
+            var request = new
             {
-                return content.GetString() ?? string.Empty;
+                model,
+                messages = new[] { new { role = "user", content = prompt } }
+            };
+
+            using var resp = await _http.PostAsJsonAsync("v1/chat/completions", request);
+            if (!resp.IsSuccessStatusCode)
+            {
+                return "AI is not available right now in this demo.";
             }
+
+            using var stream = await resp.Content.ReadAsStreamAsync();
+            using var doc = await JsonDocument.ParseAsync(stream);
+
+            if (doc.RootElement.TryGetProperty("choices", out var choices) &&
+                choices.ValueKind == JsonValueKind.Array && choices.GetArrayLength() > 0)
+            {
+                var first = choices[0];
+                if (first.TryGetProperty("message", out var message) &&
+                    message.TryGetProperty("content", out var content))
+                {
+                    return content.GetString() ?? string.Empty;
+                }
+            }
+        }
+        catch
+        {
+            return "AI is not available right now in this demo.";
         }
 
         return string.Empty;

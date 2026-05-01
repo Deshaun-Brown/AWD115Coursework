@@ -1,7 +1,7 @@
 ﻿using Fitness_Tracker.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+
 
 namespace Fitness_Tracker.Data;
 

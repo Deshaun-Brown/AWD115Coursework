@@ -1,0 +1,41 @@
+@model Fitness_Tracker.Models.Product
+
+@{
+    ViewData["Title"] = Model?.Name ?? "Product Details";
+}
+
+<div class="mx-auto max-w-4xl">
+    <a asp-route="ProductsBrowse" class="inline-flex items-center text-sm font-medium text-indigo-700 hover:text-indigo-900">&larr; Back to Browse Equipment</a>
+
+    <div class="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div class="grid gap-0 md:grid-cols-2">
+            <div class="bg-slate-100">
+                <img src="@Url.Content(Model.ResolvedImageUrl.StartsWith("/") ? "~" + Model.ResolvedImageUrl : Model.ResolvedImageUrl)"
+                     alt="@Model?.Name"
+                     loading="lazy"
+                     onerror="this.onerror=null;this.src='@Url.Content("~/images/product-placeholder.svg")';"
+                     class="h-72 w-full object-cover md:h-full" />
+            </div>
+            <div class="p-6">
+                <h1 class="text-2xl font-semibold">@Model?.Name</h1>
+                <p class="mt-2 text-sm text-slate-600">@(Model?.Category?.Name ?? "Uncategorized")</p>
+
+                <p class="mt-4 text-slate-700">@Model?.Description</p>
+
+                <div class="mt-6 space-y-2 text-sm">
+                    <p><span class="font-medium">Price:</span> @String.Format("${0:0.00}", Model?.Price)</p>
+                    <p><span class="font-medium">In stock:</span> @Model?.Quantity</p>
+                </div>
+
+                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="mt-6 inline-flex js-add-to-cart">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="productId" value="@Model?.ProductId" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                        Add to cart
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

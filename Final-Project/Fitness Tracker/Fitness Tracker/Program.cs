@@ -43,10 +43,11 @@ builder.Services.AddSession(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SalesOrdersDB")));
 
-
-
 var apiKey = Environment.GetEnvironmentVariable("FITNESS_TRACKER_API_KEY");
-builder.Services.AddChatClient(sp => new OpenAIClient(apiKey).GetChatClient("gpt-4o").AsIChatClient());
+if (!string.IsNullOrWhiteSpace(apiKey))
+{
+    builder.Services.AddChatClient(_ => new OpenAIClient(apiKey).GetChatClient("gpt-4o").AsIChatClient());
+}
 
 
 

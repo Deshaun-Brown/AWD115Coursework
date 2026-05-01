@@ -18,17 +18,13 @@
   <ItemGroup>
     <PackageReference Include="AOSharpSDK" Version="1.0.106" />
     <PackageReference Include="BigBook" Version="6.2.9" />
-    <PackageReference Include="BookSleeve" Version="1.3.41" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
     <PackageReference Include="Microsoft.Agents.AI" Version="1.1.0" />
     <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.1.0" />
-    <!-- Add Microsoft.Extensions.AI packages to enable the Microsoft.Extensions.AI namespace and helpers -->
-    <!-- Use versions aligned with other Microsoft packages in the project to avoid packag e downgrade errors -->
     <PackageReference Include="Microsoft.Extensions.AI" Version="10.5.0" />
     <PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="10.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.6">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -36,12 +32,20 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.6" />
     <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.74.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
     <PackageReference Include="MyAnimeListSharp" Version="1.3.4" />
+    <PackageReference Include="NuGet.Packaging" Version="7.3.1" />
+    <PackageReference Include="NuGet.Protocol" Version="7.3.1" />
   </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<NoWarn>CS8632;CS8618;CS8601;NU1608;NU1701</NoWarn>
+	</PropertyGroup>
 	
 	<ItemGroup>
 		<UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Properties\PublishProfiles\" />
 	</ItemGroup>
 	<Target Name="Tailwind" BeforeTargets="Build;PrepareForPublish">
 		<Exec Command="npm install" />

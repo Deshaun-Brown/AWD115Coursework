@@ -48,6 +48,13 @@
 
                 <!-- Desktop nav -->
                 <div class="flex items-center gap-2">
+                    @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <span class="hidden sm:inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm font-medium text-slate-700">
+                            @User.Identity!.Name
+                        </span>
+                    }
+
                     <!-- Cart icon with badge -->
                     <a asp-controller="Cart" asp-action="Index" class="btn-link ml-3 flex items-center gap-2 relative" title="View cart">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -188,7 +195,7 @@
     </script>
 
     <!-- Global AI Agent widget (bottom-right) -->
-    <div id="aiAgentWidget" class="fixed inset-x-4 bottom-6 z-50 flex justify-end">
+    <div id="aiAgentWidget" class="fixed inset-x-4 bottom-6 z-40 flex justify-end">
         <div id="aiAgentPanel" class="hidden w-[360px] max-w-full rounded-xl border border-slate-200 bg-white shadow-lg">
             <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
                 <div class="text-sm font-medium">Store Agent</div>

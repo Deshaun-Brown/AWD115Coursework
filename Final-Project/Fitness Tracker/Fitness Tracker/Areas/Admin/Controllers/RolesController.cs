@@ -28,11 +28,16 @@ public class RolesController : Controller
 
         foreach (var role in roles)
         {
-            var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name!);
+            if (string.IsNullOrWhiteSpace(role.Name))
+            {
+                continue;
+            }
+
+            var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name);
             model.Add(new AdminRoleListItemViewModel
             {
                 Id = role.Id,
-                Name = role.Name ?? string.Empty,
+                Name = role.Name,
                 UserCount = usersInRole.Count
             });
         }
@@ -88,7 +93,7 @@ public class RolesController : Controller
             return NotFound();
         }
 
-        var users = await _userManager.GetUsersInRoleAsync(role.Name!);
+        var users = await _userManager.GetUsersInRoleAsync(role.Name ?? string.Empty);
         var model = new AdminRoleDeleteViewModel
         {
             Id = role.Id,
@@ -109,10 +114,10 @@ public class RolesController : Controller
             return NotFound();
         }
 
-        var users = await _userManager.GetUsersInRoleAsync(role.Name!);
+        var users = await _userManager.GetUsersInRoleAsync(role.Name ?? string.Empty);
         foreach (var user in users)
         {
-            await _userManager.RemoveFromRoleAsync(user, role.Name!);
+            await _userManager.RemoveFromRoleAsync(user, role.Name ?? string.Empty);
         }
 
         await _roleManager.DeleteAsync(role);

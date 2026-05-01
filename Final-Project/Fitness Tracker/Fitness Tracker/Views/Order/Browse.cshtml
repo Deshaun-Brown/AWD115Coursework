@@ -5,18 +5,20 @@
 <div class="flex gap-8">
     <div>
         <h3 class="font-semibold mb-2">Category</h3>
-        <ul>
+        <ul class="space-y-2">
+            @{ var allSelected = string.Equals(Model.SelectedCategory, "all", StringComparison.OrdinalIgnoreCase); }
             <li>
                 <a href="@Url.RouteUrl("ProductsBrowse", new { category = "all" })"
-                   class="@(Model.SelectedCategory == "all" ? "font-bold text-green-600" : "text-slate-700")">
+                   class="@(allSelected ? "font-semibold text-green-700" : "text-slate-700 hover:text-green-600")">
                     All
                 </a>
             </li>
             @foreach (var cat in Model.Categories)
             {
+                var isSelected = string.Equals(Model.SelectedCategory, cat.Name, StringComparison.OrdinalIgnoreCase);
                 <li>
                     <a href="@Url.RouteUrl("ProductsBrowse", new { category = cat.Name })"
-                       class="@(Model.SelectedCategory == cat.Name ? "font-bold text-green-600" : "text-slate-700")">
+                       class="@(isSelected ? "font-semibold text-green-700" : "text-slate-700 hover:text-green-600")">
                         @cat.Name
                     </a>
                 </li>
@@ -29,11 +31,26 @@
             @{ var idx = 0; }
             @foreach (var prod in Model.Products)
             {
-                <div style="animation-delay:@(idx * 80)ms" class="rounded border p-4 bg-white animate-fall-in transform transition-transform duration-200 ease-out hover:-translate-y-3 hover:shadow-2xl hover:z-10 will-change-transform relative">
+                var hoverDuration = (idx % 3) switch
+                {
+                    0 => "duration-3000",
+                    1 => "duration-1000",
+                    _ => "duration-2000"
+                };
+                <div style="animation-delay:@(idx * 555555)ms" class="rounded border p-4 bg-white animate-fall-in transform transition-transform @hoverDuration ease-out hover:-translate-y-3 hover:shadow-2xl hover:z-10 will-change-transform relative">
+                    <img src="@Url.Content(prod.ResolvedImageUrl.StartsWith("/") ? "~" + prod.ResolvedImageUrl : prod.ResolvedImageUrl)"
+                         alt="@prod.Name"
+                         loading="lazy"
+                         onerror="this.onerror=null;this.src='@Url.Content("~/images/product-placeholder.svg")';"
+                         class="mb-3 h-40 w-full rounded-md object-cover" />
                     <div class="font-semibold">@prod.Name</div>
                     <div class="text-sm text-slate-600">@prod.Description</div>
                     <div class="text-xs text-slate-400 mt-2">@prod.Category?.Name</div>
                     <div class="mt-4 flex items-center gap-2">
+                        <a asp-route="ProductDetails" asp-route-id="@prod.ProductId" asp-route-slug="@prod.Slug"
+                           class="inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+                            View
+                        </a>
                         <form asp-controller="Cart" asp-action="AddToCart" method="post" class="flex js-add-to-cart">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="productId" value="@prod.ProductId" />

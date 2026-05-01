@@ -52,7 +52,7 @@ public class UsersController : Controller
 
         var allRoles = await _roleManager.Roles
             .OrderBy(r => r.Name)
-            .Select(r => r.Name!)
+            .Select(r => r.Name ?? string.Empty)
             .ToListAsync();
 
         var selectedRoles = (await _userManager.GetRolesAsync(user)).ToList();
@@ -80,7 +80,7 @@ public class UsersController : Controller
 
         if (!ModelState.IsValid)
         {
-            model.AllRoles = await _roleManager.Roles.OrderBy(r => r.Name).Select(r => r.Name!).ToListAsync();
+            model.AllRoles = await _roleManager.Roles.OrderBy(r => r.Name).Select(r => r.Name ?? string.Empty).ToListAsync();
             return View("~/Areas/Admin/Views/Users/Edit.cshtml", model);
         }
 

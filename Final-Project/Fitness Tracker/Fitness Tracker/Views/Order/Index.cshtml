@@ -16,7 +16,7 @@
                 const items = document.querySelectorAll('.js-fall-item');
                 items.forEach((el, i) => {
                     // staggered delay
-                    el.style.animationDelay = (i * 80) + 'ms';
+                    el.style.animationDelay = (i * 3000) + 'ms';
                     el.classList.add('animate-fall-in');
 
                     const onEnd = function () {
@@ -76,6 +76,7 @@
             <table class="min-w-full divide-y divide-slate-200">
                 <thead class="bg-slate-50">
                     <tr>
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Image</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Name</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Category</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Price</th>
@@ -88,40 +89,50 @@
                 {
                     <tr class="js-fall-item hover:bg-slate-50">
     <td class="whitespace-nowrap px-6 py-4">
-        <div class="rounded border p-4 bg-white transform transition-transform duration-200 ease-out hover:-translate-y-3 hover:shadow-2xl hover:z-10 relative will-change-transform">
+        <img src="@Url.Content(p.ResolvedImageUrl.StartsWith("/") ? "~" + p.ResolvedImageUrl : p.ResolvedImageUrl)"
+             alt="@p.Name"
+             loading="lazy"
+             onerror="this.onerror=null;this.src='@Url.Content("~/images/product-placeholder.svg")';"
+             class="h-12 w-12 rounded-md object-cover" />
+    </td>
+    <td class="whitespace-nowrap px-6 py-4">
+        <div class="rounded border p-4 bg-white transform transition-transform duration-700 ease-out hover:-translate-y-3 hover:shadow-2xl hover:z-10 relative will-change-transform">
             <div class="font-medium">@p.Name</div>
             <div class="text-sm text-slate-600 line-clamp-1">@p.Description</div>
         </div>
     </td>
     <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">
         <div class="px-0 py-0">
-            @(p.Category?.Name ?? "—")
+            @(p.Category?.Name ?? "-")
         </div>
     </td>
     <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">$@p.Price</td>
     <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@p.Quantity</td>
     <td class="whitespace-nowrap px-6 py-4 text-right text-sm">
-        @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
-        {
-            <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link">Edit</a>
-            <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link text-rose-700 hover:bg-rose-50">Delete</a>
-        }
-        else
-        {
-            <form asp-controller="Cart" asp-action="AddToCart" method="post" class="inline-block js-add-to-cart">
-                @Html.AntiForgeryToken()
-                <input type="hidden" name="productId" value="@p.ProductId" />
-                <input type="hidden" name="quantity" value="1" />
-                <button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-linecap="round" stroke-linejoin="round" />
-                        <circle cx="10" cy="20" r="1" />
-                        <circle cx="18" cy="20" r="1" />
-                    </svg>
-                    Buy
-                </button>
-            </form>
-        }
+        <div class="inline-flex items-center gap-3">
+            <a asp-route="ProductDetails" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link">View</a>
+            @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+            {
+                <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link">Edit</a>
+                <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@p.ProductId" asp-route-slug="@p.Slug" class="btn-link text-rose-700 hover:bg-rose-50">Delete</a>
+            }
+            else
+            {
+                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="inline-block js-add-to-cart">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="productId" value="@p.ProductId" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="10" cy="20" r="1" />
+                            <circle cx="18" cy="20" r="1" />
+                        </svg>
+                        Buy
+                    </button>
+                </form>
+            }
+        </div>
     </td>
 </tr>
                 }

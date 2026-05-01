@@ -100,7 +100,7 @@ public class OrdersController : Controller
             {
                 new()
                 {
-                    ProductId = product!.ProductId,
+                    ProductId = product.ProductId,
                     Quantity = model.SelectedQuantity,
                     Price = product.Price
                 }
@@ -216,7 +216,7 @@ public class OrdersController : Controller
     {
         var item = await _context.OrderItems
             .Include(oi => oi.Order)
-            .ThenInclude(o => o!.OrderItems)
+            .ThenInclude(o => o.OrderItems)
             .FirstOrDefaultAsync(oi => oi.OrderItemId == orderItemId);
 
         if (item is null || item.Order is null)

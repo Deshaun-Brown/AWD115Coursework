@@ -36,10 +36,21 @@
                         <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@order.Status</td>
                         <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@order.OrderItems.Count</td>
                         <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-700">@order.TotalAmount.ToString("C")</td>
-                        <td class="whitespace-nowrap px-6 py-4 text-right text-sm space-x-3">
-                            <a asp-area="Admin" asp-controller="Orders" asp-action="Confirmation" asp-route-orderId="@order.OrderId" class="text-indigo-700 hover:underline">Details</a>
-                            <a asp-area="Admin" asp-controller="Orders" asp-action="Edit" asp-route-id="@order.OrderId" class="text-slate-700 hover:underline">Edit</a>
-                            <a asp-area="Admin" asp-controller="Orders" asp-action="Delete" asp-route-id="@order.OrderId" class="text-rose-700 hover:underline">Delete</a>
+                        <td class="whitespace-nowrap px-6 py-4 text-right text-sm">
+                            <div class="inline-flex items-center justify-end gap-2">
+                                <a asp-area="Admin" asp-controller="Orders" asp-action="Confirmation" asp-route-orderId="@order.OrderId"
+                                   class="inline-flex items-center rounded-md px-2 py-1 text-indigo-700 hover:bg-indigo-50 hover:underline">
+                                    Details
+                                </a>
+                                <a asp-area="Admin" asp-controller="Orders" asp-action="Edit" asp-route-id="@order.OrderId"
+                                   class="inline-flex items-center rounded-md px-2 py-1 text-slate-700 hover:bg-slate-100 hover:underline">
+                                    Edit
+                                </a>
+                                <a asp-area="Admin" asp-controller="Orders" asp-action="Delete" asp-route-id="@order.OrderId"
+                                   class="inline-flex items-center rounded-md px-2 py-1 text-rose-700 hover:bg-rose-50 hover:underline">
+                                    Delete
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 }

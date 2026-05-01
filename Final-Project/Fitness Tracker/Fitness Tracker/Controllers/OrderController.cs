@@ -73,7 +73,7 @@ public class OrderController : Controller
 
         var products = category == "all"
             ? await productsQuery.ToListAsync()
-            : await productsQuery.Where(p => p.Category!.Name == category).ToListAsync();
+            : await productsQuery.Where(p => p.Category != null && p.Category.Name == category).ToListAsync();
 
         var model = new ProductCategoryViewModel
         {
@@ -86,6 +86,8 @@ public class OrderController : Controller
         return View("~/Views/Order/Browse.cshtml", model);
     }
 
+    // GET: /products/{id:int}/{slug?}
+    [HttpGet("/products/{id:int}/{slug?}", Name = "ProductDetails")]
     public async Task<IActionResult> Details(int id)
     {
         var product = await _context.Products
@@ -95,7 +97,8 @@ public class OrderController : Controller
         {
             return NotFound();
         }
-        return View(product); // expects Views/Product/Details.cshtml
+
+        return View("~/Views/Order/Details.cshtml", product);
     }
 }
 

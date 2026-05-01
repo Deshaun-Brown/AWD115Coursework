@@ -9,6 +9,7 @@
     <Controller_SelectedScaffolderCategoryPath>root/Common/MVC/Controller</Controller_SelectedScaffolderCategoryPath>
     <WebStackScaffolding_ControllerDialogWidth>650</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_DbContextDialogWidth>650</WebStackScaffolding_DbContextDialogWidth>
+    <NameOfLastUsedPublishProfile>C:\Users\desha\Desktop\AWD1115\AWD115\AWD1115Coursework\Final-Project\Fitness Tracker\Fitness Tracker\Properties\PublishProfiles\FitnessTracker2026 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ItemGroup>
     <Content Update="wwwroot\images\ERD\Dataset.xsd">
